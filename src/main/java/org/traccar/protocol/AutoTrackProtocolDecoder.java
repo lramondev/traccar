@@ -48,7 +48,7 @@ public class AutoTrackProtocolDecoder extends BaseProtocolDecoder {
             Channel channel, SocketAddress remoteAddress, DeviceSession deviceSession, ByteBuf buf) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(new Date(1009843200000L + buf.readUnsignedIntLE() * 1000)); // seconds since 2002
         position.setLatitude(buf.readIntLE() * 0.0000001);
@@ -57,7 +57,7 @@ public class AutoTrackProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_ODOMETER, buf.readUnsignedIntLE());
         position.set(Position.KEY_FUEL_USED, buf.readUnsignedIntLE());
 
-        position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE()));
+        position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE()));
         buf.readUnsignedShortLE(); // max speed
 
         position.set(Position.KEY_INPUT, buf.readUnsignedShortLE());
@@ -68,7 +68,7 @@ public class AutoTrackProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.PREFIX_ADC + (i + 1), buf.readUnsignedShortLE());
         }
 
-        position.setCourse(buf.readUnsignedShortLE());
+        position.setCurso(buf.readUnsignedShortLE());
 
         position.set(Position.KEY_STATUS, buf.readUnsignedShortLE());
         position.set(Position.KEY_EVENT, buf.readUnsignedShortLE());

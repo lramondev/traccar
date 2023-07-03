@@ -8,6 +8,7 @@
 
   <changeSet author="author" id="changelog-3.7">
 
+    <!--
     <preConditions onFail="MARK_RAN">
       <not>
         <tableExists tableName="tc_servers" />
@@ -20,7 +21,6 @@
     </update>
 
     <addForeignKeyConstraint baseColumnNames="groupid" baseTableName="devices" constraintName="fk_device_group_groupid" onDelete="SET NULL" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="groups" />
-
     <update tableName="groups">
       <column name="groupid" />
       <where>groupid NOT IN (SELECT id FROM (SELECT DISTINCT id FROM groups) AS groups_ids)</where>
@@ -29,9 +29,10 @@
     <addColumn tableName="devices">
       <column name="attributes" type="VARCHAR(4096)" />
     </addColumn>
+  
 
     <dropColumn tableName="devices" columnName="motion" />
-
+ 
     <dropColumn tableName="devices" columnName="status" />
 
     <addColumn tableName="groups">
@@ -41,11 +42,13 @@
     <addColumn tableName="server">
       <column name="attributes" type="VARCHAR(4096)" />
     </addColumn>
+    -->
 
   </changeSet>
 
   <changeSet author="author" id="changelog-3.7-notmssql">
 
+    <!--
     <preConditions onFail="MARK_RAN">
       <not>
         <tableExists tableName="tc_servers" />
@@ -54,8 +57,9 @@
         <dbms type="mssql" />
       </not>
     </preConditions>
+    
 
-    <addForeignKeyConstraint baseColumnNames="groupid" baseTableName="groups" constraintName="fk_group_group_groupid" onDelete="SET NULL" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="groups" />
+    <addForeignKeyConstraint baseColumnNames="groupid" baseTableName="groups" constraintName="fk_group_group_groupid" onDelete="SET NULL" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="groups" />-->
 
   </changeSet>
 

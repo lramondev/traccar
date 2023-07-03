@@ -49,7 +49,7 @@ public class NyitechProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(dateBuilder.getDate());
 
         int flags = buf.readUnsignedByte();
-        position.setValid(BitUtil.to(flags, 2) > 0);
+        //position.setValid(BitUtil.to(flags, 2) > 0);
 
         double lat = buf.readUnsignedIntLE() / 3600000.0;
         double lon = buf.readUnsignedIntLE() / 3600000.0;
@@ -57,8 +57,8 @@ public class NyitechProtocolDecoder extends BaseProtocolDecoder {
         position.setLatitude(BitUtil.check(flags, 2) ? lat : -lat);
         position.setLongitude(BitUtil.check(flags, 3) ? lon : -lon);
 
-        position.setSpeed(UnitsConverter.knotsFromCps(buf.readUnsignedShortLE()));
-        position.setCourse(buf.readUnsignedShortLE() * 0.1);
+        position.setVelocidade(UnitsConverter.knotsFromCps(buf.readUnsignedShortLE()));
+        position.setCurso(buf.readUnsignedShortLE() * 0.1);
         position.setAltitude(buf.readShortLE() * 0.1);
     }
 
@@ -100,7 +100,7 @@ public class NyitechProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         if (type == MSG_COMPREHENSIVE_LIVE || type == MSG_COMPREHENSIVE_HISTORY) {
 

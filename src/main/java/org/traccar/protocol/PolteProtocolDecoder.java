@@ -53,11 +53,11 @@ public class PolteProtocolDecoder extends BaseHttpProtocolDecoder {
         if (json.containsKey("location")) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             JsonObject location = json.getJsonObject("location");
 
-            position.setValid(true);
+            //position.setValid(true);
             position.setTime(new Date(location.getInt("detected_at") * 1000L));
             position.setLatitude(location.getJsonNumber("latitude").doubleValue());
             position.setLongitude(location.getJsonNumber("longitude").doubleValue());

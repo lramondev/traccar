@@ -117,20 +117,20 @@ public class EelinkProtocolDecoder extends BaseProtocolDecoder {
     private Position decodeOld(DeviceSession deviceSession, ByteBuf buf, int type, int index) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_INDEX, index);
 
         position.setTime(new Date(buf.readUnsignedInt() * 1000));
         position.setLatitude(buf.readInt() / 1800000.0);
         position.setLongitude(buf.readInt() / 1800000.0);
-        position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
-        position.setCourse(buf.readUnsignedShort());
+        position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+        position.setCurso(buf.readUnsignedShort());
 
-        position.setNetwork(new Network(CellTower.from(
+        position.setRede(new Network(CellTower.from(
                 buf.readUnsignedShort(), buf.readUnsignedShort(), buf.readUnsignedShort(), buf.readUnsignedMedium())));
 
-        position.setValid((buf.readUnsignedByte() & 0x01) != 0);
+        //position.setValid((buf.readUnsignedByte() & 0x01) != 0);
 
         if (type == MSG_GPS) {
 
@@ -174,7 +174,7 @@ public class EelinkProtocolDecoder extends BaseProtocolDecoder {
     private Position decodeNew(DeviceSession deviceSession, ByteBuf buf, int type, int index) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_INDEX, index);
 
@@ -186,11 +186,11 @@ public class EelinkProtocolDecoder extends BaseProtocolDecoder {
             position.setLatitude(buf.readInt() / 1800000.0);
             position.setLongitude(buf.readInt() / 1800000.0);
             position.setAltitude(buf.readShort());
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
-            position.setCourse(buf.readUnsignedShort());
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
+            position.setCurso(buf.readUnsignedShort());
             position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
         } else {
-            getLastLocation(position, position.getDeviceTime());
+            getLastLocation(position, position.getDatahora_rastreador());
         }
 
         Network network = new Network();
@@ -253,7 +253,7 @@ public class EelinkProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (network.getCellTowers() != null || network.getWifiAccessPoints() != null) {
-            position.setNetwork(network);
+            position.setRede(network);
         }
 
         if (type == MSG_WARNING) {
@@ -269,7 +269,7 @@ public class EelinkProtocolDecoder extends BaseProtocolDecoder {
         if (type == MSG_NORMAL || type == MSG_WARNING || type == MSG_REPORT) {
 
             int status = buf.readUnsignedShort();
-            position.setValid(BitUtil.check(status, 0));
+            //position.setValid(BitUtil.check(status, 0));
             if (BitUtil.check(status, 1)) {
                 position.set(Position.KEY_IGNITION, BitUtil.check(status, 2));
             }
@@ -366,7 +366,7 @@ public class EelinkProtocolDecoder extends BaseProtocolDecoder {
     private Position decodeResult(DeviceSession deviceSession, ByteBuf buf, int index) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_INDEX, index);
 
@@ -378,11 +378,11 @@ public class EelinkProtocolDecoder extends BaseProtocolDecoder {
         Parser parser = new Parser(PATTERN, sentence);
         if (parser.matches()) {
 
-            position.setValid(true);
+            //position.setValid(true);
             position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
             position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
-            position.setCourse(parser.nextDouble());
-            position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
+            position.setCurso(parser.nextDouble());
+            position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
             position.setTime(parser.nextDateTime());
 
         } else {
@@ -399,7 +399,7 @@ public class EelinkProtocolDecoder extends BaseProtocolDecoder {
     private Position decodeObd(DeviceSession deviceSession, ByteBuf buf) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, new Date(buf.readUnsignedInt() * 1000));
 
@@ -505,7 +505,7 @@ public class EelinkProtocolDecoder extends BaseProtocolDecoder {
                     || type == MSG_OBD && buf.readableBytes() == 4) {
 
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 getLastLocation(position, null);
 

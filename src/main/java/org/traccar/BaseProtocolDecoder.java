@@ -142,27 +142,27 @@ public abstract class BaseProtocolDecoder extends ExtendedObjectDecoder {
     }
 
     public void getLastLocation(Position position, Date deviceTime) {
-        if (position.getDeviceId() != 0) {
-            position.setOutdated(true);
+        if (position.getRastreador_id() != 0) {
+            //position.setOutdated(true);
 
-            Position last = cacheManager.getPosition(position.getDeviceId());
+            Position last = cacheManager.getPosition(position.getRastreador_id());
             if (last != null) {
-                position.setFixTime(last.getFixTime());
-                position.setValid(last.getValid());
+                position.setDatahora_corrigida(last.getDatahora_corrigida());
+                //position.setValid(last.getValid());
                 position.setLatitude(last.getLatitude());
                 position.setLongitude(last.getLongitude());
                 position.setAltitude(last.getAltitude());
-                position.setSpeed(last.getSpeed());
-                position.setCourse(last.getCourse());
-                position.setAccuracy(last.getAccuracy());
+                position.setVelocidade(last.getVelocidade());
+                position.setCurso(last.getCurso());
+                position.setPrecisao(last.getPrecisao());
             } else {
-                position.setFixTime(new Date(0));
+                position.setDatahora_corrigida(new Date(0));
             }
 
             if (deviceTime != null) {
-                position.setDeviceTime(deviceTime);
+                position.setDatahora_rastreador(deviceTime);
             } else {
-                position.setDeviceTime(new Date());
+                position.setDatahora_rastreador(new Date());
             }
         }
     }
@@ -176,11 +176,11 @@ public abstract class BaseProtocolDecoder extends ExtendedObjectDecoder {
         Set<Long> deviceIds = new HashSet<>();
         if (decodedMessage != null) {
             if (decodedMessage instanceof Position) {
-                deviceIds.add(((Position) decodedMessage).getDeviceId());
+                deviceIds.add(((Position) decodedMessage).getRastreador_id());
             } else if (decodedMessage instanceof Collection) {
                 Collection<Position> positions = (Collection) decodedMessage;
                 for (Position position : positions) {
-                    deviceIds.add(position.getDeviceId());
+                    deviceIds.add(position.getRastreador_id());
                 }
             }
         }
@@ -207,7 +207,7 @@ public abstract class BaseProtocolDecoder extends ExtendedObjectDecoder {
         DeviceSession deviceSession = getDeviceSession(channel, remoteAddress);
         if (getConfig().getBoolean(Keys.DATABASE_SAVE_EMPTY) && deviceSession != null) {
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
             getLastLocation(position, null);
             return position;
         } else {

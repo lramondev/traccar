@@ -69,32 +69,32 @@ public class Gt06ProtocolEncoder extends BaseProtocolEncoder {
     protected Object encodeCommand(Command command) {
 
         boolean alternative = AttributeUtil.lookup(
-                getCacheManager(), Keys.PROTOCOL_ALTERNATIVE.withPrefix(getProtocolName()), command.getDeviceId());
+                getCacheManager(), Keys.PROTOCOL_ALTERNATIVE.withPrefix(getProtocolName()), command.getRastreador_id());
 
         String password = AttributeUtil.getDevicePassword(
-                getCacheManager(), command.getDeviceId(), getProtocolName(), "123456");
+                getCacheManager(), command.getRastreador_id(), getProtocolName(), "123456");
 
-        Device device = getCacheManager().getObject(Device.class, command.getDeviceId());
+        Device device = getCacheManager().getObject(Device.class, command.getRastreador_id());
 
         switch (command.getType()) {
             case Command.TYPE_ENGINE_STOP:
-                if ("G109".equals(device.getModel())) {
-                    return encodeContent(command.getDeviceId(), "DYD#");
+                if ("G109".equals(device.getModelo())) {
+                    return encodeContent(command.getRastreador_id(), "DYD#");
                 } else if (alternative) {
-                    return encodeContent(command.getDeviceId(), "DYD," + password + "#");
+                    return encodeContent(command.getRastreador_id(), "DYD," + password + "#");
                 } else {
-                    return encodeContent(command.getDeviceId(), "Relay,1#");
+                    return encodeContent(command.getRastreador_id(), "Relay,1#");
                 }
             case Command.TYPE_ENGINE_RESUME:
-                if ("G109".equals(device.getModel())) {
-                    return encodeContent(command.getDeviceId(), "HFYD#");
+                if ("G109".equals(device.getModelo())) {
+                    return encodeContent(command.getRastreador_id(), "HFYD#");
                 } else if (alternative) {
-                    return encodeContent(command.getDeviceId(), "HFYD," + password + "#");
+                    return encodeContent(command.getRastreador_id(), "HFYD," + password + "#");
                 } else {
-                    return encodeContent(command.getDeviceId(), "Relay,0#");
+                    return encodeContent(command.getRastreador_id(), "Relay,0#");
                 }
             case Command.TYPE_CUSTOM:
-                return encodeContent(command.getDeviceId(), command.getString(Command.KEY_DATA));
+                return encodeContent(command.getRastreador_id(), command.getString(Command.KEY_DATA));
             default:
                 return null;
         }

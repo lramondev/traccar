@@ -50,7 +50,7 @@ public class GpxExportProvider {
             writer.print("<gpx version=\"1.0\">");
             writer.print("<trk>");
             writer.print("<name>");
-            writer.print(device.getName());
+            writer.print(device.getDescricao());
             writer.print("</name>");
             writer.print("<trkseg>");
             positions.forEach(position -> {
@@ -63,7 +63,7 @@ public class GpxExportProvider {
                 writer.print(position.getAltitude());
                 writer.print("</ele>");
                 writer.print("<time>");
-                writer.print(DateUtil.formatDate(position.getFixTime()));
+                writer.print(DateUtil.formatDate(position.getDatahora_corrigida()));
                 writer.print("</time>");
                 writer.print("</trkpt>");
             });

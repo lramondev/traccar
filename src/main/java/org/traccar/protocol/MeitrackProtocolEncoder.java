@@ -31,7 +31,7 @@ public class MeitrackProtocolEncoder extends StringProtocolEncoder {
     }
 
     private Object formatCommand(Command command, char dataId, String content) {
-        String uniqueId = getUniqueId(command.getDeviceId());
+        String uniqueId = getUniqueId(command.getRastreador_id());
         int length = 1 + uniqueId.length() + 1 + content.length() + 5;
         String result = String.format("@@%c%02d,%s,%s*", dataId, length, uniqueId, content);
         result += Checksum.sum(result) + "\r\n";
@@ -44,7 +44,7 @@ public class MeitrackProtocolEncoder extends StringProtocolEncoder {
         Map<String, Object> attributes = command.getAttributes();
 
         boolean alternative = AttributeUtil.lookup(
-                getCacheManager(), Keys.PROTOCOL_ALTERNATIVE.withPrefix(getProtocolName()), command.getDeviceId());
+                getCacheManager(), Keys.PROTOCOL_ALTERNATIVE.withPrefix(getProtocolName()), command.getRastreador_id());
 
         switch (command.getType()) {
             case Command.TYPE_POSITION_SINGLE:

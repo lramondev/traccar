@@ -36,7 +36,7 @@ public class PositionForwarderRedis implements PositionForwarder {
     public void forward(PositionData positionData, ResultHandler resultHandler) {
 
         try {
-            String key = "positions." + positionData.getDevice().getUniqueId();
+            String key = "positions." + positionData.getDevice().getImei();
             String value = objectMapper.writeValueAsString(positionData.getPosition());
             try (Jedis jedis = new Jedis(url)) {
                 jedis.lpush(key, value);

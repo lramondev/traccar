@@ -8,6 +8,7 @@
 
   <changeSet author="author" id="changelog-3.6">
 
+    <!--
     <preConditions onFail="MARK_RAN">
       <not>
         <tableExists tableName="tc_servers" />
@@ -110,7 +111,7 @@
     <addColumn tableName="users">
       <column name="attributes" type="VARCHAR(4096)" />
     </addColumn>
-
+   -->
   </changeSet>
 
 </databaseChangeLog>

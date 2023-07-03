@@ -63,8 +63,8 @@ public class FlespiProtocolDecoder extends BaseHttpProtocolDecoder {
                 continue;
             }
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
-            position.setValid(true);
+            position.setRastreador_id(deviceSession.getDeviceId());
+            //position.setValid(true);
             decodePosition(message, position);
             positions.add(position);
         }
@@ -88,7 +88,7 @@ public class FlespiProtocolDecoder extends BaseHttpProtocolDecoder {
             }
         }
         if (position.getLatitude() == 0 && position.getLongitude() == 0) {
-            getLastLocation(position, position.getDeviceTime());
+            getLastLocation(position, position.getDatahora_rastreador());
         }
     }
 
@@ -104,10 +104,10 @@ public class FlespiProtocolDecoder extends BaseHttpProtocolDecoder {
                 position.setLongitude(((JsonNumber) value).doubleValue());
                 return true;
             case "position.speed":
-                position.setSpeed(UnitsConverter.knotsFromKph(((JsonNumber) value).doubleValue()));
+                position.setVelocidade(UnitsConverter.knotsFromKph(((JsonNumber) value).doubleValue()));
                 return true;
             case "position.direction":
-                position.setCourse(((JsonNumber) value).doubleValue());
+                position.setCurso(((JsonNumber) value).doubleValue());
                 return true;
             case "position.altitude":
                 position.setAltitude(((JsonNumber) value).doubleValue());
@@ -116,7 +116,7 @@ public class FlespiProtocolDecoder extends BaseHttpProtocolDecoder {
                 position.set(Position.KEY_SATELLITES, ((JsonNumber) value).intValue());
                 return true;
             case "position.valid":
-                position.setValid(value == JsonValue.TRUE);
+                //position.setValid(value == JsonValue.TRUE);
                 return true;
             case "position.hdop":
                 position.set(Position.KEY_HDOP, ((JsonNumber) value).doubleValue());

@@ -34,7 +34,7 @@ public class PretraceProtocolEncoder extends BaseProtocolEncoder {
     @Override
     protected Object encodeCommand(Command command) {
 
-        String uniqueId = getUniqueId(command.getDeviceId());
+        String uniqueId = getUniqueId(command.getRastreador_id());
 
         switch (command.getType()) {
             case Command.TYPE_CUSTOM:

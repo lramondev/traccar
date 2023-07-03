@@ -105,7 +105,7 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
         double longitude = convertCoordinate(BcdUtil.readInteger(buf, 9));
 
         byte flags = buf.readByte();
-        position.setValid((flags & 0x1) == 0x1);
+        //position.setValid((flags & 0x1) == 0x1);
         if ((flags & 0x2) == 0) {
             latitude = -latitude;
         }
@@ -115,8 +115,8 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
         }
         position.setLongitude(longitude);
 
-        position.setSpeed(BcdUtil.readInteger(buf, 2));
-        position.setCourse(buf.readUnsignedByte() * 2.0);
+        position.setVelocidade(BcdUtil.readInteger(buf, 2));
+        position.setCurso(buf.readUnsignedByte() * 2.0);
     }
 
     private List<Position> decodeBinary(ByteBuf buf, Channel channel, SocketAddress remoteAddress) {
@@ -146,7 +146,7 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
         while (buf.readableBytes() >= 17) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             decodeBinaryLocation(buf, position);
 
@@ -180,7 +180,7 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
                 CellTower cellTower = CellTower.fromCidLac(
                         getConfig(), buf.readUnsignedShort(), buf.readUnsignedShort());
                 cellTower.setSignalStrength((int) buf.readUnsignedByte());
-                position.setNetwork(new Network(cellTower));
+                position.setRede(new Network(cellTower));
 
                 if (protocolVersion == 0x17 || protocolVersion == 0x19) {
                     buf.readUnsignedByte(); // geofence id
@@ -204,7 +204,7 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
                 if (cid != 0 && lac != 0) {
                     CellTower cellTower = CellTower.fromCidLac(getConfig(), cid, lac);
                     cellTower.setSignalStrength(rssi);
-                    position.setNetwork(new Network(cellTower));
+                    position.setRede(new Network(cellTower));
                 } else {
                     position.set(Position.KEY_RSSI, rssi);
                 }
@@ -284,16 +284,16 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setLongitude(parser.nextCoordinate());
         position.setLatitude(parser.nextCoordinate());
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
+        position.setCurso(parser.nextDouble(0));
 
         position.set(Position.KEY_POWER, parser.nextDouble(0));
         position.set(Position.KEY_GPS, parser.nextInt(0));
@@ -342,16 +342,16 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
         String type = parser.next();
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
-        position.setValid(parser.next().equals("T"));
+        //position.setValid(parser.next().equals("T"));
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
 
-        position.setSpeed(UnitsConverter.knotsFromMph(parser.nextDouble(0)));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(UnitsConverter.knotsFromMph(parser.nextDouble(0)));
+        position.setCurso(parser.nextDouble(0));
 
         position.set(Position.KEY_SATELLITES, parser.nextInt(0));
         position.set(Position.KEY_BATTERY_LEVEL, parser.nextInt(0));
@@ -359,7 +359,7 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
 
         CellTower cellTower = CellTower.fromCidLac(getConfig(), parser.nextInt(0), parser.nextInt(0));
         cellTower.setSignalStrength(parser.nextInt(0));
-        position.setNetwork(new Network(cellTower));
+        position.setRede(new Network(cellTower));
 
         position.set(Position.KEY_ODOMETER, parser.nextLong(0) * 1000);
         position.set(Position.KEY_INDEX, parser.nextInt(0));
@@ -408,16 +408,16 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
 
-        position.setSpeed(UnitsConverter.knotsFromMph(parser.nextDouble()));
-        position.setCourse(parser.nextDouble());
+        position.setVelocidade(UnitsConverter.knotsFromMph(parser.nextDouble()));
+        position.setCurso(parser.nextDouble());
 
         String rfid = parser.next();
         if (!rfid.equals("0000000000")) {

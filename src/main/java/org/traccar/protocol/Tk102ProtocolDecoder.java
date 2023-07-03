@@ -121,15 +121,15 @@ public class Tk102ProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             DateBuilder dateBuilder = new DateBuilder()
                     .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
-            position.setValid(parser.next().equals("A"));
+            //position.setValid(parser.next().equals("A"));
             position.setLatitude(parser.nextCoordinate());
             position.setLongitude(parser.nextCoordinate());
-            position.setSpeed(parser.nextDouble(0));
+            position.setVelocidade(parser.nextDouble(0));
 
             dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
             position.setTime(dateBuilder.getDate());

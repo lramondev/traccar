@@ -80,7 +80,7 @@ public class FutureWayProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             Network network = new Network();
 
@@ -93,7 +93,7 @@ public class FutureWayProtocolDecoder extends BaseProtocolDecoder {
                         return null;
                     }
 
-                    position.setValid(parser.next().equals("A"));
+                    //position.setValid(parser.next().equals("A"));
                     position.setTime(parser.nextDateTime());
 
                     if (parser.hasNext(6)) {
@@ -106,8 +106,8 @@ public class FutureWayProtocolDecoder extends BaseProtocolDecoder {
                         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
                     }
 
-                    position.setSpeed(parser.nextDouble());
-                    position.setCourse(parser.nextDouble());
+                    position.setVelocidade(parser.nextDouble());
+                    position.setCurso(parser.nextDouble());
 
                 } else if (line.startsWith("WIFI")) {
 
@@ -139,10 +139,10 @@ public class FutureWayProtocolDecoder extends BaseProtocolDecoder {
             }
 
             if (!network.getCellTowers().isEmpty() || !network.getWifiAccessPoints().isEmpty()) {
-                position.setNetwork(network);
+                position.setRede(network);
             }
 
-            if (position.getFixTime() == null) {
+            if (position.getDatahora_corrigida() == null) {
                 getLastLocation(position, null);
             }
 

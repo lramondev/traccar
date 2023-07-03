@@ -76,12 +76,12 @@ public class Tt8850ProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setValid(true);
-        position.setAccuracy(parser.nextInt(0));
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
-        position.setCourse(parser.nextDouble(0));
+        //position.setValid(true);
+        position.setPrecisao(parser.nextInt(0));
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
+        position.setCurso(parser.nextDouble(0));
         position.setAltitude(parser.nextDouble(0));
         position.setLongitude(parser.nextDouble(0));
         position.setLatitude(parser.nextDouble(0));
@@ -89,7 +89,7 @@ public class Tt8850ProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(parser.nextDateTime());
 
         if (parser.hasNext(4)) {
-            position.setNetwork(new Network(
+            position.setRede(new Network(
                     CellTower.from(parser.nextInt(0), parser.nextInt(0), parser.nextHexInt(0), parser.nextHexInt(0))));
         }
 

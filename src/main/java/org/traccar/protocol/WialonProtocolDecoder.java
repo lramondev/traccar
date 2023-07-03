@@ -94,7 +94,7 @@ public class WialonProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         if (parser.hasNext(6)) {
             position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
@@ -105,16 +105,16 @@ public class WialonProtocolDecoder extends BaseProtocolDecoder {
         if (parser.hasNextAny(9)) {
             position.setLatitude(parser.nextCoordinate());
             position.setLongitude(parser.nextCoordinate());
-            position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
-            position.setCourse(parser.nextDouble(0));
+            position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
+            position.setCurso(parser.nextDouble(0));
             position.setAltitude(parser.nextDouble(0));
         } else {
-            getLastLocation(position, position.getDeviceTime());
+            getLastLocation(position, position.getDatahora_rastreador());
         }
 
         if (parser.hasNext()) {
             int satellites = parser.nextInt(0);
-            position.setValid(satellites >= 3);
+            //position.setValid(satellites >= 3);
             position.set(Position.KEY_SATELLITES, satellites);
         }
 
@@ -140,7 +140,7 @@ public class WialonProtocolDecoder extends BaseProtocolDecoder {
                     String value = paramParser.group(2);
                     try {
                         if (key.equals("accuracy")) {
-                            position.setAccuracy(Double.parseDouble(value));
+                            position.setPrecisao(Double.parseDouble(value));
                         } else {
                             position.set(key, Double.parseDouble(value));
                         }
@@ -221,9 +221,9 @@ public class WialonProtocolDecoder extends BaseProtocolDecoder {
                 deviceSession = getDeviceSession(channel, remoteAddress, id);
                 if (deviceSession != null) {
                     position = new Position(getProtocolName());
-                    position.setDeviceId(deviceSession.getDeviceId());
+                    position.setRastreador_id(deviceSession.getDeviceId());
                     getLastLocation(position, new Date());
-                    position.setValid(false);
+                    //position.setValid(false);
                     position.set(Position.KEY_RESULT, data);
                     sendResponse(channel, remoteAddress, type, 1);
                     return position;

@@ -93,9 +93,9 @@ public class FlexibleReportProtocolDecoder extends BaseProtocolDecoder {
         if (type == MSG_GENERAL) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
-            position.setDeviceTime(time);
+            position.setDatahora_rastreador(time);
 
             position.set(Position.KEY_EVENT, event);
 
@@ -106,16 +106,16 @@ public class FlexibleReportProtocolDecoder extends BaseProtocolDecoder {
                 buf.readUnsignedByte(); // product id
             }
             if (BitUtil.check(mask, 1)) {
-                position.setFixTime(decodeTime(buf));
+                position.setDatahora_corrigida(decodeTime(buf));
             }
             if (BitUtil.check(mask, 2)) {
-                position.setValid(true);
+                //position.setValid(true);
                 position.setLatitude(buf.readUnsignedInt() / 1000000.0 - 90);
                 position.setLongitude(buf.readUnsignedInt() / 1000000.0 - 180);
             }
             if (BitUtil.check(mask, 3)) {
-                position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
-                position.setCourse(buf.readUnsignedShort());
+                position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+                position.setCurso(buf.readUnsignedShort());
             }
             if (BitUtil.check(mask, 4)) {
                 position.setAltitude(buf.readShort());

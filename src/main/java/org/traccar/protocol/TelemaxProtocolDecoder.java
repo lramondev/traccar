@@ -83,12 +83,12 @@ public class TelemaxProtocolDecoder extends BaseProtocolDecoder {
         for (int i = 0; i < count; i++) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             int speed = Integer.parseInt(readValue(sentence, index, 2), 16);
 
-            position.setValid(BitUtil.check(speed, 7));
-            position.setSpeed(BitUtil.to(speed, 7));
+            //position.setValid(BitUtil.check(speed, 7));
+            position.setVelocidade(BitUtil.to(speed, 7));
 
             position.setLongitude((Integer.parseInt(readValue(sentence, index, 6), 16) - 5400000) / 30000.0);
             position.setLatitude((Integer.parseInt(readValue(sentence, index, 6), 16) - 5400000) / 30000.0);

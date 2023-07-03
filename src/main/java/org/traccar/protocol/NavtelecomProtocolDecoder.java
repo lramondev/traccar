@@ -191,7 +191,7 @@ public class NavtelecomProtocolDecoder extends BaseProtocolDecoder {
 
                 for (int i = 0; i < count; i++) {
                     Position position = new Position(getProtocolName());
-                    position.setDeviceId(deviceSession.getDeviceId());
+                    position.setRastreador_id(deviceSession.getDeviceId());
 
                     for (int j = 0; j < bits.length(); j++) {
                         if (bits.get(j)) {
@@ -206,15 +206,15 @@ public class NavtelecomProtocolDecoder extends BaseProtocolDecoder {
                                     position.set(Position.KEY_EVENT, buf.readUnsignedShortLE());
                                     break;
                                 case 3:
-                                    position.setDeviceTime(new Date(buf.readUnsignedIntLE() * 1000));
+                                    position.setDatahora_rastreador(new Date(buf.readUnsignedIntLE() * 1000));
                                     break;
                                 case 8:
                                     value = buf.readUnsignedByte();
-                                    position.setValid(BitUtil.check(value, 1));
+                                    //position.setValid(BitUtil.check(value, 1));
                                     position.set(Position.KEY_SATELLITES, BitUtil.from(value, 2));
                                     break;
                                 case 9:
-                                    position.setFixTime(new Date(buf.readUnsignedIntLE() * 1000));
+                                    position.setDatahora_corrigida(new Date(buf.readUnsignedIntLE() * 1000));
                                     break;
                                 case 10:
                                     position.setLatitude(buf.readIntLE() * 0.0001 / 60);
@@ -226,10 +226,10 @@ public class NavtelecomProtocolDecoder extends BaseProtocolDecoder {
                                     position.setAltitude(buf.readIntLE() * 0.1);
                                     break;
                                 case 13:
-                                    position.setSpeed(UnitsConverter.knotsFromKph(buf.readFloatLE()));
+                                    position.setVelocidade(UnitsConverter.knotsFromKph(buf.readFloatLE()));
                                     break;
                                 case 14:
-                                    position.setCourse(buf.readUnsignedShortLE());
+                                    position.setCurso(buf.readUnsignedShortLE());
                                     break;
                                 case 15:
                                     position.set(Position.KEY_ODOMETER, buf.readFloatLE());
@@ -312,8 +312,8 @@ public class NavtelecomProtocolDecoder extends BaseProtocolDecoder {
                         }
                     }
 
-                    if (position.getFixTime() == null) {
-                        getLastLocation(position, position.getDeviceTime());
+                    if (position.getDatahora_corrigida() == null) {
+                        getLastLocation(position, position.getDatahora_rastreador());
                     }
 
                     positions.add(position);

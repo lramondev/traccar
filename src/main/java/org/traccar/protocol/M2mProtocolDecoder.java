@@ -70,7 +70,7 @@ public class M2mProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             DateBuilder dateBuilder = new DateBuilder()
                     .setDay(buf.readUnsignedByte() & 0x3f)
@@ -104,10 +104,10 @@ public class M2mProtocolDecoder extends BaseProtocolDecoder {
                 latitude = -latitude;
             }
 
-            position.setValid(true);
+            //position.setValid(true);
             position.setLatitude(latitude);
             position.setLongitude(longitude);
-            position.setSpeed(buf.readUnsignedByte());
+            position.setVelocidade(buf.readUnsignedByte());
 
             int satellites = buf.readUnsignedByte();
             if (satellites == 0) {

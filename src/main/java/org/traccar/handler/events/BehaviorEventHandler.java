@@ -47,10 +47,10 @@ public class BehaviorEventHandler extends BaseEventHandler {
     @Override
     protected Map<Event, Position> analyzePosition(Position position) {
 
-        Position lastPosition = cacheManager.getPosition(position.getDeviceId());
-        if (lastPosition != null && position.getFixTime().equals(lastPosition.getFixTime())) {
-            double acceleration = UnitsConverter.mpsFromKnots(position.getSpeed() - lastPosition.getSpeed()) * 1000
-                    / (position.getFixTime().getTime() - lastPosition.getFixTime().getTime());
+        Position lastPosition = cacheManager.getPosition(position.getRastreador_id());
+        if (lastPosition != null && position.getDatahora_corrigida().equals(lastPosition.getDatahora_corrigida())) {
+            double acceleration = UnitsConverter.mpsFromKnots(position.getVelocidade() - lastPosition.getVelocidade()) * 1000
+                    / (position.getDatahora_corrigida().getTime() - lastPosition.getDatahora_corrigida().getTime());
             if (accelerationThreshold != 0 && acceleration >= accelerationThreshold) {
                 Event event = new Event(Event.TYPE_ALARM, position);
                 event.set(Position.KEY_ALARM, Position.ALARM_ACCELERATION);

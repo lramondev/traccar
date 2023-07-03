@@ -101,7 +101,7 @@ public class TmgProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         switch (type) {
             case "rmv":
@@ -130,11 +130,11 @@ public class TmgProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
-        position.setValid(parser.nextInt() > 0);
+        //position.setValid(parser.nextInt() > 0);
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
-        position.setCourse(parser.nextDouble());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
+        position.setCurso(parser.nextDouble());
 
         if (parser.hasNext(15)) {
 

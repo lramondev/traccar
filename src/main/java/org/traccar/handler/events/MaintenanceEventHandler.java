@@ -41,13 +41,13 @@ public class MaintenanceEventHandler extends BaseEventHandler {
 
     @Override
     protected Map<Event, Position> analyzePosition(Position position) {
-        Position lastPosition = cacheManager.getPosition(position.getDeviceId());
-        if (lastPosition == null || position.getFixTime().compareTo(lastPosition.getFixTime()) < 0) {
+        Position lastPosition = cacheManager.getPosition(position.getRastreador_id());
+        if (lastPosition == null || position.getDatahora_corrigida().compareTo(lastPosition.getDatahora_corrigida()) < 0) {
             return null;
         }
 
         Map<Event, Position> events = new HashMap<>();
-        for (Maintenance maintenance : cacheManager.getDeviceObjects(position.getDeviceId(), Maintenance.class)) {
+        for (Maintenance maintenance : cacheManager.getDeviceObjects(position.getRastreador_id(), Maintenance.class)) {
             if (maintenance.getPeriod() != 0) {
                 double oldValue = lastPosition.getDouble(maintenance.getType());
                 double newValue = position.getDouble(maintenance.getType());

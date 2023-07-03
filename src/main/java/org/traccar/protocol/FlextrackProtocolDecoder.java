@@ -106,17 +106,17 @@ public class FlextrackProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             sendAcknowledgement(channel, remoteAddress, parser.next());
 
             position.setTime(parser.nextDateTime());
 
-            position.setValid(true);
+            //position.setValid(true);
             position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
             position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
-            position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt(0)));
-            position.setCourse(parser.nextInt(0));
+            position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt(0)));
+            position.setCurso(parser.nextInt(0));
 
             position.set(Position.KEY_SATELLITES, parser.nextInt(0));
             position.set(Position.KEY_BATTERY, parser.nextInt(0));
@@ -130,7 +130,7 @@ public class FlextrackProtocolDecoder extends BaseProtocolDecoder {
 
             position.set(Position.KEY_HDOP, parser.nextInt(0) * 0.1);
 
-            position.setNetwork(new Network(CellTower.from(
+            position.setRede(new Network(CellTower.from(
                     mcc, mnc, parser.nextHexInt(0), parser.nextHexInt(0), rssi)));
 
             position.set(Position.KEY_ODOMETER, parser.nextInt(0));

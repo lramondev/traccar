@@ -73,7 +73,7 @@ public class MilesmateProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_BATTERY, parser.nextDouble());
         position.set(Position.PREFIX_ADC + 1, parser.nextDouble());
@@ -83,7 +83,7 @@ public class MilesmateProtocolDecoder extends BaseProtocolDecoder {
 
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
 
         dateBuilder.setDateReverse(parser.nextInt(), parser.nextInt(), parser.nextInt());
         position.setTime(dateBuilder.getDate());
@@ -98,9 +98,9 @@ public class MilesmateProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_BLOCKED, flags.charAt(0) == '1');
         position.set(Position.KEY_ALARM, flags.charAt(1) == '1' ? Position.ALARM_TOW : null);
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
 
-        position.setCourse(parser.nextDouble());
+        position.setCurso(parser.nextDouble());
 
         return position;
     }

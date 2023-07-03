@@ -116,20 +116,20 @@ public class At2000ProtocolDecoder extends BaseProtocolDecoder {
                 while (buf.readableBytes() >= 63) {
 
                     Position position = new Position(getProtocolName());
-                    position.setDeviceId(deviceSession.getDeviceId());
+                    position.setRastreador_id(deviceSession.getDeviceId());
 
                     buf.readUnsignedShortLE(); // index
                     buf.readUnsignedShortLE(); // reserved
 
-                    position.setValid(true);
+                    //position.setValid(true);
 
                     position.setTime(new Date(buf.readLongLE() * 1000));
 
                     position.setLatitude(buf.readFloatLE());
                     position.setLongitude(buf.readFloatLE());
                     position.setAltitude(buf.readFloatLE());
-                    position.setSpeed(UnitsConverter.knotsFromKph(buf.readFloatLE()));
-                    position.setCourse(buf.readFloatLE());
+                    position.setVelocidade(UnitsConverter.knotsFromKph(buf.readFloatLE()));
+                    position.setCurso(buf.readFloatLE());
 
                     buf.readUnsignedIntLE(); // geozone event
                     buf.readUnsignedIntLE(); // io events

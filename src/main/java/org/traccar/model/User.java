@@ -165,6 +165,7 @@ public class User extends ExtendedModel implements UserRestrictions, Disableable
         this.disabled = disabled;
     }
 
+    /* 
     private Date expirationTime;
 
     @Override
@@ -176,6 +177,7 @@ public class User extends ExtendedModel implements UserRestrictions, Disableable
     public void setExpirationTime(Date expirationTime) {
         this.expirationTime = expirationTime;
     }
+    */
 
     private int deviceLimit;
 

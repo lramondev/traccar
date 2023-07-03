@@ -8,7 +8,7 @@
 
   <changeSet author="author" id="changelog-5.6">
 
-    <addColumn tableName="tc_devices">
+    <!--<addColumn tableName="geolocal_rastreador">
       <column name="motionstreak" type="BOOLEAN" defaultValueBoolean="false" />
     </addColumn>
 
@@ -65,9 +65,9 @@
       </column>
     </createTable>
 
-    <addForeignKeyConstraint baseTableName="tc_device_report" baseColumnNames="deviceid" constraintName="fk_device_report_deviceid" referencedTableName="tc_devices" referencedColumnNames="id" onDelete="CASCADE" />
+    <addForeignKeyConstraint baseTableName="tc_device_report" baseColumnNames="deviceid" constraintName="fk_device_report_deviceid" referencedTableName="geolocal_rastreador" referencedColumnNames="id" onDelete="CASCADE" />
     <addForeignKeyConstraint baseTableName="tc_device_report" baseColumnNames="reportid" constraintName="fk_device_report_reportid" referencedTableName="tc_reports" referencedColumnNames="id" onDelete="CASCADE" />
-
+-->
   </changeSet>
 
 </databaseChangeLog>

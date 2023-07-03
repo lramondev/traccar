@@ -98,7 +98,7 @@ public class TzoneProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (hardware == 0x413) {
-            position.setFixTime(new DateBuilder()
+            position.setDatahora_corrigida(new DateBuilder()
                     .setDate(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
                     .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte()).getDate());
         }
@@ -119,23 +119,23 @@ public class TzoneProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_HDOP, buf.readUnsignedShort() * 0.1);
 
             position.setAltitude(buf.readUnsignedShort());
-            position.setCourse(buf.readUnsignedShort());
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort() * 0.1));
+            position.setCurso(buf.readUnsignedShort());
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort() * 0.1));
 
             position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
 
         } else {
 
-            position.setFixTime(new DateBuilder()
+            position.setDatahora_corrigida(new DateBuilder()
                     .setDate(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
                     .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte()).getDate());
 
-            position.setSpeed(buf.readUnsignedShort() * 0.01);
+            position.setVelocidade(buf.readUnsignedShort() * 0.01);
 
             position.set(Position.KEY_ODOMETER, buf.readUnsignedMedium());
 
             int flags = buf.readUnsignedShort();
-            position.setCourse(BitUtil.to(flags, 9));
+            position.setCurso(BitUtil.to(flags, 9));
             if (!BitUtil.check(flags, 10)) {
                 lat = -lat;
             }
@@ -144,7 +144,7 @@ public class TzoneProtocolDecoder extends BaseProtocolDecoder {
                 lon = -lon;
             }
             position.setLongitude(lon);
-            position.setValid(BitUtil.check(flags, 11));
+            //position.setValid(BitUtil.check(flags, 11));
 
         }
 
@@ -266,12 +266,12 @@ public class TzoneProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_VERSION_HW, hardware);
         position.set(Position.KEY_VERSION_FW, firmware);
 
-        position.setDeviceTime(new DateBuilder()
+        position.setDatahora_rastreador(new DateBuilder()
                 .setDate(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
                 .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte()).getDate());
 
@@ -279,7 +279,7 @@ public class TzoneProtocolDecoder extends BaseProtocolDecoder {
 
         if (hardware == 0x406 || !decodeGps(position, buf, hardware)) {
 
-            getLastLocation(position, position.getDeviceTime());
+            getLastLocation(position, position.getDatahora_rastreador());
 
         }
 
@@ -291,7 +291,7 @@ public class TzoneProtocolDecoder extends BaseProtocolDecoder {
         if (blockLength > 0) {
             if (hardware == 0x10A || hardware == 0x10B || hardware == 0x406) {
 
-                position.setNetwork(new Network(
+                position.setRede(new Network(
                         CellTower.fromLacCid(getConfig(), buf.readUnsignedShort(), buf.readUnsignedShort())));
 
             } else if (hardware == 0x407) {
@@ -307,7 +307,7 @@ public class TzoneProtocolDecoder extends BaseProtocolDecoder {
                     network.addCellTower(CellTower.from(
                             mcc, mnc, buf.readUnsignedShort(), buf.readUnsignedInt()));
                 }
-                position.setNetwork(network);
+                position.setRede(network);
 
             }
         }

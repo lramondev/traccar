@@ -176,7 +176,7 @@ public class ItsProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         if (type != null && type.equals("EMR")) {
             position.set(Position.KEY_ALARM, Position.ALARM_SOS);
@@ -203,19 +203,19 @@ public class ItsProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (parser.hasNext()) {
-            position.setValid(parser.nextInt() == 1);
+            //position.setValid(parser.nextInt() == 1);
         }
         position.setTime(parser.nextDateTime(
                 Parser.DateTimeFormat.DMY_HMS, getTimeZone(deviceSession.getDeviceId()).getID()));
         if (parser.hasNext()) {
-            position.setValid(parser.next().matches("[1A]"));
+            //position.setValid(parser.next().matches("[1A]"));
         }
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
 
         if (parser.hasNext(3)) {
-            position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
-            position.setCourse(parser.nextDouble());
+            position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
+            position.setCurso(parser.nextDouble());
             position.set(Position.KEY_SATELLITES, parser.nextInt());
         }
 
@@ -248,7 +248,7 @@ public class ItsProtocolDecoder extends BaseProtocolDecoder {
                         }
                     }
                 }
-                position.setNetwork(network);
+                position.setRede(network);
             }
 
             String input = parser.next();
@@ -287,7 +287,7 @@ public class ItsProtocolDecoder extends BaseProtocolDecoder {
 
         if (parser.hasNext(2)) {
             position.setAltitude(parser.nextDouble());
-            position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
+            position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
         }
 
         return position;

@@ -70,7 +70,7 @@ public class RadarProtocolDecoder extends BaseProtocolDecoder {
             for (int index = 0; index < count; index++) {
 
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 position.set(Position.KEY_EVENT, buf.readUnsignedShort());
 
@@ -81,10 +81,10 @@ public class RadarProtocolDecoder extends BaseProtocolDecoder {
                 buf.readUnsignedShort(); // length
 
                 if (mask.get(0)) {
-                    position.setDeviceTime(new Date(buf.readUnsignedInt() * 1000));
+                    position.setDatahora_rastreador(new Date(buf.readUnsignedInt() * 1000));
                 }
                 if (mask.get(1)) {
-                    position.setFixTime(new Date(buf.readUnsignedInt() * 1000));
+                    position.setDatahora_corrigida(new Date(buf.readUnsignedInt() * 1000));
                 }
                 if (mask.get(2)) {
                     position.setLatitude(buf.readInt() / 360000.0);
@@ -93,17 +93,17 @@ public class RadarProtocolDecoder extends BaseProtocolDecoder {
                     position.setLongitude(buf.readInt() / 360000.0);
                 }
                 if (mask.get(4)) {
-                    position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
+                    position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
                 }
                 if (mask.get(5)) {
-                    position.setCourse(buf.readUnsignedShort() * 0.1);
+                    position.setCurso(buf.readUnsignedShort() * 0.1);
                 }
                 if (mask.get(6)) {
                     position.setAltitude(buf.readShort());
                 }
                 if (mask.get(7)) {
                     int flags = buf.readUnsignedByte();
-                    position.setValid(BitUtil.check(flags, 0));
+                    //position.setValid(BitUtil.check(flags, 0));
                     position.set(Position.KEY_SATELLITES, BitUtil.from(flags, 4));
                 }
                 if (mask.get(8)) {
@@ -180,7 +180,7 @@ public class RadarProtocolDecoder extends BaseProtocolDecoder {
                     buf.readUnsignedInt(); // accumulated hours
                 }
 
-                if (position.getDeviceTime() != null && position.getFixTime() != null) {
+                if (position.getDatahora_rastreador() != null && position.getDatahora_corrigida() != null) {
                     positions.add(position);
                 }
 

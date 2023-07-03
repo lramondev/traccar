@@ -77,7 +77,7 @@ public class WatchProtocolEncoder extends StringProtocolEncoder implements Strin
         buf.writeByte('[');
         buf.writeCharSequence(manufacturer, StandardCharsets.US_ASCII);
         buf.writeByte('*');
-        buf.writeCharSequence(getUniqueId(command.getDeviceId()), StandardCharsets.US_ASCII);
+        buf.writeCharSequence(getUniqueId(command.getRastreador_id()), StandardCharsets.US_ASCII);
         buf.writeByte('*');
         if (hasIndex) {
             buf.writeCharSequence("0001", StandardCharsets.US_ASCII);

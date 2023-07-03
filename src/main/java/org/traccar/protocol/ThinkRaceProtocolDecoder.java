@@ -90,20 +90,20 @@ public class ThinkRaceProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.setTime(new Date(buf.readUnsignedInt() * 1000));
 
             int flags = buf.readUnsignedByte();
 
-            position.setValid(true);
+            //position.setValid(true);
             position.setLatitude(convertCoordinate(buf.readUnsignedInt(), !BitUtil.check(flags, 0)));
             position.setLongitude(convertCoordinate(buf.readUnsignedInt(), !BitUtil.check(flags, 1)));
 
-            position.setSpeed(buf.readUnsignedByte());
-            position.setCourse(buf.readUnsignedByte());
+            position.setVelocidade(buf.readUnsignedByte());
+            position.setCurso(buf.readUnsignedByte());
 
-            position.setNetwork(new Network(
+            position.setRede(new Network(
                     CellTower.fromLacCid(getConfig(), buf.readUnsignedShort(), buf.readUnsignedShort())));
 
             return position;

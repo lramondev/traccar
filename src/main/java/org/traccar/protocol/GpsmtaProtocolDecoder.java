@@ -65,16 +65,16 @@ public class GpsmtaProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         String time = parser.next();
         position.setTime(new Date(Long.parseLong(time) * 1000));
 
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
-        position.setSpeed(parser.nextInt());
-        position.setCourse(parser.nextInt());
-        position.setAccuracy(parser.nextInt());
+        position.setVelocidade(parser.nextInt());
+        position.setCurso(parser.nextInt());
+        position.setPrecisao(parser.nextInt());
         position.setAltitude(parser.nextInt());
 
         position.set(Position.KEY_STATUS, parser.nextInt());

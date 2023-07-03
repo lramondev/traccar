@@ -56,7 +56,7 @@ public class DistanceHandler extends BaseDataHandler {
         }
         double totalDistance = 0.0;
 
-        Position last = cacheManager.getPosition(position.getDeviceId());
+        Position last = cacheManager.getPosition(position.getRastreador_id());
         if (last != null) {
             totalDistance = last.getDouble(Position.KEY_TOTAL_DISTANCE);
             if (!position.hasAttribute(Position.KEY_DISTANCE)) {
@@ -69,7 +69,7 @@ public class DistanceHandler extends BaseDataHandler {
                 boolean satisfiesMin = coordinatesMinError == 0 || distance > coordinatesMinError;
                 boolean satisfiesMax = coordinatesMaxError == 0 || distance < coordinatesMaxError;
                 if (!satisfiesMin || !satisfiesMax) {
-                    position.setValid(last.getValid());
+                    //position.setValid(last.getValid());
                     position.setLatitude(last.getLatitude());
                     position.setLongitude(last.getLongitude());
                     distance = 0;

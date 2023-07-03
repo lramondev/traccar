@@ -76,8 +76,8 @@ public class ArnaviBinaryProtocolDecoder extends BaseProtocolDecoder {
     private Position decodePosition(DeviceSession deviceSession, ByteBuf buf, int length, Date time) {
 
         final Position position = new Position();
-        position.setProtocol(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setProtocolo(getProtocolName());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(time);
 
@@ -87,20 +87,20 @@ public class ArnaviBinaryProtocolDecoder extends BaseProtocolDecoder {
             switch (tag) {
                 case TAG_LATITUDE:
                     position.setLatitude(buf.readFloatLE());
-                    position.setValid(true);
+                    //position.setValid(true);
                     break;
 
                 case TAG_LONGITUDE:
                     position.setLongitude(buf.readFloatLE());
-                    position.setValid(true);
+                    //position.setValid(true);
                     break;
 
                 case TAG_COORD_PARAMS:
-                    position.setCourse(buf.readUnsignedByte() * 2);
+                    position.setCurso(buf.readUnsignedByte() * 2);
                     position.setAltitude(buf.readUnsignedByte() * 10);
                     byte satellites = buf.readByte();
                     position.set(Position.KEY_SATELLITES, satellites & 0x0F + (satellites >> 4) & 0x0F);
-                    position.setSpeed(buf.readUnsignedByte());
+                    position.setVelocidade(buf.readUnsignedByte());
                     break;
 
                 default:

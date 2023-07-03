@@ -66,7 +66,7 @@ public class AutoFonProtocolDecoder extends BaseProtocolDecoder {
     private Position decodePosition(DeviceSession deviceSession, ByteBuf buf, boolean history) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         if (!history) {
             buf.readUnsignedByte(); // interval
@@ -93,10 +93,10 @@ public class AutoFonProtocolDecoder extends BaseProtocolDecoder {
         CellTower cellTower = CellTower.from(
                 buf.readUnsignedShort(), buf.readUnsignedShort(),
                 buf.readUnsignedShort(), buf.readUnsignedShort(), rssi);
-        position.setNetwork(new Network(cellTower));
+        position.setRede(new Network(cellTower));
 
         int valid = buf.readUnsignedByte();
-        position.setValid((valid & 0xc0) != 0);
+        //position.setValid((valid & 0xc0) != 0);
         position.set(Position.KEY_SATELLITES, valid & 0x3f);
 
         DateBuilder dateBuilder = new DateBuilder()
@@ -107,8 +107,8 @@ public class AutoFonProtocolDecoder extends BaseProtocolDecoder {
         position.setLatitude(convertCoordinate(buf.readInt()));
         position.setLongitude(convertCoordinate(buf.readInt()));
         position.setAltitude(buf.readShort());
-        position.setSpeed(buf.readUnsignedByte());
-        position.setCourse(buf.readUnsignedByte() * 2.0);
+        position.setVelocidade(buf.readUnsignedByte());
+        position.setCurso(buf.readUnsignedByte() * 2.0);
 
         position.set(Position.KEY_HDOP, buf.readUnsignedShort());
 
@@ -170,7 +170,7 @@ public class AutoFonProtocolDecoder extends BaseProtocolDecoder {
         } else if (type == MSG_45_LOCATION) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             short status = buf.readUnsignedByte();
             if (BitUtil.check(status, 7)) {
@@ -189,7 +189,7 @@ public class AutoFonProtocolDecoder extends BaseProtocolDecoder {
             buf.skipBytes(6); // mcc, mnc, lac, cid
 
             int valid = buf.readUnsignedByte();
-            position.setValid(BitUtil.from(valid, 6) != 0);
+            //position.setValid(BitUtil.from(valid, 6) != 0);
             position.set(Position.KEY_SATELLITES, BitUtil.from(valid, 6));
 
             int time = buf.readUnsignedMedium();
@@ -202,8 +202,8 @@ public class AutoFonProtocolDecoder extends BaseProtocolDecoder {
 
             position.setLatitude(convertCoordinate(buf.readUnsignedByte(), buf.readUnsignedMedium()));
             position.setLongitude(convertCoordinate(buf.readUnsignedByte(), buf.readUnsignedMedium()));
-            position.setSpeed(buf.readUnsignedByte());
-            position.setCourse(buf.readUnsignedShort());
+            position.setVelocidade(buf.readUnsignedByte());
+            position.setCurso(buf.readUnsignedShort());
 
             return position;
 

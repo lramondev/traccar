@@ -75,7 +75,7 @@ public class CommandResource extends ExtendedObjectResource<Command> {
         Position position = storage.getObject(Position.class, new Request(
                 new Columns.All(), new Condition.LatestPositions(deviceId)));
         if (position != null) {
-            return serverManager.getProtocol(position.getProtocol());
+            return serverManager.getProtocol(position.getProtocolo());
         } else {
             return null;
         }
@@ -110,10 +110,10 @@ public class CommandResource extends ExtendedObjectResource<Command> {
     public Response send(Command entity, @QueryParam("groupId") long groupId) throws Exception {
         if (entity.getId() > 0) {
             permissionsService.checkPermission(baseClass, getUserId(), entity.getId());
-            long deviceId = entity.getDeviceId();
+            long deviceId = entity.getRastreador_id();
             entity = storage.getObject(baseClass, new Request(
                     new Columns.All(), new Condition.Equals("id", entity.getId())));
-            entity.setDeviceId(deviceId);
+            entity.setRastreador_id(deviceId);
         } else {
             permissionsService.checkRestriction(getUserId(), UserRestrictions::getLimitCommands);
         }
@@ -123,11 +123,11 @@ public class CommandResource extends ExtendedObjectResource<Command> {
             var devices = DeviceUtil.getAccessibleDevices(storage, getUserId(), List.of(), List.of(groupId));
             for (Device device : devices) {
                 Command command = QueuedCommand.fromCommand(entity).toCommand();
-                command.setDeviceId(device.getId());
+                command.setRastreador_id(device.getId());
                 result = commandsManager.sendCommand(command) && result;
             }
         } else {
-            permissionsService.checkPermission(Device.class, getUserId(), entity.getDeviceId());
+            permissionsService.checkPermission(Device.class, getUserId(), entity.getRastreador_id());
             result = commandsManager.sendCommand(entity);
         }
         return result ? Response.ok(entity).build() : Response.accepted(entity).build();

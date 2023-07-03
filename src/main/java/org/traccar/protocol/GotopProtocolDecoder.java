@@ -62,7 +62,7 @@ public class GotopProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         String type = parser.next();
         if (type.equals("CMD-KEY")) {
@@ -75,17 +75,17 @@ public class GotopProtocolDecoder extends BaseProtocolDecoder {
             }
         }
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
 
         position.setTime(parser.nextDateTime());
 
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
 
         position.set(Position.KEY_STATUS, parser.next());
 
-        position.setCourse(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
 
         return position;
     }

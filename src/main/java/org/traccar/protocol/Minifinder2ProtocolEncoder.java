@@ -48,8 +48,8 @@ public class Minifinder2ProtocolEncoder extends BaseProtocolEncoder {
     @Override
     protected Object encodeCommand(Command command) {
 
-        Device device = getCacheManager().getObject(Device.class, command.getDeviceId());
-        if ("Nano".equalsIgnoreCase(device.getModel())) {
+        Device device = getCacheManager().getObject(Device.class, command.getRastreador_id());
+        if ("Nano".equalsIgnoreCase(device.getModelo())) {
             ByteBuf content = Unpooled.buffer();
             if (command.getType().equals(Command.TYPE_FIRMWARE_UPDATE)) {
                 String url = command.getString(Command.KEY_DATA);

@@ -124,7 +124,7 @@ public class Mta6ProtocolDecoder extends BaseProtocolDecoder {
         try {
             while (buf.isReadable()) {
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 short flags = buf.readUnsignedByte();
 
@@ -152,8 +152,8 @@ public class Mta6ProtocolDecoder extends BaseProtocolDecoder {
                 }
 
                 if (BitUtil.check(flags, 2)) {
-                    position.setSpeed(buf.readUnsignedShort() & 0x03ff);
-                    position.setCourse(buf.readUnsignedByte());
+                    position.setVelocidade(buf.readUnsignedShort() & 0x03ff);
+                    position.setCurso(buf.readUnsignedByte());
                 }
 
                 if (BitUtil.check(flags, 3)) {
@@ -189,7 +189,7 @@ public class Mta6ProtocolDecoder extends BaseProtocolDecoder {
                     position.set(Position.KEY_RSSI, (buf.getUnsignedByte(buf.readerIndex()) >> 4) & 0x07);
 
                     int satellites = buf.readUnsignedByte() & 0x0f;
-                    position.setValid(satellites >= 3);
+                    //position.setValid(satellites >= 3);
                     position.set(Position.KEY_SATELLITES, satellites);
                 }
                 positions.add(position);
@@ -203,7 +203,7 @@ public class Mta6ProtocolDecoder extends BaseProtocolDecoder {
 
     private Position parseFormatA1(DeviceSession deviceSession, ByteBuf buf) {
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         short flags = buf.readUnsignedByte();
 
@@ -227,8 +227,8 @@ public class Mta6ProtocolDecoder extends BaseProtocolDecoder {
 
         if (BitUtil.check(flags, 0)) {
             position.setAltitude(buf.readUnsignedShort());
-            position.setSpeed(buf.readUnsignedByte());
-            position.setCourse(buf.readByte());
+            position.setVelocidade(buf.readUnsignedByte());
+            position.setCurso(buf.readByte());
             position.set(Position.KEY_ODOMETER, new FloatReader().readFloat(buf));
         }
 
@@ -267,7 +267,7 @@ public class Mta6ProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_RSSI, buf.getUnsignedByte(buf.readerIndex()) >> 5);
 
             int satellites = buf.readUnsignedByte() & 0x1f;
-            position.setValid(satellites >= 3);
+            //position.setValid(satellites >= 3);
             position.set(Position.KEY_SATELLITES, satellites);
         }
 

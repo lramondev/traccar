@@ -48,18 +48,18 @@ public class AdmProtocolDecoder extends BaseProtocolDecoder {
 
         if (BitUtil.to(type, 2) == 0) {
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.set(Position.KEY_VERSION_FW, buf.readUnsignedByte());
             position.set(Position.KEY_INDEX, buf.readUnsignedShortLE());
 
             int status = buf.readUnsignedShortLE();
             position.set(Position.KEY_STATUS, status);
-            position.setValid(!BitUtil.check(status, 5));
+            //position.setValid(!BitUtil.check(status, 5));
             position.setLatitude(buf.readFloatLE());
             position.setLongitude(buf.readFloatLE());
-            position.setCourse(buf.readUnsignedShortLE() * 0.1);
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE() * 0.1));
+            position.setCurso(buf.readUnsignedShortLE() * 0.1);
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE() * 0.1));
 
             position.set(Position.KEY_ACCELERATION, buf.readUnsignedByte() * 0.1);
             position.setAltitude(buf.readShortLE());
@@ -161,7 +161,7 @@ public class AdmProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 

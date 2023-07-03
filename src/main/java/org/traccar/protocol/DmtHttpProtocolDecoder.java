@@ -83,14 +83,14 @@ public class DmtHttpProtocolDecoder extends BaseHttpProtocolDecoder {
 
         for (int i = 0; i < records.size(); i++) {
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             JsonObject record = records.getJsonObject(i);
 
             position.set(Position.KEY_INDEX, record.getInt("SeqNo"));
             position.set(Position.KEY_EVENT, record.getInt("Reason"));
 
-            position.setDeviceTime(dateFormat.parse(record.getString("DateUTC")));
+            position.setDatahora_rastreador(dateFormat.parse(record.getString("DateUTC")));
 
             JsonArray fields = record.getJsonArray("Fields");
 
@@ -98,14 +98,14 @@ public class DmtHttpProtocolDecoder extends BaseHttpProtocolDecoder {
                 JsonObject field = fields.getJsonObject(j);
                 switch (field.getInt("FType")) {
                     case 0:
-                        position.setFixTime(dateFormat.parse(field.getString("GpsUTC")));
+                        position.setDatahora_corrigida(dateFormat.parse(field.getString("GpsUTC")));
                         position.setLatitude(field.getJsonNumber("Lat").doubleValue());
                         position.setLongitude(field.getJsonNumber("Long").doubleValue());
                         position.setAltitude(field.getInt("Alt"));
-                        position.setSpeed(UnitsConverter.knotsFromCps(field.getInt("Spd")));
-                        position.setCourse(field.getInt("Head"));
-                        position.setAccuracy(field.getInt("PosAcc"));
-                        position.setValid(field.getInt("GpsStat") > 0);
+                        position.setVelocidade(UnitsConverter.knotsFromCps(field.getInt("Spd")));
+                        position.setCurso(field.getInt("Head"));
+                        position.setPrecisao(field.getInt("PosAcc"));
+                        //position.setValid(field.getInt("GpsStat") > 0);
                         break;
                     case 2:
                         int input = field.getInt("DIn");
@@ -157,16 +157,16 @@ public class DmtHttpProtocolDecoder extends BaseHttpProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         Date time = new Date(OffsetDateTime.parse(root.getString("date")).toInstant().toEpochMilli());
 
         if (root.containsKey("lat") && root.containsKey("lng")) {
-            position.setValid(true);
+            //position.setValid(true);
             position.setTime(time);
             position.setLatitude(root.getJsonNumber("lat").doubleValue());
             position.setLongitude(root.getJsonNumber("lng").doubleValue());
-            position.setAccuracy(root.getJsonNumber("posAcc").doubleValue());
+            position.setPrecisao(root.getJsonNumber("posAcc").doubleValue());
         } else {
             getLastLocation(position, time);
         }

@@ -82,16 +82,16 @@ public class Tr20ProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
 
         position.setTime(parser.nextDateTime());
 
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
-        position.setCourse(parser.nextDouble());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
+        position.setCurso(parser.nextDouble());
 
         position.set(Position.PREFIX_TEMP + 1, parser.nextInt());
         position.set(Position.KEY_STATUS, parser.nextHexLong());

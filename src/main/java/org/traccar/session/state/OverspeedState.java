@@ -24,16 +24,16 @@ public class OverspeedState {
 
     public static OverspeedState fromDevice(Device device) {
         OverspeedState state = new OverspeedState();
-        state.overspeedState = device.getOverspeedState();
+        /*state.overspeedState = device.getOverspeedState();
         state.overspeedTime = device.getOverspeedTime();
-        state.overspeedGeofenceId = device.getOverspeedGeofenceId();
+        state.overspeedGeofenceId = device.getOverspeedGeofenceId();*/
         return state;
     }
 
     public void toDevice(Device device) {
-        device.setOverspeedState(overspeedState);
+        /*device.setOverspeedState(overspeedState);
         device.setOverspeedTime(overspeedTime);
-        device.setOverspeedGeofenceId(overspeedGeofenceId);
+        device.setOverspeedGeofenceId(overspeedGeofenceId);*/
     }
 
     private boolean changed;

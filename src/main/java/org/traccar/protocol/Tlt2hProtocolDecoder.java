@@ -170,7 +170,7 @@ public class Tlt2hProtocolDecoder extends BaseProtocolDecoder {
 
         for (String message : messages) {
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             if (message.contains("$GPRMC")) {
 
@@ -185,17 +185,17 @@ public class Tlt2hProtocolDecoder extends BaseProtocolDecoder {
                         Network network = new Network();
                         network.addCellTower(CellTower.from(
                                 parser.nextInt(), parser.nextInt(), parser.nextHexInt(), parser.nextHexInt()));
-                        position.setNetwork(network);
+                        position.setRede(network);
                     }
 
                     DateBuilder dateBuilder = new DateBuilder()
                             .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
-                    position.setValid(parser.next().equals("A"));
+                    //position.setValid(parser.next().equals("A"));
                     position.setLatitude(parser.nextCoordinate());
                     position.setLongitude(parser.nextCoordinate());
-                    position.setSpeed(parser.nextDouble(0));
-                    position.setCourse(parser.nextDouble(0));
+                    position.setVelocidade(parser.nextDouble(0));
+                    position.setCurso(parser.nextDouble(0));
 
                     dateBuilder.setDateReverse(parser.nextInt(), parser.nextInt(), parser.nextInt());
                     position.setTime(dateBuilder.getDate());
@@ -225,7 +225,7 @@ public class Tlt2hProtocolDecoder extends BaseProtocolDecoder {
                         String mac = values[i * 2 + 1].replaceAll("(..)", "$1:").substring(0, 17);
                         network.addWifiAccessPoint(WifiAccessPoint.from(mac, Integer.parseInt(values[i * 2])));
                     }
-                    position.setNetwork(network);
+                    position.setRede(network);
 
                     dateBuilder.setDateReverse(parser.nextInt(), parser.nextInt(), parser.nextInt());
 

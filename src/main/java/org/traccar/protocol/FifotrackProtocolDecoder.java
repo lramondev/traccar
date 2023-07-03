@@ -217,11 +217,11 @@ public class FifotrackProtocolDecoder extends BaseProtocolDecoder {
         String index = parser.next();
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_ALARM, decodeAlarm(parser.nextInt()));
 
-        position.setDeviceTime(parser.nextDateTime());
+        position.setDatahora_rastreador(parser.nextDateTime());
 
         Network network = new Network();
         network.addCellTower(CellTower.from(
@@ -233,10 +233,10 @@ public class FifotrackProtocolDecoder extends BaseProtocolDecoder {
 
         if (parser.hasNext(5)) {
 
-            position.setValid(parser.next().equals("A"));
-            position.setFixTime(position.getDeviceTime());
+            //position.setValid(parser.next().equals("A"));
+            position.setDatahora_corrigida(position.getDatahora_rastreador());
             position.set(Position.KEY_SATELLITES, parser.nextInt());
-            position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
+            position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
             position.setLatitude(parser.nextDouble());
             position.setLongitude(parser.nextDouble());
 
@@ -252,7 +252,7 @@ public class FifotrackProtocolDecoder extends BaseProtocolDecoder {
 
         }
 
-        position.setNetwork(network);
+        position.setRede(network);
 
         DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -276,17 +276,17 @@ public class FifotrackProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_ALARM, decodeAlarm(parser.nextInt()));
 
         position.setTime(parser.nextDateTime());
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
-        position.setCourse(parser.nextInt());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
+        position.setCurso(parser.nextInt());
         position.setAltitude(parser.nextInt());
 
         position.set(Position.KEY_ODOMETER, parser.nextLong());
@@ -299,7 +299,7 @@ public class FifotrackProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_INPUT, parser.nextHexInt());
         position.set(Position.KEY_OUTPUT, parser.nextHexInt());
 
-        position.setNetwork(new Network(CellTower.from(
+        position.setRede(new Network(CellTower.from(
                 parser.nextInt(), parser.nextInt(), parser.nextHexInt(), parser.nextHexInt())));
 
         String[] adc = parser.next().split("\\|");
@@ -340,7 +340,7 @@ public class FifotrackProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_RESULT, parser.next());
 
@@ -394,7 +394,7 @@ public class FifotrackProtocolDecoder extends BaseProtocolDecoder {
                     requestPhoto(channel, remoteAddress, imei, photoId);
                 } else {
                     Position position = new Position(getProtocolName());
-                    position.setDeviceId(getDeviceSession(channel, remoteAddress, imei).getDeviceId());
+                    position.setRastreador_id(getDeviceSession(channel, remoteAddress, imei).getDeviceId());
                     getLastLocation(position, null);
                     position.set(Position.KEY_IMAGE, writeMediaFile(imei, photo, "jpg"));
                     photo.release();

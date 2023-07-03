@@ -57,13 +57,16 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
 
+/* 
+    private static final Collection<Class<? extends BaseModel>> CLASSES = Arrays.asList(Attribute.class, Driver.class, Geofence.class, Maintenance.class, Notification.class);
+*/
+
 @Singleton
 public class CacheManager implements BroadcastInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CacheManager.class);
     private static final int GROUP_DEPTH_LIMIT = 3;
-    private static final Collection<Class<? extends BaseModel>> CLASSES = Arrays.asList(
-            Attribute.class, Driver.class, Geofence.class, Maintenance.class, Notification.class);
+    private static final Collection<Class<? extends BaseModel>> CLASSES = Arrays.asList(Attribute.class);
 
     private final Config config;
     private final Storage storage;
@@ -85,7 +88,7 @@ public class CacheManager implements BroadcastInterface {
         this.storage = storage;
         this.broadcastService = broadcastService;
         invalidateServer();
-        invalidateUsers();
+        //invalidateUsers();
         broadcastService.registerListener(this);
     }
 
@@ -199,8 +202,8 @@ public class CacheManager implements BroadcastInterface {
     public void updatePosition(Position position) {
         try {
             lock.writeLock().lock();
-            if (deviceLinks.containsKey(position.getDeviceId())) {
-                devicePositions.put(position.getDeviceId(), position);
+            if (deviceLinks.containsKey(position.getRastreador_id())) {
+                devicePositions.put(position.getRastreador_id(), position);
             }
         } finally {
             lock.writeLock().unlock();
@@ -365,9 +368,9 @@ public class CacheManager implements BroadcastInterface {
 
             deviceLinks.put(deviceId, links);
 
-            if (device.getPositionId() > 0) {
+            if (device.getRastreador_posicao_id() > 0) {
                 devicePositions.put(deviceId, storage.getObject(Position.class, new Request(
-                        new Columns.All(), new Condition.Equals("id", device.getPositionId()))));
+                        new Columns.All(), new Condition.Equals("id", device.getRastreador_posicao_id()))));
             }
         }
     }

@@ -71,8 +71,8 @@ public final class UserUtil {
     public static void setUserDefaults(User user, Config config) {
         user.setDeviceLimit(config.getInteger(Keys.USERS_DEFAULT_DEVICE_LIMIT));
         int expirationDays = config.getInteger(Keys.USERS_DEFAULT_EXPIRATION_DAYS);
-        if (expirationDays > 0) {
+        /*if (expirationDays > 0) {
             user.setExpirationTime(new Date(System.currentTimeMillis() + expirationDays * 86400000L));
-        }
+        }*/
     }
 }

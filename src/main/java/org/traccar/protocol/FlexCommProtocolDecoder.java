@@ -88,21 +88,21 @@ public class FlexCommProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime());
-        position.setValid(parser.next().equals("1"));
+        //position.setValid(parser.next().equals("1"));
         position.setLatitude(parseSignedValue(parser, 6));
         position.setLongitude(parseSignedValue(parser, 6));
         position.setAltitude(parseSignedValue(parser, 0));
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
+        position.setCurso(parser.nextDouble(0));
 
         position.set(Position.KEY_SATELLITES_VISIBLE, parser.nextInt());
         position.set(Position.KEY_SATELLITES, parser.nextInt());
         position.set(Position.KEY_RSSI, parser.nextInt());
 
-        position.setNetwork(new Network(CellTower.from(
+        position.setRede(new Network(CellTower.from(
                 parser.nextInt(), parser.nextInt(), parser.nextHexInt(), parser.nextHexInt())));
 
         for (int i = 1; i <= 3; i++) {

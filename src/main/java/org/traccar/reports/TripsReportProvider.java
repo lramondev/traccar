@@ -77,7 +77,7 @@ public class TripsReportProvider {
         for (Device device: DeviceUtil.getAccessibleDevices(storage, userId, deviceIds, groupIds)) {
             Collection<TripReportItem> trips = reportUtils.detectTripsAndStops(device, from, to, TripReportItem.class);
             DeviceReportSection deviceTrips = new DeviceReportSection();
-            deviceTrips.setDeviceName(device.getName());
+            deviceTrips.setDeviceName(device.getDescricao());
             sheetNames.add(WorkbookUtil.createSafeSheetName(deviceTrips.getDeviceName()));
             if (device.getGroupId() > 0) {
                 Group group = storage.getObject(Group.class, new Request(

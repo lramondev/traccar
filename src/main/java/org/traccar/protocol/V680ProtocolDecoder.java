@@ -82,10 +82,10 @@ public class V680ProtocolDecoder extends BaseProtocolDecoder {
             if (deviceSession == null) {
                 return null;
             }
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.set("user", parser.next());
-            position.setValid(parser.nextInt(0) > 0);
+            //position.setValid(parser.nextInt(0) > 0);
             position.set("password", parser.next());
             position.set(Position.KEY_EVENT, parser.next());
             position.set("packet", parser.next());
@@ -109,8 +109,8 @@ public class V680ProtocolDecoder extends BaseProtocolDecoder {
             position.setLongitude(west ? -lon : lon);
             position.setLatitude(south ? -lat : lat);
 
-            position.setSpeed(parser.nextDouble(0));
-            position.setCourse(parser.nextDouble(0));
+            position.setVelocidade(parser.nextDouble(0));
+            position.setCurso(parser.nextDouble(0));
 
             int day = parser.nextInt(0);
             int month = parser.nextInt(0);

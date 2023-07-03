@@ -108,7 +108,7 @@ public class DualcamProtocolDecoder extends BaseProtocolDecoder {
                 if (currentPacket == packetCount) {
                     deviceSession = getDeviceSession(channel, remoteAddress);
                     Position position = new Position(getProtocolName());
-                    position.setDeviceId(deviceSession.getDeviceId());
+                    position.setRastreador_id(deviceSession.getDeviceId());
                     getLastLocation(position, null);
                     try {
                         if (video) {

@@ -66,7 +66,7 @@ public class RecodaProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.setTime(new Date(buf.readLongLE()));
 
@@ -76,7 +76,7 @@ public class RecodaProtocolDecoder extends BaseProtocolDecoder {
 
                 buf.readUnsignedShortLE(); // declination
 
-                position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE()));
+                position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE()));
 
                 position.setLongitude(buf.readUnsignedByte() + buf.readUnsignedByte() / 60.0);
                 position.setLatitude(buf.readUnsignedByte() + buf.readUnsignedByte() / 60.0);
@@ -86,7 +86,7 @@ public class RecodaProtocolDecoder extends BaseProtocolDecoder {
 
                 int status = buf.readUnsignedByte();
 
-                position.setValid(BitUtil.check(status, 0));
+                //position.setValid(BitUtil.check(status, 0));
                 if (BitUtil.check(status, 1)) {
                     position.setLongitude(-position.getLongitude());
                 }
@@ -96,7 +96,7 @@ public class RecodaProtocolDecoder extends BaseProtocolDecoder {
 
             } else {
 
-                getLastLocation(position, position.getDeviceTime());
+                getLastLocation(position, position.getDatahora_rastreador());
 
             }
 

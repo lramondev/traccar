@@ -67,7 +67,7 @@ public class StbProtocolDecoder extends BaseProtocolDecoder {
         if (type == MSG_PROPERTY || type == MSG_ALARM) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             if (type == MSG_PROPERTY) {
                 int locationType = 0;
@@ -109,7 +109,7 @@ public class StbProtocolDecoder extends BaseProtocolDecoder {
                 }
                 if (locationType > 0) {
                     position.setTime(new Date());
-                    position.setValid(locationType != 5);
+                    //position.setValid(locationType != 5);
                     if (locationType == 2 || locationType == 4) {
                         position.setLongitude(-position.getLongitude());
                     }

@@ -85,7 +85,7 @@ public class MxtProtocolDecoder extends BaseProtocolDecoder {
         if (type == MSG_POSITION) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             buf.readUnsignedByte(); // protocol
             int infoGroups = buf.readUnsignedByte();
@@ -109,7 +109,7 @@ public class MxtProtocolDecoder extends BaseProtocolDecoder {
 
             position.setTime(dateBuilder.getDate());
 
-            position.setValid(true);
+            //position.setValid(true);
             position.setLatitude(buf.readIntLE() / 1000000.0);
             position.setLongitude(buf.readIntLE() / 1000000.0);
 
@@ -120,11 +120,11 @@ public class MxtProtocolDecoder extends BaseProtocolDecoder {
             }
             position.set(Position.KEY_INPUT, BitUtil.between(flags, 2, 7));
             position.set(Position.KEY_OUTPUT, BitUtil.between(flags, 7, 10));
-            position.setCourse(BitUtil.between(flags, 10, 13) * 45);
-            // position.setValid(BitUtil.check(flags, 15));
+            position.setCurso(BitUtil.between(flags, 10, 13) * 45);
+            // //position.setValid(BitUtil.check(flags, 15));
             position.set(Position.KEY_CHARGE, BitUtil.check(flags, 20));
 
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
 
             buf.readUnsignedByte(); // input mask
 
@@ -139,7 +139,7 @@ public class MxtProtocolDecoder extends BaseProtocolDecoder {
             if (BitUtil.check(infoGroups, 2)) {
                 position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
                 position.set(Position.KEY_HDOP, buf.readUnsignedByte());
-                position.setAccuracy(buf.readUnsignedByte());
+                position.setPrecisao(buf.readUnsignedByte());
                 position.set(Position.KEY_RSSI, buf.readUnsignedByte());
                 buf.readUnsignedShortLE(); // time since boot
                 position.set(Position.KEY_POWER, buf.readUnsignedByte());

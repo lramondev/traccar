@@ -87,18 +87,18 @@ public class YwtProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime());
 
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
         position.setAltitude(parser.nextDouble(0));
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
-        position.setCourse(parser.nextDouble());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
+        position.setCurso(parser.nextDouble());
 
         int satellites = parser.nextInt();
-        position.setValid(satellites != 0);
+        //position.setValid(satellites != 0);
         position.set(Position.KEY_SATELLITES, satellites);
 
         String reportId = parser.next();

@@ -77,25 +77,25 @@ public class NavisetProtocolDecoder extends BaseProtocolDecoder {
             while (buf.readableBytes() > 2) {
 
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 position.set(Position.KEY_INDEX, buf.readUnsignedShortLE());
                 position.set(Position.KEY_STATUS, buf.readUnsignedByte());
-                position.setValid(true);
+                //position.setValid(true);
                 position.setTime(new Date(buf.readUnsignedIntLE() * 1000));
                 position.setLatitude(buf.readUnsignedIntLE() * 0.000001);
                 position.setLongitude(buf.readUnsignedIntLE() * 0.000001);
-                position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE() * 0.1));
+                position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE() * 0.1));
 
                 if (BitUtil.check(blockMask, 0)) {
                     int dataMask = buf.readUnsignedByte();
                     if (BitUtil.check(dataMask, 0)) {
                         int satellites = buf.readUnsignedByte();
-                        position.setValid(BitUtil.check(satellites, 7));
+                        //position.setValid(BitUtil.check(satellites, 7));
                         position.set(Position.KEY_SATELLITES, BitUtil.to(satellites, 7));
                     }
                     if (BitUtil.check(dataMask, 1)) {
-                        position.setCourse(buf.readUnsignedShortLE() * 0.1);
+                        position.setCurso(buf.readUnsignedShortLE() * 0.1);
                     }
                     if (BitUtil.check(dataMask, 2)) {
                         position.setAltitude(buf.readShortLE());

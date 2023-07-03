@@ -84,14 +84,14 @@ public class BoxProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.setTime(parser.nextDateTime());
 
             position.setLatitude(parser.nextDouble());
             position.setLongitude(parser.nextDouble());
-            position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
-            position.setCourse(parser.nextDouble());
+            position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
+            position.setCurso(parser.nextDouble());
 
             position.set(Position.KEY_ODOMETER_TRIP, parser.nextDouble() * 1000);
             position.set(Position.KEY_EVENT, parser.next());
@@ -99,7 +99,7 @@ public class BoxProtocolDecoder extends BaseProtocolDecoder {
             int status = parser.nextInt();
             position.set(Position.KEY_IGNITION, BitUtil.check(status, 0));
             position.set(Position.KEY_MOTION, BitUtil.check(status, 1));
-            position.setValid(!BitUtil.check(status, 2));
+            //position.setValid(!BitUtil.check(status, 2));
             position.set(Position.KEY_STATUS, status);
 
             if (parser.hasNext()) {

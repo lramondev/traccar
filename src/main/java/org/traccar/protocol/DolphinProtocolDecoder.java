@@ -25,7 +25,7 @@ import org.traccar.NetworkMessage;
 import org.traccar.Protocol;
 import org.traccar.helper.UnitsConverter;
 import org.traccar.model.Position;
-import org.traccar.protobuf.dolphin.Messages.DolphinMessages;
+//import org.traccar.protobuf.dolphin.Messages.DolphinMessages;
 
 import java.net.SocketAddress;
 import java.util.Date;
@@ -57,7 +57,7 @@ public class DolphinProtocolDecoder extends BaseProtocolDecoder {
 
         int length = (int) buf.readUnsignedIntLE();
         buf.readUnsignedInt(); // reserved
-
+        /*
         if (type == DolphinMessages.MessageType.DataPack_Request.getNumber()) {
 
             DolphinMessages.DataPackRequest message = DolphinMessages.DataPackRequest.parseFrom(
@@ -86,17 +86,17 @@ public class DolphinProtocolDecoder extends BaseProtocolDecoder {
             for (int i = 0; i < message.getPointsCount(); i++) {
 
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 DolphinMessages.DataPoint point = message.getPoints(i);
 
-                position.setValid(true);
+                //position.setValid(true);
                 position.setTime(new Date(point.getTimestamp() * 1000L));
                 position.setLatitude(point.getLatitude());
                 position.setLongitude(point.getLongitude());
                 position.setAltitude(point.getAltitude());
-                position.setSpeed(UnitsConverter.knotsFromKph(point.getSpeed()));
-                position.setCourse(point.getBearing());
+                position.setVelocidade(UnitsConverter.knotsFromKph(point.getSpeed()));
+                position.setCurso(point.getBearing());
 
                 position.set(Position.KEY_SATELLITES, point.getSatellites());
                 position.set(Position.KEY_HDOP, point.getHDOP());
@@ -108,10 +108,10 @@ public class DolphinProtocolDecoder extends BaseProtocolDecoder {
                 positions.add(position);
 
             }
-
+         
             return positions;
 
-        }
+        }   */
 
         return null;
     }

@@ -104,7 +104,7 @@ public class MobilogixProtocolDecoder extends BaseProtocolDecoder {
 
         Position position = new Position(getProtocolName());
 
-        position.setDeviceTime(parser.nextDateTime());
+        position.setDatahora_rastreador(parser.nextDateTime());
         if (parser.nextInt() == 0) {
             position.set(Position.KEY_ARCHIVE, true);
         }
@@ -113,7 +113,7 @@ public class MobilogixProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_TYPE, type);
         position.set(Position.KEY_ALARM, decodeAlarm(type));
@@ -130,17 +130,17 @@ public class MobilogixProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_SATELLITES, parser.nextInt());
             position.set(Position.KEY_RSSI, 6 * parser.nextInt() - 111);
 
-            position.setValid(parser.nextInt() > 0);
-            position.setFixTime(position.getDeviceTime());
+            //position.setValid(parser.nextInt() > 0);
+            position.setDatahora_corrigida(position.getDatahora_rastreador());
 
             position.setLatitude(parser.nextDouble());
             position.setLongitude(parser.nextDouble());
-            position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
-            position.setCourse(parser.nextDouble());
+            position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
+            position.setCurso(parser.nextDouble());
 
         } else {
 
-            getLastLocation(position, position.getDeviceTime());
+            getLastLocation(position, position.getDatahora_rastreador());
 
         }
 

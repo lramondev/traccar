@@ -79,7 +79,7 @@ public class ArnaviTextProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_INDEX, parser.nextInt());
         position.set(Position.KEY_POWER, parser.nextInt() * 0.01);
@@ -93,11 +93,11 @@ public class ArnaviTextProtocolDecoder extends BaseProtocolDecoder {
         DateBuilder dateBuilder = new DateBuilder()
                 .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
-        position.setSpeed(parser.nextDouble());
-        position.setCourse(parser.nextDouble());
+        position.setVelocidade(parser.nextDouble());
+        position.setCurso(parser.nextDouble());
 
         dateBuilder.setDateReverse(parser.nextInt(), parser.nextInt(), parser.nextInt());
         position.setTime(dateBuilder.getDate());

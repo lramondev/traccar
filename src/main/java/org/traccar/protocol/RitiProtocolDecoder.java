@@ -63,7 +63,7 @@ public class RitiProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set("mode", buf.readUnsignedByte());
         position.set(Position.KEY_COMMAND, buf.readUnsignedByte());
@@ -87,11 +87,11 @@ public class RitiProtocolDecoder extends BaseProtocolDecoder {
         DateBuilder dateBuilder = new DateBuilder()
                 .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
-        position.setSpeed(parser.nextDouble(0));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
 
         dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
         position.setTime(dateBuilder.getDate());

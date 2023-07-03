@@ -73,16 +73,16 @@ public class PretraceProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
 
         position.setTime(parser.nextDateTime());
 
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt(0)));
-        position.setCourse(parser.nextInt(0));
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt(0)));
+        position.setCurso(parser.nextInt(0));
         position.setAltitude(parser.nextHexInt(0));
 
         position.set(Position.KEY_ODOMETER, parser.nextHexInt(0));

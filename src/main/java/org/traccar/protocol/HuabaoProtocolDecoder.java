@@ -268,7 +268,7 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
         } else if (type == MSG_ACCELERATION) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, null);
 
@@ -307,7 +307,7 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
         DeviceSession deviceSession = getDeviceSession(channel, remoteAddress);
         if (deviceSession != null) {
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
             getLastLocation(position, null);
             position.set(Position.KEY_RESULT, sentence);
             return position;
@@ -403,7 +403,7 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_BLOCKED, BitUtil.check(status, 10));
         position.set(Position.KEY_CHARGE, BitUtil.check(status, 26));
 
-        position.setValid(BitUtil.check(status, 1));
+        //position.setValid(BitUtil.check(status, 1));
 
         double lat = buf.readUnsignedInt() * 0.000001;
         double lon = buf.readUnsignedInt() * 0.000001;
@@ -431,15 +431,15 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
     private Position decodeLocation(DeviceSession deviceSession, ByteBuf buf) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_ALARM, decodeAlarm(buf.readUnsignedInt()));
 
         decodeCoordinates(position, buf);
 
         position.setAltitude(buf.readShort());
-        position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort() * 0.1));
-        position.setCourse(buf.readUnsignedShort());
+        position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort() * 0.1));
+        position.setCurso(buf.readUnsignedShort());
         position.setTime(readDate(buf, deviceSession.get(DeviceSession.KEY_TIMEZONE)));
 
         if (buf.readableBytes() == 20) {
@@ -587,7 +587,7 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
                                     mcc, mnc, buf.readUnsignedShort(), buf.readUnsignedShort(),
                                     buf.readUnsignedByte()));
                         }
-                        position.setNetwork(network);
+                        position.setRede(network);
                     } else {
                         while (buf.readerIndex() < endIndex) {
                             int extendedLength = buf.readUnsignedShort();
@@ -609,7 +609,7 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
                                     network.addCellTower(CellTower.from(
                                             buf.readUnsignedShort(), buf.readUnsignedByte(),
                                             buf.readUnsignedShort(), buf.readUnsignedInt()));
-                                    position.setNetwork(network);
+                                    position.setRede(network);
                                     break;
                                 case 0xE1:
                                     position.set(Position.KEY_BATTERY_LEVEL, buf.readUnsignedByte());
@@ -744,10 +744,10 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
     private Position decodeLocation2(DeviceSession deviceSession, ByteBuf buf, int type) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         Jt600ProtocolDecoder.decodeBinaryLocation(buf, position);
-        position.setValid(type != MSG_LOCATION_REPORT_BLIND);
+        //position.setValid(type != MSG_LOCATION_REPORT_BLIND);
 
         position.set(Position.KEY_RSSI, buf.readUnsignedByte());
         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
@@ -760,7 +760,7 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_CHARGE, true);
         }
 
-        position.setNetwork(new Network(CellTower.fromCidLac(
+        position.setRede(new Network(CellTower.fromCidLac(
                 getConfig(), buf.readUnsignedInt(), buf.readUnsignedShort())));
 
         int product = buf.readUnsignedByte();
@@ -846,7 +846,7 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
 
         if (type == 0xF0) {
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             Date time = readDate(buf, deviceSession.get(DeviceSession.KEY_TIMEZONE));
 

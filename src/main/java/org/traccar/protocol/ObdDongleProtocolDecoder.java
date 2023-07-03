@@ -95,13 +95,13 @@ public class ObdDongleProtocolDecoder extends BaseProtocolDecoder {
             buf.readUnsignedByte(); // event id
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.setTime(new Date(buf.readUnsignedInt() * 1000));
 
             int flags = buf.readUnsignedByte();
 
-            position.setValid(!BitUtil.check(flags, 6));
+            //position.setValid(!BitUtil.check(flags, 6));
 
             position.set(Position.KEY_SATELLITES, BitUtil.to(flags, 4));
 
@@ -112,8 +112,8 @@ public class ObdDongleProtocolDecoder extends BaseProtocolDecoder {
             position.setLatitude(BitUtil.check(flags, 4) ? latitude : -latitude);
 
             int speedCourse = buf.readUnsignedMedium();
-            position.setSpeed(UnitsConverter.knotsFromMph(BitUtil.from(speedCourse, 10) * 0.1));
-            position.setCourse(BitUtil.to(speedCourse, 10));
+            position.setVelocidade(UnitsConverter.knotsFromMph(BitUtil.from(speedCourse, 10) * 0.1));
+            position.setCurso(BitUtil.to(speedCourse, 10));
 
             ByteBuf response = Unpooled.buffer();
             response.writeByte(typeMajor);

@@ -93,15 +93,15 @@ public class NdtpV6ProtocolDecoder extends BaseProtocolDecoder {
             position.setLatitude(buf.readIntLE() / 10000000.0);
 
             short flags = buf.readUnsignedByte();
-            position.setValid(BitUtil.check(flags, 7));
+            //position.setValid(BitUtil.check(flags, 7));
             if (BitUtil.check(flags, 1)) {
                 position.set(Position.KEY_ALARM, Position.ALARM_GENERAL);
             }
 
             position.set(Position.KEY_BATTERY, buf.readUnsignedByte() * 20);
             position.set(Position.KEY_OBD_SPEED, buf.readUnsignedShortLE());
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE()));
-            position.setCourse(buf.readUnsignedShortLE());
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE()));
+            position.setCurso(buf.readUnsignedShortLE());
 
             position.set(Position.KEY_ODOMETER, buf.readUnsignedShortLE());
             position.setAltitude(buf.readShortLE());
@@ -163,7 +163,7 @@ public class NdtpV6ProtocolDecoder extends BaseProtocolDecoder {
             int deviceId = buf.readUnsignedShortLE();
             Position position = new Position(getProtocolName());
             deviceSession = getDeviceSession(channel, remoteAddress, String.valueOf(deviceId));
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             if (channel != null) {
                 sendResponse(channel, serviceId, requestId);
@@ -172,7 +172,7 @@ public class NdtpV6ProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_RESULT, String.valueOf(NPH_SGC_RESULT));
             position.setTime(new Date());
             getLastLocation(position, new Date());
-            position.setValid(false);
+            //position.setValid(false);
 
             return position;
 
@@ -186,7 +186,7 @@ public class NdtpV6ProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             if (channel != null) {
                 sendResponse(channel, serviceId, requestId);

@@ -114,15 +114,15 @@ public class WatchProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
+        position.setCurso(parser.nextDouble(0));
         position.setAltitude(parser.nextDouble(0));
 
         position.set(Position.KEY_SATELLITES, parser.nextInt(0));
@@ -176,7 +176,7 @@ public class WatchProtocolDecoder extends BaseProtocolDecoder {
             }
 
             if (network.getCellTowers() != null || network.getWifiAccessPoints() != null) {
-                position.setNetwork(network);
+                position.setRede(network);
             }
 
         }
@@ -252,7 +252,7 @@ public class WatchProtocolDecoder extends BaseProtocolDecoder {
                 String[] values = buf.toString(StandardCharsets.US_ASCII).split(",");
                 if (values.length >= 3) {
                     Position position = new Position(getProtocolName());
-                    position.setDeviceId(deviceSession.getDeviceId());
+                    position.setRastreador_id(deviceSession.getDeviceId());
 
                     getLastLocation(position, null);
 
@@ -290,7 +290,7 @@ public class WatchProtocolDecoder extends BaseProtocolDecoder {
             if (buf.isReadable()) {
 
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 getLastLocation(position, new Date());
 
@@ -320,7 +320,7 @@ public class WatchProtocolDecoder extends BaseProtocolDecoder {
         } else if (type.equals("img")) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, null);
 
@@ -350,7 +350,7 @@ public class WatchProtocolDecoder extends BaseProtocolDecoder {
                 return null;
             } else {
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
                 getLastLocation(position, null);
                 position.set(Position.KEY_AUDIO, writeMediaFile(id, audio, "amr"));
                 audio.release();
@@ -365,7 +365,7 @@ public class WatchProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, null);
 

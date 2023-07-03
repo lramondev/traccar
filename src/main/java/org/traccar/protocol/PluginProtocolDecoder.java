@@ -91,20 +91,20 @@ public class PluginProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime());
         position.setLongitude(parser.nextDouble());
         position.setLatitude(parser.nextDouble());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
-        position.setCourse(parser.nextInt());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
+        position.setCurso(parser.nextInt());
         position.setAltitude(parser.nextInt());
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
         position.set(Position.KEY_ODOMETER, (long) (parser.nextDouble() * 1000));
 
         long status = parser.nextLong();
-        position.setValid(BitUtil.check(status, 0));
+        //position.setValid(BitUtil.check(status, 0));
         position.set(Position.KEY_IGNITION, BitUtil.check(status, 1));
         for (int i = 0; i < 4; i++) {
             position.set(Position.PREFIX_IN + (i + 1), BitUtil.check(status, 20 + i));

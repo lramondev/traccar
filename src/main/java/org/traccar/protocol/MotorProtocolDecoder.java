@@ -49,7 +49,7 @@ public class MotorProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         buf.skipBytes(2); // divider
 
@@ -59,15 +59,15 @@ public class MotorProtocolDecoder extends BaseProtocolDecoder {
         buf.readUnsignedMediumLE(); // command
 
         int flags = buf.readUnsignedByte();
-        position.setValid(BitUtil.check(flags, 7));
+        //position.setValid(BitUtil.check(flags, 7));
         if (BitUtil.check(flags, 0)) {
             position.set(Position.KEY_ALARM, Position.ALARM_GENERAL);
         }
 
         position.setLatitude(BcdUtil.readInteger(buf, 2) + BcdUtil.readInteger(buf, 6) * 0.0001 / 60);
         position.setLongitude(BcdUtil.readInteger(buf, 4) + BcdUtil.readInteger(buf, 6) * 0.0001 / 60);
-        position.setSpeed(BcdUtil.readInteger(buf, 4) * 0.1);
-        position.setCourse(BcdUtil.readInteger(buf, 4) * 0.1);
+        position.setVelocidade(BcdUtil.readInteger(buf, 4) * 0.1);
+        position.setCurso(BcdUtil.readInteger(buf, 4) * 0.1);
 
         position.setTime(new DateBuilder()
                 .setYear(BcdUtil.readInteger(buf, 2))

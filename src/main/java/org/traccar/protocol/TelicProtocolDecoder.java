@@ -94,7 +94,7 @@ public class TelicProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         int event = parser.nextInt();
         position.set(Position.KEY_EVENT, event);
@@ -118,9 +118,9 @@ public class TelicProtocolDecoder extends BaseProtocolDecoder {
             position.setLatitude(parser.nextDouble() / 10000);
         }
 
-        position.setValid(parser.nextInt() != 1);
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
-        position.setCourse(parser.nextDouble());
+        //position.setValid(parser.nextInt() != 1);
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
+        position.setCurso(parser.nextDouble());
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
         position.set(Position.KEY_BATTERY, parser.nextInt());

@@ -50,19 +50,19 @@ public class CsvExportProvider {
 
         var properties = new LinkedHashMap<String, Function<Position, Object>>();
         properties.put("id", Position::getId);
-        properties.put("deviceId", Position::getDeviceId);
-        properties.put("protocol", Position::getProtocol);
-        properties.put("serverTime", position -> DateUtil.formatDate(position.getServerTime()));
-        properties.put("deviceTime", position -> DateUtil.formatDate(position.getDeviceTime()));
-        properties.put("fixTime", position -> DateUtil.formatDate(position.getFixTime()));
-        properties.put("valid", Position::getValid);
+        properties.put("deviceId", Position::getRastreador_id);
+        properties.put("protocol", Position::getProtocolo);
+        properties.put("serverTime", position -> DateUtil.formatDate(position.getDatahora_servidor()));
+        properties.put("deviceTime", position -> DateUtil.formatDate(position.getDatahora_rastreador()));
+        properties.put("fixTime", position -> DateUtil.formatDate(position.getDatahora_corrigida()));
+        //properties.put("valid", Position::getValid);
         properties.put("latitude", Position::getLatitude);
         properties.put("longitude", Position::getLongitude);
         properties.put("altitude", Position::getAltitude);
-        properties.put("speed", Position::getSpeed);
-        properties.put("course", Position::getCourse);
-        properties.put("address", Position::getAddress);
-        properties.put("accuracy", Position::getAccuracy);
+        properties.put("speed", Position::getVelocidade);
+        properties.put("course", Position::getCurso);
+        //properties.put("address", Position::getAddress);
+        properties.put("accuracy", Position::getPrecisao);
         attributes.forEach(key -> properties.put(key, position -> position.getAttributes().get(key)));
 
         try (PrintWriter writer = new PrintWriter(outputStream)) {

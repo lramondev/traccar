@@ -7,7 +7,7 @@
   logicalFilePath="changelog-4.7">
 
   <changeSet author="author" id="changelog-4.7">
-
+  <!--
     <preConditions onFail="MARK_RAN">
       <not>
         <indexExists indexName="user_device_user_id" />
@@ -18,10 +18,12 @@
       <column name="userid" />
     </createIndex>
 
-    <createIndex tableName="tc_positions" indexName="position_deviceid_fixtime">
-      <column name="deviceid" />
+   
+    <createIndex tableName="geolocal_rastreador_posicao" indexName="position_rastreador_id_fixtime">
+      <column name="rastreador_id" />
       <column name="fixtime" />
     </createIndex>
+    -->
 
   </changeSet>
 

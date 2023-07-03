@@ -46,7 +46,7 @@ public class NotificationFormatter {
     public NotificationMessage formatMessage(User user, Event event, Position position, String templatePath) {
 
         Server server = cacheManager.getServer();
-        Device device = cacheManager.getObject(Device.class, event.getDeviceId());
+        Device device = cacheManager.getObject(Device.class, event.getRastreador_id());
 
         VelocityContext velocityContext = textTemplateFormatter.prepareContext(server, user);
 

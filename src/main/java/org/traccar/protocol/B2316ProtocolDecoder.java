@@ -87,7 +87,7 @@ public class B2316ProtocolDecoder extends BaseProtocolDecoder {
         for (int i = 0; i < data.size(); i++) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             Network network = new Network();
 
@@ -98,7 +98,7 @@ public class B2316ProtocolDecoder extends BaseProtocolDecoder {
                 String[] coordinates = item.getString("gp").split(",");
                 position.setLongitude(Double.parseDouble(coordinates[0]));
                 position.setLatitude(Double.parseDouble(coordinates[1]));
-                position.setValid(true);
+                //position.setValid(true);
                 position.setTime(time);
             } else {
                 getLastLocation(position, time);
@@ -151,7 +151,7 @@ public class B2316ProtocolDecoder extends BaseProtocolDecoder {
             }
 
             if (network.getCellTowers() != null || network.getWifiAccessPoints() != null) {
-                position.setNetwork(network);
+                position.setRede(network);
             }
 
             positions.add(position);

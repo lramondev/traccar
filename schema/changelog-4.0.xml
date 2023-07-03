@@ -7,7 +7,7 @@
   logicalFilePath="changelog-4.0">
 
   <changeSet author="author" id="changelog-4.0-pre">
-
+    <!--
     <preConditions onFail="MARK_RAN">
       <not>
         <tableExists tableName="tc_servers" />
@@ -20,11 +20,12 @@
     <addColumn tableName="notifications">
       <column name="notificators" type="VARCHAR(128)" />
     </addColumn>
-
+-->
   </changeSet>
 
   <changeSet author="author" id="changelog-4.0-common">
 
+    <!--
     <preConditions onFail="MARK_RAN">
       <not>
         <tableExists tableName="tc_servers" />
@@ -36,6 +37,7 @@
       <columnExists tableName="notifications" columnName="mail" />
       <columnExists tableName="notifications" columnName="sms" />
     </preConditions>
+  
 
     <update tableName="notifications">
       <column name="notificators" value="web,mail,sms" />
@@ -71,11 +73,12 @@
       <column name="notificators" value="sms" />
       <where>web = 0 AND mail = 0 AND sms = 1</where>
     </update>
-
+  -->
   </changeSet>
 
   <changeSet author="author" id="changelog-4.0-pg">
 
+    <!--
     <preConditions onFail="MARK_RAN">
       <not>
         <tableExists tableName="tc_servers" />
@@ -85,6 +88,7 @@
       <columnExists tableName="tc_notifications" columnName="mail" />
       <columnExists tableName="tc_notifications" columnName="sms" />
     </preConditions>
+  
 
     <update tableName="notifications">
       <column name="notificators" value="web,mail,sms" />
@@ -120,16 +124,18 @@
       <column name="notificators" value="sms" />
       <where>web = FALSE AND mail = FALSE AND sms = TRUE</where>
     </update>
-
+  -->
   </changeSet>
 
   <changeSet author="author" id="changelog-4.0">
 
+    <!--
     <preConditions onFail="MARK_RAN">
       <not>
         <tableExists tableName="tc_servers" />
       </not>
     </preConditions>
+  
 
     <dropDefaultValue tableName="notifications" columnName="web" />
     <dropColumn tableName="notifications" columnName="web" />
@@ -139,18 +145,20 @@
 
     <dropDefaultValue tableName="notifications" columnName="sms" />
     <dropColumn tableName="notifications" columnName="sms" />
-
+  -->
   </changeSet>
 
   <changeSet author="author" id="changelog-4.0-renaming">
 
+    <!--
     <preConditions onFail="MARK_RAN">
       <not>
         <tableExists tableName="tc_servers" />
       </not>
     </preConditions>
+    -->
 
-    <renameTable oldTableName="attributes" newTableName="tc_attributes" />
+    <!--<renameTable oldTableName="attributes" newTableName="tc_attributes" />
     <renameTable oldTableName="calendars" newTableName="tc_calendars" />
     <renameTable oldTableName="commands" newTableName="tc_commands" />
     <renameTable oldTableName="device_attribute" newTableName="tc_device_attribute" />
@@ -159,7 +167,7 @@
     <renameTable oldTableName="device_geofence" newTableName="tc_device_geofence" />
     <renameTable oldTableName="device_maintenance" newTableName="tc_device_maintenance" />
     <renameTable oldTableName="device_notification" newTableName="tc_device_notification" />
-    <renameTable oldTableName="devices" newTableName="tc_devices" />
+    <renameTable oldTableName="devices" newTableName="geolocal_rastreador" />
     <renameTable oldTableName="drivers" newTableName="tc_drivers" />
     <renameTable oldTableName="events" newTableName="tc_events" />
     <renameTable oldTableName="geofences" newTableName="tc_geofences" />
@@ -172,7 +180,7 @@
     <renameTable oldTableName="groups" newTableName="tc_groups" />
     <renameTable oldTableName="maintenances" newTableName="tc_maintenances" />
     <renameTable oldTableName="notifications" newTableName="tc_notifications" />
-    <renameTable oldTableName="positions" newTableName="tc_positions" />
+    <renameTable oldTableName="positions" newTableName="geolocal_rastreador_posicao" />
     <renameTable oldTableName="servers" newTableName="tc_servers" />
     <renameTable oldTableName="statistics" newTableName="tc_statistics" />
     <renameTable oldTableName="user_attribute" newTableName="tc_user_attribute" />
@@ -185,7 +193,7 @@
     <renameTable oldTableName="user_maintenance" newTableName="tc_user_maintenance" />
     <renameTable oldTableName="user_notification" newTableName="tc_user_notification" />
     <renameTable oldTableName="user_user" newTableName="tc_user_user" />
-    <renameTable oldTableName="users" newTableName="tc_users" />
+    <renameTable oldTableName="users" newTableName="tc_users" />-->
 
   </changeSet>
 

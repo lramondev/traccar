@@ -61,7 +61,7 @@ public class Gt02ProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_INDEX, buf.readUnsignedShort());
 
@@ -89,13 +89,13 @@ public class Gt02ProtocolDecoder extends BaseProtocolDecoder {
             double latitude = buf.readUnsignedInt() / (60.0 * 30000.0);
             double longitude = buf.readUnsignedInt() / (60.0 * 30000.0);
 
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
-            position.setCourse(buf.readUnsignedShort());
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+            position.setCurso(buf.readUnsignedShort());
 
             buf.skipBytes(3); // reserved
 
             long flags = buf.readUnsignedInt();
-            position.setValid(BitUtil.check(flags, 0));
+            //position.setValid(BitUtil.check(flags, 0));
             if (!BitUtil.check(flags, 1)) {
                 latitude = -latitude;
             }

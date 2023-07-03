@@ -126,13 +126,13 @@ public class GlobalSatProtocolDecoder extends BaseProtocolDecoder {
                     if (deviceSession == null) {
                         return null;
                     }
-                    position.setDeviceId(deviceSession.getDeviceId());
+                    position.setRastreador_id(deviceSession.getDeviceId());
                     break;
                 case 'A':
                     if (value.isEmpty()) {
-                        position.setValid(false);
+                        //position.setValid(false);
                     } else {
-                        position.setValid(Integer.parseInt(value) != 1);
+                        //position.setValid(Integer.parseInt(value) != 1);
                     }
                     break;
                 case 'B':
@@ -190,16 +190,16 @@ public class GlobalSatProtocolDecoder extends BaseProtocolDecoder {
                     position.setAltitude(Double.parseDouble(value));
                     break;
                 case 'H':
-                    position.setSpeed(Double.parseDouble(value));
+                    position.setVelocidade(Double.parseDouble(value));
                     break;
                 case 'I':
-                    position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(value)));
+                    position.setVelocidade(UnitsConverter.knotsFromKph(Double.parseDouble(value)));
                     break;
                 case 'J':
-                    position.setSpeed(UnitsConverter.knotsFromMph(Double.parseDouble(value)));
+                    position.setVelocidade(UnitsConverter.knotsFromMph(Double.parseDouble(value)));
                     break;
                 case 'K':
-                    position.setCourse(Double.parseDouble(value));
+                    position.setCurso(Double.parseDouble(value));
                     break;
                 case 'L':
                     position.set(Position.KEY_SATELLITES, Integer.parseInt(value));
@@ -253,7 +253,7 @@ public class GlobalSatProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (cellTower.getCellId() != null) {
-            position.setNetwork(new Network(cellTower));
+            position.setRede(new Network(cellTower));
         }
 
         return position;
@@ -290,15 +290,15 @@ public class GlobalSatProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setValid(!parser.next().equals("1"));
+        //position.setValid(!parser.next().equals("1"));
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
         position.setAltitude(parser.nextDouble(0));
-        position.setSpeed(parser.nextDouble(0));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
 
         position.set(Position.KEY_SATELLITES, parser.nextInt(0));
         position.set(Position.KEY_HDOP, parser.nextDouble());

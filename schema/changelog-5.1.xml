@@ -7,15 +7,15 @@
   logicalFilePath="changelog-5.1">
 
   <changeSet author="author" id="changelog-5.1">
-
+    <!--
     <createIndex tableName="tc_drivers" indexName="idx_drivers_uniqueid">
       <column name="uniqueid" />
     </createIndex>
-
-    <createIndex tableName="tc_devices" indexName="idx_devices_uniqueid">
-      <column name="uniqueid" />
+    -->
+    <createIndex tableName="geolocal_rastreador" indexName="idx_rastreador_imei">
+      <column name="imei" />
     </createIndex>
-
+    <!--
     <createIndex tableName="tc_users" indexName="idx_users_email">
       <column name="email" />
     </createIndex>
@@ -28,10 +28,11 @@
       <column name="token" />
     </createIndex>
 
+   
     <addColumn tableName="tc_servers">
       <column name="overlayurl" type="VARCHAR(512)" />
     </addColumn>
-
+    -->
   </changeSet>
 
 </databaseChangeLog>

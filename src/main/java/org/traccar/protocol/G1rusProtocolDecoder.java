@@ -48,7 +48,7 @@ public class G1rusProtocolDecoder extends BaseProtocolDecoder {
     private Position decodeRegular(DeviceSession deviceSession, ByteBuf buf, int type) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
         position.setTime(new Date((buf.readUnsignedIntLE() + 946684800) * 1000L));
 
         if (BitUtil.check(type, 6)) {
@@ -70,17 +70,17 @@ public class G1rusProtocolDecoder extends BaseProtocolDecoder {
             if (BitUtil.check(locationMask, 0)) {
                 int validity = buf.readUnsignedByte();
                 position.set(Position.KEY_SATELLITES, BitUtil.to(validity, 5));
-                position.setValid(BitUtil.between(validity, 5, 7) == 2);
+                //position.setValid(BitUtil.between(validity, 5, 7) == 2);
             }
             if (BitUtil.check(locationMask, 1)) {
                 position.setLatitude(buf.readInt() / 1000000.0);
                 position.setLongitude(buf.readInt() / 1000000.0);
             }
             if (BitUtil.check(locationMask, 2)) {
-                position.setSpeed(buf.readUnsignedShort());
+                position.setVelocidade(buf.readUnsignedShort());
             }
             if (BitUtil.check(locationMask, 3)) {
-                position.setCourse(buf.readUnsignedShort());
+                position.setCurso(buf.readUnsignedShort());
             }
             if (BitUtil.check(locationMask, 4)) {
                 position.setAltitude(buf.readShort());

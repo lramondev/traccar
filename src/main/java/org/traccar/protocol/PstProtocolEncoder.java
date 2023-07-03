@@ -51,9 +51,9 @@ public class PstProtocolEncoder extends BaseProtocolEncoder {
 
         switch (command.getType()) {
             case Command.TYPE_ENGINE_STOP:
-                return encodeContent(command.getDeviceId(), 0x0002, 0xffff, 0xffff);
+                return encodeContent(command.getRastreador_id(), 0x0002, 0xffff, 0xffff);
             case Command.TYPE_ENGINE_RESUME:
-                return encodeContent(command.getDeviceId(), 0x0001, 0xffff, 0xffff);
+                return encodeContent(command.getRastreador_id(), 0x0001, 0xffff, 0xffff);
             default:
                 return null;
         }

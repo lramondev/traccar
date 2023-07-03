@@ -68,14 +68,14 @@ public class PortmanProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setValid(!parser.next().equals("L"));
+        //position.setValid(!parser.next().equals("L"));
         position.setTime(parser.nextDateTime());
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
-        position.setCourse(parser.nextInt());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
+        position.setCurso(parser.nextInt());
 
         position.set(Position.PREFIX_TEMP + 1, parser.next());
         position.set(Position.KEY_STATUS, parser.nextHexLong());
@@ -133,14 +133,14 @@ public class PortmanProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setValid(!parser.next().equals("L"));
+        //position.setValid(!parser.next().equals("L"));
         position.setTime(parser.nextDateTime());
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
-        position.setCourse(parser.nextInt());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
+        position.setCurso(parser.nextInt());
 
         position.set(Position.PREFIX_TEMP + 1, parser.next());
         position.set(Position.KEY_FUEL_LEVEL, parser.nextInt());

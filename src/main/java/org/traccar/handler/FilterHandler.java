@@ -102,8 +102,7 @@ public class FilterHandler extends ChannelInboundHandlerAdapter {
     }
 
     private boolean filterInvalid(Position position) {
-        return filterInvalid && (!position.getValid()
-                || position.getLatitude() > 90 || position.getLongitude() > 180
+        return filterInvalid && (position.getLatitude() > 90 || position.getLongitude() > 180
                 || position.getLatitude() < -90 || position.getLongitude() < -180);
     }
 
@@ -112,7 +111,7 @@ public class FilterHandler extends ChannelInboundHandlerAdapter {
     }
 
     private boolean filterDuplicate(Position position, Position last) {
-        if (filterDuplicate && last != null && position.getFixTime().equals(last.getFixTime())) {
+        if (filterDuplicate && last != null && position.getDatahora_corrigida().equals(last.getDatahora_corrigida())) {
             for (String key : position.getAttributes().keySet()) {
                 if (!last.hasAttribute(key)) {
                     return false;
@@ -123,20 +122,22 @@ public class FilterHandler extends ChannelInboundHandlerAdapter {
         return false;
     }
 
+    /* 
     private boolean filterOutdated(Position position) {
         return filterOutdated && position.getOutdated();
     }
+    */
 
     private boolean filterFuture(Position position) {
-        return filterFuture != 0 && position.getFixTime().getTime() > System.currentTimeMillis() + filterFuture;
+        return filterFuture != 0 && position.getDatahora_corrigida().getTime() > System.currentTimeMillis() + filterFuture;
     }
 
     private boolean filterPast(Position position) {
-        return filterPast != 0 && position.getFixTime().getTime() < System.currentTimeMillis() - filterPast;
+        return filterPast != 0 && position.getDatahora_corrigida().getTime() < System.currentTimeMillis() - filterPast;
     }
 
     private boolean filterAccuracy(Position position) {
-        return filterAccuracy != 0 && position.getAccuracy() > filterAccuracy;
+        return filterAccuracy != 0 && position.getPrecisao() > filterAccuracy;
     }
 
     private boolean filterApproximate(Position position) {
@@ -144,7 +145,7 @@ public class FilterHandler extends ChannelInboundHandlerAdapter {
     }
 
     private boolean filterStatic(Position position) {
-        return filterStatic && position.getSpeed() == 0.0;
+        return filterStatic && position.getVelocidade() == 0.0;
     }
 
     private boolean filterDistance(Position position, Position last) {
@@ -157,7 +158,7 @@ public class FilterHandler extends ChannelInboundHandlerAdapter {
     private boolean filterMaxSpeed(Position position, Position last) {
         if (filterMaxSpeed != 0 && last != null) {
             double distance = position.getDouble(Position.KEY_DISTANCE);
-            double time = position.getFixTime().getTime() - last.getFixTime().getTime();
+            double time = position.getDatahora_corrigida().getTime() - last.getDatahora_corrigida().getTime();
             return UnitsConverter.knotsFromMps(distance / (time / 1000)) > filterMaxSpeed;
         }
         return false;
@@ -165,7 +166,7 @@ public class FilterHandler extends ChannelInboundHandlerAdapter {
 
     private boolean filterMinPeriod(Position position, Position last) {
         if (filterMinPeriod != 0 && last != null) {
-            long time = position.getFixTime().getTime() - last.getFixTime().getTime();
+            long time = position.getDatahora_corrigida().getTime() - last.getDatahora_corrigida().getTime();
             return time > 0 && time < filterMinPeriod;
         }
         return false;
@@ -173,21 +174,21 @@ public class FilterHandler extends ChannelInboundHandlerAdapter {
 
     private boolean filterDailyLimit(Position position) {
         if (filterDailyLimit != 0) {
-            return statisticsManager.messageStoredCount(position.getDeviceId()) >= filterDailyLimit;
+            return statisticsManager.messageStoredCount(position.getRastreador_id()) >= filterDailyLimit;
         }
         return false;
     }
 
     private boolean skipLimit(Position position, Position last) {
         if (skipLimit != 0 && last != null) {
-            return (position.getServerTime().getTime() - last.getServerTime().getTime()) > skipLimit;
+            return (position.getDatahora_servidor().getTime() - last.getDatahora_servidor().getTime()) > skipLimit;
         }
         return false;
     }
 
     private boolean skipAttributes(Position position) {
         if (skipAttributes) {
-            String string = AttributeUtil.lookup(cacheManager, Keys.FILTER_SKIP_ATTRIBUTES, position.getDeviceId());
+            String string = AttributeUtil.lookup(cacheManager, Keys.FILTER_SKIP_ATTRIBUTES, position.getRastreador_id());
             for (String attribute : string.split("[ ,]")) {
                 if (position.hasAttribute(attribute)) {
                     return true;
@@ -208,9 +209,9 @@ public class FilterHandler extends ChannelInboundHandlerAdapter {
         if (filterZero(position)) {
             filterType.append("Zero ");
         }
-        if (filterOutdated(position)) {
+        /*if (filterOutdated(position)) {
             filterType.append("Outdated ");
-        }
+        }*/
         if (filterFuture(position)) {
             filterType.append("Future ");
         }
@@ -228,12 +229,12 @@ public class FilterHandler extends ChannelInboundHandlerAdapter {
         }
 
         // filter out excessive data
-        long deviceId = position.getDeviceId();
+        long deviceId = position.getRastreador_id();
         if (filterDuplicate || filterStatic || filterDistance > 0 || filterMaxSpeed > 0 || filterMinPeriod > 0) {
             Position preceding = null;
             if (filterRelative) {
                 try {
-                    Date newFixTime = position.getFixTime();
+                    Date newFixTime = position.getDatahora_corrigida();
                     preceding = getPrecedingPosition(deviceId, newFixTime);
                 } catch (StorageException e) {
                     LOGGER.warn("Error retrieving preceding position; fallbacking to last received position.", e);
@@ -260,7 +261,7 @@ public class FilterHandler extends ChannelInboundHandlerAdapter {
         }
 
         if (filterType.length() > 0) {
-            String uniqueId = cacheManager.getObject(Device.class, deviceId).getUniqueId();
+            String uniqueId = cacheManager.getObject(Device.class, deviceId).getImei();
             LOGGER.info("Position filtered by {}filters from device: {}", filterType, uniqueId);
             return true;
         }

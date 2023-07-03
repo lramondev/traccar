@@ -8,11 +8,13 @@
 
   <changeSet author="author" id="changelog-3.3">
 
+    <!--
     <preConditions onFail="MARK_RAN">
       <not>
         <tableExists tableName="tc_servers" />
       </not>
     </preConditions>
+   
 
     <createTable tableName="users">
       <column name="id" type="INT" autoIncrement="true">
@@ -60,7 +62,7 @@
     </createTable>
 
     <addUniqueConstraint tableName="users" columnNames="email" constraintName="uk_user_email" />
-
+  
     <createTable tableName="devices">
       <column name="id" type="INT" autoIncrement="true">
         <constraints primaryKey="true" />
@@ -72,8 +74,8 @@
         <constraints nullable="false" />
       </column>
       <column name="status" type="VARCHAR(128)" />
-      <column name="lastupdate" type="TIMESTAMP" />
-      <column name="positionid" type="INT" />
+      <column name="datahora_atualizacao" type="TIMESTAMP" />
+      <column name="rastreador_posicao_id" type="INT" />
     </createTable>
 
     <addUniqueConstraint tableName="devices" columnNames="uniqueid" constraintName="uk_device_uniqueid" />
@@ -98,14 +100,14 @@
       <column name="id" type="INT" autoIncrement="true">
         <constraints primaryKey="true" />
       </column>
-      <column name="protocol" type="VARCHAR(128)" />
+      <column name="protocolo" type="VARCHAR(128)" />
       <column name="deviceid" type="int">
         <constraints nullable="false" />
       </column>
       <column name="servertime" type="TIMESTAMP">
         <constraints nullable="false" />
       </column>
-      <column name="devicetime" type="TIMESTAMP">
+      <column name="datahora_movimento" type="TIMESTAMP">
         <constraints nullable="false" />
       </column>
       <column name="fixtime" type="TIMESTAMP">
@@ -114,6 +116,7 @@
       <column name="valid" type="BOOLEAN">
         <constraints nullable="false" />
       </column>
+
       <column name="latitude" type="DOUBLE">
         <constraints nullable="false" />
       </column>
@@ -123,13 +126,13 @@
       <column name="altitude" type="FLOAT">
         <constraints nullable="false" />
       </column>
-      <column name="speed" type="FLOAT">
+      <column name="velocidade" type="FLOAT">
         <constraints nullable="false" />
       </column>
-      <column name="course" type="FLOAT">
+      <column name="curso" type="FLOAT">
         <constraints nullable="false" />
       </column>
-      <column name="address" type="VARCHAR(512)" />
+      <column name="endereco" type="VARCHAR(512)" />
       <column name="attributes" type="VARCHAR(4096)">
         <constraints nullable="false" />
       </column>
@@ -183,6 +186,7 @@
       <column name="salt" value="000000000000000000000000000000000000000000000000" />
       <column name="administrator" valueBoolean="true" />
     </insert>
+    -->
 
   </changeSet>
 

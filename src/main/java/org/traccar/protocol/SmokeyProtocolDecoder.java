@@ -87,7 +87,7 @@ public class SmokeyProtocolDecoder extends BaseProtocolDecoder {
         if (type == MSG_DATE_RECORD) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.set(Position.KEY_VERSION_FW, buf.readUnsignedShort());
 
@@ -147,7 +147,7 @@ public class SmokeyProtocolDecoder extends BaseProtocolDecoder {
 
             }
 
-            position.setNetwork(network);
+            position.setRede(network);
 
             sendResponse(channel, remoteAddress, id, index, report);
 

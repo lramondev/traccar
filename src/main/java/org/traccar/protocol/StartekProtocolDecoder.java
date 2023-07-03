@@ -132,7 +132,7 @@ public class StartekProtocolDecoder extends BaseProtocolDecoder {
         if (content.length() < 100) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, null);
 
@@ -155,7 +155,7 @@ public class StartekProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         int event = parser.nextInt();
         String eventData = parser.next();
@@ -167,20 +167,20 @@ public class StartekProtocolDecoder extends BaseProtocolDecoder {
         }
 
         position.setTime(parser.nextDateTime());
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
         position.set(Position.KEY_HDOP, parser.nextDouble());
 
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
-        position.setCourse(parser.nextInt());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
+        position.setCurso(parser.nextInt());
         position.setAltitude(parser.nextInt());
 
         position.set(Position.KEY_ODOMETER, parser.nextInt());
 
-        position.setNetwork(new Network(CellTower.from(
+        position.setRede(new Network(CellTower.from(
                 parser.nextInt(), parser.nextInt(), parser.nextHexInt(), parser.nextHexInt(), parser.nextInt())));
 
         position.set(Position.KEY_STATUS, parser.nextHexInt());

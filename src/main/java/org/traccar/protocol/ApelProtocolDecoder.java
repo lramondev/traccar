@@ -138,7 +138,7 @@ public class ApelProtocolDecoder extends BaseProtocolDecoder {
 
             for (int j = 0; j < recordCount; j++) {
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 int subtype = type;
                 if (type == MSG_LOG_RECORDS) {
@@ -160,16 +160,16 @@ public class ApelProtocolDecoder extends BaseProtocolDecoder {
 
                 if (subtype == MSG_STATE_FULL_INFO_T104) {
                     int speed = buf.readUnsignedByte();
-                    position.setValid(speed != 255);
-                    position.setSpeed(UnitsConverter.knotsFromKph(speed));
+                    //position.setValid(speed != 255);
+                    position.setVelocidade(UnitsConverter.knotsFromKph(speed));
                     position.set(Position.KEY_HDOP, buf.readByte());
                 } else {
                     int speed = buf.readShortLE();
-                    position.setValid(speed != -1);
-                    position.setSpeed(UnitsConverter.knotsFromKph(speed * 0.01));
+                    //position.setValid(speed != -1);
+                    position.setVelocidade(UnitsConverter.knotsFromKph(speed * 0.01));
                 }
 
-                position.setCourse(buf.readShortLE() * 0.01);
+                position.setCurso(buf.readShortLE() * 0.01);
                 position.setAltitude(buf.readShortLE());
 
                 if (subtype == MSG_STATE_FULL_INFO_T104) {

@@ -57,13 +57,13 @@ public abstract class BaseProtocolEncoder extends ChannelOutboundHandlerAdapter 
     }
 
     protected String getUniqueId(long deviceId) {
-        return cacheManager.getObject(Device.class, deviceId).getUniqueId();
+        return cacheManager.getObject(Device.class, deviceId).getImei();
     }
 
     protected void initDevicePassword(Command command, String defaultPassword) {
         if (!command.hasAttribute(Command.KEY_DEVICE_PASSWORD)) {
             String password = AttributeUtil.getDevicePassword(
-                    cacheManager, command.getDeviceId(), getProtocolName(), defaultPassword);
+                    cacheManager, command.getRastreador_id(), getProtocolName(), defaultPassword);
             command.set(Command.KEY_DEVICE_PASSWORD, password);
         }
     }
@@ -80,7 +80,7 @@ public abstract class BaseProtocolEncoder extends ChannelOutboundHandlerAdapter 
 
                 StringBuilder s = new StringBuilder();
                 s.append("[").append(NetworkUtil.session(ctx.channel())).append("] ");
-                s.append("id: ").append(getUniqueId(command.getDeviceId())).append(", ");
+                s.append("id: ").append(getUniqueId(command.getRastreador_id())).append(", ");
                 s.append("command type: ").append(command.getType()).append(" ");
                 if (encodedCommand != null) {
                     s.append("sent");

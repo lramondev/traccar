@@ -53,7 +53,7 @@ public class KmlExportProvider {
             writer.print("<kml xmlns=\"http://www.opengis.net/kml/2.2\">");
             writer.print("<Document>");
             writer.print("<name>");
-            writer.print(device.getName());
+            writer.print(device.getDescricao());
             writer.print("</name>");
             writer.print("<Placemark>");
             writer.print("<name>");

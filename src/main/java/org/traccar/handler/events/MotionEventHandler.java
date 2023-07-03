@@ -58,14 +58,14 @@ public class MotionEventHandler extends BaseEventHandler {
     @Override
     protected Map<Event, Position> analyzePosition(Position position) {
 
-        long deviceId = position.getDeviceId();
+        long deviceId = position.getRastreador_id();
         Device device = cacheManager.getObject(Device.class, deviceId);
         if (device == null || !PositionUtil.isLatest(cacheManager, position)) {
             return null;
         }
         boolean processInvalid = AttributeUtil.lookup(
                 cacheManager, Keys.EVENT_MOTION_PROCESS_INVALID_POSITIONS, deviceId);
-        if (!processInvalid && !position.getValid()) {
+        if (!processInvalid) {
             return null;
         }
 

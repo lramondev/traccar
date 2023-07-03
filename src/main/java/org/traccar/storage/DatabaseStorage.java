@@ -344,6 +344,7 @@ public class DatabaseStorage extends Storage {
         result.append(" = :");
         result.append(conditionKey);
 
+        /* 
         if (condition.getIncludeGroups()) {
 
             boolean expandDevices;
@@ -403,6 +404,7 @@ public class DatabaseStorage extends Storage {
             result.append(conditionKey);
 
         }
+        */
 
         return result.toString();
     }

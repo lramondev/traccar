@@ -80,7 +80,7 @@ public class TrackboxProtocolDecoder extends BaseProtocolDecoder {
         sendResponse(channel, remoteAddress);
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         DateBuilder dateBuilder = new DateBuilder()
                 .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
@@ -94,10 +94,10 @@ public class TrackboxProtocolDecoder extends BaseProtocolDecoder {
 
         int fix = parser.nextInt(0);
         position.set(Position.KEY_GPS, fix);
-        position.setValid(fix > 0);
+        //position.setValid(fix > 0);
 
-        position.setCourse(parser.nextDouble(0));
-        position.setSpeed(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
 
         dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
         position.setTime(dateBuilder.getDate());

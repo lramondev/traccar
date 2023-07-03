@@ -76,7 +76,7 @@ public class DmtProtocolDecoder extends BaseProtocolDecoder {
 
         while (buf.readableBytes() >= 64) {
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             buf.readByte(); // type
 
@@ -94,8 +94,8 @@ public class DmtProtocolDecoder extends BaseProtocolDecoder {
 
             position.setLongitude(buf.readIntLE() * 0.0000001);
             position.setLatitude(buf.readIntLE() * 0.0000001);
-            position.setSpeed(UnitsConverter.knotsFromCps(buf.readUnsignedShortLE()));
-            position.setCourse(buf.readUnsignedByte() * 2);
+            position.setVelocidade(UnitsConverter.knotsFromCps(buf.readUnsignedShortLE()));
+            position.setCurso(buf.readUnsignedByte() * 2);
             position.setAltitude(buf.readShortLE());
 
             buf.readUnsignedShortLE(); // position accuracy
@@ -103,7 +103,7 @@ public class DmtProtocolDecoder extends BaseProtocolDecoder {
 
             position.set(Position.KEY_EVENT, buf.readUnsignedByte());
 
-            position.setValid(BitUtil.check(buf.readByte(), 0));
+            //position.setValid(BitUtil.check(buf.readByte(), 0));
 
             position.set(Position.KEY_INPUT, buf.readUnsignedIntLE());
             position.set(Position.KEY_OUTPUT, buf.readUnsignedShortLE());
@@ -145,11 +145,11 @@ public class DmtProtocolDecoder extends BaseProtocolDecoder {
             int recordEnd = buf.readerIndex() + buf.readUnsignedShortLE();
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.set(Position.KEY_INDEX, buf.readUnsignedIntLE());
 
-            position.setDeviceTime(new Date(1356998400000L + buf.readUnsignedIntLE() * 1000)); // since 1 Jan 2013
+            position.setDatahora_rastreador(new Date(1356998400000L + buf.readUnsignedIntLE() * 1000)); // since 1 Jan 2013
 
             position.set(Position.KEY_EVENT, buf.readUnsignedByte());
 
@@ -161,20 +161,20 @@ public class DmtProtocolDecoder extends BaseProtocolDecoder {
 
                 if (fieldId == 0) {
 
-                    position.setFixTime(new Date(1356998400000L + buf.readUnsignedIntLE() * 1000));
+                    position.setDatahora_corrigida(new Date(1356998400000L + buf.readUnsignedIntLE() * 1000));
                     position.setLatitude(buf.readIntLE() * 0.0000001);
                     position.setLongitude(buf.readIntLE() * 0.0000001);
                     position.setAltitude(buf.readShortLE());
-                    position.setSpeed(UnitsConverter.knotsFromCps(buf.readUnsignedShortLE()));
+                    position.setVelocidade(UnitsConverter.knotsFromCps(buf.readUnsignedShortLE()));
 
                     buf.readUnsignedByte(); // speed accuracy
 
-                    position.setCourse(buf.readUnsignedByte() * 2);
+                    position.setCurso(buf.readUnsignedByte() * 2);
 
                     position.set(Position.KEY_PDOP, buf.readUnsignedByte() * 0.1);
 
-                    position.setAccuracy(buf.readUnsignedByte());
-                    position.setValid(buf.readUnsignedByte() != 0);
+                    position.setPrecisao(buf.readUnsignedByte());
+                    //position.setValid(buf.readUnsignedByte() != 0);
 
                 } else if (fieldId == 2) {
 
@@ -236,8 +236,8 @@ public class DmtProtocolDecoder extends BaseProtocolDecoder {
 
             }
 
-            if (position.getFixTime() == null) {
-                getLastLocation(position, position.getDeviceTime());
+            if (position.getDatahora_corrigida() == null) {
+                getLastLocation(position, position.getDatahora_rastreador());
             }
 
             positions.add(position);

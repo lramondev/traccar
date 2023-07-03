@@ -71,7 +71,7 @@ public class VnetProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
             position.setTime(dateBuilder.getDate());
 
             int value;
@@ -86,14 +86,14 @@ public class VnetProtocolDecoder extends BaseProtocolDecoder {
             double lon = degrees + value % 10000000 * 0.00001 / 60;
 
             int flags = buf.readUnsignedByte();
-            position.setValid(BitUtil.check(flags, 0));
+            //position.setValid(BitUtil.check(flags, 0));
             position.setLatitude(BitUtil.check(flags, 1) ? lat : -lat);
             position.setLongitude(BitUtil.check(flags, 2) ? lon : -lon);
 
             position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
             position.set(Position.KEY_ODOMETER, buf.readUnsignedIntLE());
-            position.setCourse(buf.readUnsignedByte() * 2);
+            position.setCurso(buf.readUnsignedByte() * 2);
 
             return position;
 

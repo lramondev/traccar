@@ -152,7 +152,7 @@ public class HuaShengProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 
@@ -198,11 +198,11 @@ public class HuaShengProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         int status = buf.readUnsignedShort();
 
-        position.setValid(BitUtil.check(status, 15));
+        //position.setValid(BitUtil.check(status, 15));
 
         position.set(Position.KEY_STATUS, status);
         position.set(Position.KEY_IGNITION, BitUtil.check(status, 14));
@@ -225,8 +225,8 @@ public class HuaShengProtocolDecoder extends BaseProtocolDecoder {
         position.setLongitude(buf.readInt() * 0.00001);
         position.setLatitude(buf.readInt() * 0.00001);
 
-        position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
-        position.setCourse(buf.readUnsignedShort());
+        position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
+        position.setCurso(buf.readUnsignedShort());
         position.setAltitude(buf.readUnsignedShort());
 
         position.set(Position.KEY_ODOMETER, buf.readUnsignedShort() * 1000);
@@ -303,7 +303,7 @@ public class HuaShengProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (network.getCellTowers() != null || network.getWifiAccessPoints() != null) {
-            position.setNetwork(network);
+            position.setRede(network);
         }
 
         sendResponse(channel, MSG_POSITION_RSP, index, null);

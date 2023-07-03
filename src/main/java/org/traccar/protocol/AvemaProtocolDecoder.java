@@ -78,14 +78,14 @@ public class AvemaProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setTime(parser.nextDateTime());
         position.setLongitude(parser.nextDouble());
         position.setLatitude(parser.nextDouble());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
-        position.setCourse(parser.nextInt());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
+        position.setCurso(parser.nextInt());
         position.setAltitude(parser.nextInt());
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
@@ -98,7 +98,7 @@ public class AvemaProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_ROAMING, parser.nextInt() == 1);
 
         int rssi = parser.nextInt();
-        position.setNetwork(new Network(CellTower.from(
+        position.setRede(new Network(CellTower.from(
                 parser.nextInt(), parser.nextInt(), parser.nextHexInt(), parser.nextHexInt(), rssi)));
 
         position.set(Position.KEY_BATTERY, parser.nextDouble());

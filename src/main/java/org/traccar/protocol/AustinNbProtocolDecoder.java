@@ -61,14 +61,14 @@ public class AustinNbProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime());
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setLatitude(Double.parseDouble(parser.next().replace(',', '.')));
         position.setLongitude(Double.parseDouble(parser.next().replace(',', '.')));
-        position.setCourse(parser.nextInt());
+        position.setCurso(parser.nextInt());
         position.set("angle", parser.nextInt());
         position.set("range", parser.nextInt());
         position.set("outOfRange", parser.nextInt());

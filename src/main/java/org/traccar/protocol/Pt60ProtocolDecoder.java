@@ -100,15 +100,15 @@ public class Pt60ProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
-            position.setDeviceTime(parser.nextDateTime());
+            position.setRastreador_id(deviceSession.getDeviceId());
+            position.setDatahora_rastreador(parser.nextDateTime());
 
             String[] values = parser.next().split(",");
 
             if (type == MSG_G_TRACK) {
 
-                position.setValid(true);
-                position.setFixTime(position.getDeviceTime());
+                //position.setValid(true);
+                position.setDatahora_corrigida(position.getDatahora_rastreador());
 
                 String[] coordinates = values[0].split(";");
                 position.setLatitude(Double.parseDouble(coordinates[0]));
@@ -116,7 +116,7 @@ public class Pt60ProtocolDecoder extends BaseProtocolDecoder {
 
             } else {
 
-                getLastLocation(position, position.getDeviceTime());
+                getLastLocation(position, position.getDatahora_rastreador());
 
                 switch (type) {
                     case MSG_G_STEP_COUNT:
@@ -141,14 +141,14 @@ public class Pt60ProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
-            position.setDeviceTime(parser.nextDateTime());
+            position.setRastreador_id(deviceSession.getDeviceId());
+            position.setDatahora_rastreador(parser.nextDateTime());
 
             String[] values = parser.next().split("\\|");
 
             if (Integer.parseInt(values[values.length - 1]) == 2) {
 
-                getLastLocation(position, position.getDeviceTime());
+                getLastLocation(position, position.getDatahora_rastreador());
 
                 Network network = new Network();
 
@@ -163,13 +163,13 @@ public class Pt60ProtocolDecoder extends BaseProtocolDecoder {
                     network.addCellTower(tower);
                 }
 
-                position.setNetwork(network);
+                position.setRede(network);
 
 
             } else {
 
-                position.setValid(true);
-                position.setFixTime(position.getDeviceTime());
+                //position.setValid(true);
+                position.setDatahora_corrigida(position.getDatahora_rastreador());
 
                 position.setLatitude(Double.parseDouble(values[0]));
                 position.setLongitude(Double.parseDouble(values[1]));

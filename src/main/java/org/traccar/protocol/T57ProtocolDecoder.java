@@ -65,16 +65,16 @@ public class T57ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
-        position.setSpeed(parser.nextDouble());
+        position.setVelocidade(parser.nextDouble());
         position.setAltitude(parser.nextDouble());
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
 
         position.set(Position.KEY_BATTERY, parser.nextDouble());
 

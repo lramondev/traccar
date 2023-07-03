@@ -69,11 +69,11 @@ public class AstraProtocolDecoder extends BaseProtocolDecoder {
         while (buf.readableBytes() > 2) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             buf.readUnsignedByte(); // index
 
-            position.setValid(true);
+            //position.setValid(true);
             position.setLatitude(buf.readInt() * 0.000001);
             position.setLongitude(buf.readInt() * 0.000001);
 
@@ -81,8 +81,8 @@ public class AstraProtocolDecoder extends BaseProtocolDecoder {
                     .setDate(1980, 1, 6).addMillis(buf.readUnsignedInt() * 1000L);
             position.setTime(dateBuilder.getDate());
 
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte() * 2));
-            position.setCourse(buf.readUnsignedByte() * 2);
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte() * 2));
+            position.setCurso(buf.readUnsignedByte() * 2);
 
             int reason = buf.readUnsignedMedium();
             position.set(Position.KEY_EVENT, reason);

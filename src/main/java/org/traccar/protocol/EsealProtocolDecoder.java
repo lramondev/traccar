@@ -106,7 +106,7 @@ public class EsealProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         String type = parser.next();
         String prefix = sentence.substring(0, sentence.indexOf(type));
@@ -134,11 +134,11 @@ public class EsealProtocolDecoder extends BaseProtocolDecoder {
         }
 
         position.setTime(parser.nextDateTime());
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
-        position.setCourse(parser.nextInt());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
+        position.setCurso(parser.nextInt());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
 
         switch (parser.next()) {
             case "Open":

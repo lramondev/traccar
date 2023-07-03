@@ -94,16 +94,16 @@ public class Ivt401ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
-        position.setCourse(parser.nextInt());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
+        position.setCurso(parser.nextInt());
         position.setAltitude(parser.nextDouble());
-        position.setValid(parser.nextInt() > 0);
+        //position.setValid(parser.nextInt() > 0);
 
         position.set(Position.KEY_RSSI, parser.nextInt());
 

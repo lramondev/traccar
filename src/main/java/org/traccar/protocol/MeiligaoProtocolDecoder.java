@@ -244,16 +244,16 @@ public class MeiligaoProtocolDecoder extends BaseProtocolDecoder {
         DateBuilder dateBuilder = new DateBuilder()
                 .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
 
         if (parser.hasNext()) {
-            position.setSpeed(parser.nextDouble(0));
+            position.setVelocidade(parser.nextDouble(0));
         }
 
         if (parser.hasNext()) {
-            position.setCourse(parser.nextDouble(0));
+            position.setCurso(parser.nextDouble(0));
         }
 
         dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
@@ -297,7 +297,7 @@ public class MeiligaoProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS_DMY));
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
 
@@ -368,7 +368,7 @@ public class MeiligaoProtocolDecoder extends BaseProtocolDecoder {
             String sentence = buf.readSlice(endIndex - buf.readerIndex()).toString(StandardCharsets.US_ASCII);
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position = decodeRegular(position, sentence);
 
@@ -444,7 +444,7 @@ public class MeiligaoProtocolDecoder extends BaseProtocolDecoder {
 
             Position position = new Position(getProtocolName());
 
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             if (command == MSG_ALARM) {
                 short alarmCode = buf.readUnsignedByte();

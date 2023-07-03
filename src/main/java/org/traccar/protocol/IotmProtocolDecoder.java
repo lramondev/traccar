@@ -288,7 +288,7 @@ public class IotmProtocolDecoder extends BaseProtocolDecoder {
                 if (type == 1) {
 
                     Position position = new Position(getProtocolName());
-                    position.setDeviceId(deviceSession.getDeviceId());
+                    position.setRastreador_id(deviceSession.getDeviceId());
                     position.setTime(new Date(record.readUnsignedIntLE() * 1000));
 
                     while (record.readableBytes() > 0) {
@@ -296,15 +296,15 @@ public class IotmProtocolDecoder extends BaseProtocolDecoder {
                         int sensorId = record.readUnsignedShortLE();
                         if (sensorType == 14) {
 
-                            position.setValid(true);
+                            //position.setValid(true);
                             position.setLatitude(record.readFloatLE());
                             position.setLongitude(record.readFloatLE());
-                            position.setSpeed(UnitsConverter.knotsFromKph(record.readUnsignedShortLE()));
+                            position.setVelocidade(UnitsConverter.knotsFromKph(record.readUnsignedShortLE()));
 
                             position.set(Position.KEY_HDOP, record.readUnsignedByte());
                             position.set(Position.KEY_SATELLITES, record.readUnsignedByte());
 
-                            position.setCourse(record.readUnsignedShortLE());
+                            position.setCurso(record.readUnsignedShortLE());
                             position.setAltitude(record.readShortLE());
 
                         } else {
@@ -323,7 +323,7 @@ public class IotmProtocolDecoder extends BaseProtocolDecoder {
                 } else if (type == 3) {
 
                     Position position = new Position(getProtocolName());
-                    position.setDeviceId(deviceSession.getDeviceId());
+                    position.setRastreador_id(deviceSession.getDeviceId());
 
                     getLastLocation(position, new Date(record.readUnsignedIntLE() * 1000));
 

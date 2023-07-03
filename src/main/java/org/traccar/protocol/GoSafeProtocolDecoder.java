@@ -79,7 +79,7 @@ public class GoSafeProtocolDecoder extends BaseProtocolDecoder {
 
         switch (fragment.substring(0, dataIndex)) {
             case "GPS":
-                position.setValid(values[index++].equals("A"));
+                //position.setValid(values[index++].equals("A"));
                 position.set(Position.KEY_SATELLITES, Integer.parseInt(values[index++]));
                 position.setLatitude(Double.parseDouble(values[index].substring(1)));
                 if (values[index++].charAt(0) == 'S') {
@@ -90,9 +90,9 @@ public class GoSafeProtocolDecoder extends BaseProtocolDecoder {
                     position.setLongitude(-position.getLongitude());
                 }
                 if (!values[index++].isEmpty()) {
-                    position.setSpeed(UnitsConverter.knotsFromKph(Integer.parseInt(values[index - 1])));
+                    position.setVelocidade(UnitsConverter.knotsFromKph(Integer.parseInt(values[index - 1])));
                 }
-                position.setCourse(Integer.parseInt(values[index++]));
+                position.setCurso(Integer.parseInt(values[index++]));
                 if (index < values.length && !values[index++].isEmpty()) {
                     position.setAltitude(Integer.parseInt(values[index - 1]));
                 }
@@ -106,7 +106,7 @@ public class GoSafeProtocolDecoder extends BaseProtocolDecoder {
             case "GSM":
                 index += 1; // registration status
                 index += 1; // signal strength
-                position.setNetwork(new Network(CellTower.from(
+                position.setRede(new Network(CellTower.from(
                         Integer.parseInt(values[index++]), Integer.parseInt(values[index++]),
                         Integer.parseInt(values[index++], 16), Integer.parseInt(values[index++], 16),
                         Integer.parseInt(values[index++]))));
@@ -182,7 +182,7 @@ public class GoSafeProtocolDecoder extends BaseProtocolDecoder {
     private Position decodePosition(DeviceSession deviceSession, String sentence) throws ParseException {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         int index = 0;
         String[] fragments = sentence.split(",");
@@ -234,16 +234,16 @@ public class GoSafeProtocolDecoder extends BaseProtocolDecoder {
         if (pattern == PATTERN_OLD) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             DateBuilder dateBuilder = new DateBuilder()
                     .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
-            position.setValid(parser.next().equals("A"));
+            //position.setValid(parser.next().equals("A"));
             position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
             position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
-            position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
-            position.setCourse(parser.nextDouble(0));
+            position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
+            position.setCurso(parser.nextDouble(0));
 
             position.set(Position.KEY_HDOP, parser.next());
 

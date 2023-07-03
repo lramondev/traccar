@@ -97,7 +97,7 @@ public class BlueProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         while (buf.readableBytes() > 1) {
 
@@ -113,11 +113,11 @@ public class BlueProtocolDecoder extends BaseProtocolDecoder {
                 buf.readUnsignedByte(); // reserved
                 int flags = buf.readUnsignedByte();
 
-                position.setValid(BitUtil.check(flags, 7));
+                //position.setValid(BitUtil.check(flags, 7));
                 position.setLatitude(readCoordinate(buf, BitUtil.check(flags, 6)));
                 position.setLongitude(readCoordinate(buf, BitUtil.check(flags, 5)));
-                position.setSpeed(buf.readUnsignedShort() + buf.readUnsignedShort() * 0.001);
-                position.setCourse(buf.readUnsignedShort() + buf.readUnsignedByte() * 0.01);
+                position.setVelocidade(buf.readUnsignedShort() + buf.readUnsignedShort() * 0.001);
+                position.setCurso(buf.readUnsignedShort() + buf.readUnsignedByte() * 0.01);
 
                 DateBuilder dateBuilder = new DateBuilder()
                         .setDate(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
@@ -164,7 +164,7 @@ public class BlueProtocolDecoder extends BaseProtocolDecoder {
             buf.readerIndex(frameEnd);
         }
 
-        return position.getFixTime() != null ? position : null;
+        return position.getDatahora_corrigida() != null ? position : null;
     }
 
 }

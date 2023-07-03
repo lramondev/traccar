@@ -71,7 +71,7 @@ public class UproProtocolDecoder extends BaseProtocolDecoder {
             position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN));
 
             int flags = parser.nextInt(0);
-            position.setValid(!BitUtil.check(flags, 0));
+            //position.setValid(!BitUtil.check(flags, 0));
             if (!BitUtil.check(flags, 1)) {
                 position.setLatitude(-position.getLatitude());
             }
@@ -79,8 +79,8 @@ public class UproProtocolDecoder extends BaseProtocolDecoder {
                 position.setLongitude(-position.getLongitude());
             }
 
-            position.setSpeed(parser.nextInt(0) * 2);
-            position.setCourse(parser.nextInt(0) * 10);
+            position.setVelocidade(parser.nextInt(0) * 2);
+            position.setCurso(parser.nextInt(0) * 10);
 
             dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
             position.setTime(dateBuilder.getDate());
@@ -125,7 +125,7 @@ public class UproProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
         Network network = new Network();
 
         String type = parser.next();
@@ -169,7 +169,7 @@ public class UproProtocolDecoder extends BaseProtocolDecoder {
                     position.set(Position.KEY_ODOMETER, odometer * 2 * 1852 / 3600);
                     break;
                 case 'F':
-                    position.setSpeed(
+                    position.setVelocidade(
                             Integer.parseInt(data.readSlice(4).toString(StandardCharsets.US_ASCII)) * 0.1);
                     break;
                 case 'G':
@@ -228,7 +228,7 @@ public class UproProtocolDecoder extends BaseProtocolDecoder {
                     break;
                 case 'P':
                     if (data.readableBytes() >= 16) {
-                        position.setNetwork(new Network(CellTower.from(
+                        position.setRede(new Network(CellTower.from(
                                 Integer.parseInt(data.readSlice(4).toString(StandardCharsets.US_ASCII)),
                                 Integer.parseInt(data.readSlice(4).toString(StandardCharsets.US_ASCII)),
                                 Integer.parseInt(data.readSlice(4).toString(StandardCharsets.US_ASCII), 16),
@@ -283,7 +283,7 @@ public class UproProtocolDecoder extends BaseProtocolDecoder {
                                     Integer.parseInt(values[index++]),
                                     Integer.parseInt(values[index])));
                         }
-                        position.setNetwork(network);
+                        position.setRede(network);
                     }
                     break;
                 case 'Y':
@@ -317,14 +317,14 @@ public class UproProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (network.getCellTowers() != null || network.getWifiAccessPoints() != null) {
-            position.setNetwork(network);
+            position.setRede(network);
         }
 
         if (position.getLatitude() == 0 || position.getLongitude() == 0) {
             if (position.getAttributes().isEmpty()) {
                 return null;
             }
-            getLastLocation(position, position.getDeviceTime());
+            getLastLocation(position, position.getDatahora_rastreador());
         }
 
         return position;

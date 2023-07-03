@@ -74,11 +74,11 @@ public class OrbcommProtocolDecoder extends BaseProtocolDecoder {
             if (deviceSession != null) {
 
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-                position.setDeviceTime(dateFormat.parse(message.getString("MessageUTC")));
+                position.setDatahora_rastreador(dateFormat.parse(message.getString("MessageUTC")));
 
                 JsonArray fields = message.getJsonObject("Payload").getJsonArray("Fields");
                 for (int j = 0; j < fields.size(); j++) {
@@ -86,7 +86,7 @@ public class OrbcommProtocolDecoder extends BaseProtocolDecoder {
                     String value = field.getString("Value");
                     switch (field.getString("Name").toLowerCase()) {
                         case "eventtime":
-                            position.setDeviceTime(new Date(Long.parseLong(value) * 1000));
+                            position.setDatahora_rastreador(new Date(Long.parseLong(value) * 1000));
                             break;
                         case "latitude":
                             position.setLatitude(Integer.parseInt(value) / 60000.0);
@@ -95,11 +95,11 @@ public class OrbcommProtocolDecoder extends BaseProtocolDecoder {
                             position.setLongitude(Integer.parseInt(value) / 60000.0);
                             break;
                         case "speed":
-                            position.setSpeed(UnitsConverter.knotsFromKph(Integer.parseInt(value)));
+                            position.setVelocidade(UnitsConverter.knotsFromKph(Integer.parseInt(value)));
                             break;
                         case "heading":
                             int heading = Integer.parseInt(value);
-                            position.setCourse(heading <= 360 ? heading : 0);
+                            position.setCurso(heading <= 360 ? heading : 0);
                             break;
                         default:
                             break;
@@ -107,10 +107,10 @@ public class OrbcommProtocolDecoder extends BaseProtocolDecoder {
                 }
 
                 if (position.getLatitude() != 0 && position.getLongitude() != 0) {
-                    position.setValid(true);
-                    position.setFixTime(position.getDeviceTime());
+                    //position.setValid(true);
+                    position.setDatahora_corrigida(position.getDatahora_rastreador());
                 } else {
-                    getLastLocation(position, position.getDeviceTime());
+                    getLastLocation(position, position.getDatahora_rastreador());
                 }
 
                 positions.add(position);

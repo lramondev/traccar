@@ -8,7 +8,7 @@
 
   <changeSet author="author" id="changelog-5.4">
 
-    <addColumn tableName="tc_devices">
+    <!--<addColumn tableName="geolocal_rastreador">
       <column name="motionstate" type="BOOLEAN" defaultValueBoolean="false" />
       <column name="motiontime" type="TIMESTAMP" />
       <column name="motiondistance" type="DOUBLE" defaultValueNumeric="0" />
@@ -44,12 +44,12 @@
             constraintName="fk_commands_queue_deviceid"
             onDelete="CASCADE"
             referencedColumnNames="id"
-            referencedTableName="tc_devices" />
+            referencedTableName="geolocal_rastreador" />
 
     <createIndex tableName="tc_commands_queue" indexName="idx_commands_queue_deviceid">
       <column name="deviceid" />
     </createIndex>
-
+-->
   </changeSet>
 
 </databaseChangeLog>

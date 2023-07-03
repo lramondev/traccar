@@ -45,7 +45,7 @@ public class EventResource extends BaseResource {
         if (event == null) {
             throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND).build());
         }
-        permissionsService.checkPermission(Device.class, getUserId(), event.getDeviceId());
+        permissionsService.checkPermission(Device.class, getUserId(), event.getRastreador_id());
         return event;
     }
 

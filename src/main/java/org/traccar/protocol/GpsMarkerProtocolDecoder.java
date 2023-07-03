@@ -68,15 +68,15 @@ public class GpsMarkerProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_MIN));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_MIN));
-        position.setSpeed(parser.nextDouble(0));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
 
         position.set(Position.KEY_SATELLITES, parser.nextHexInt(0));
         position.set(Position.KEY_BATTERY_LEVEL, parser.nextInt(0));

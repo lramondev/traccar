@@ -156,7 +156,7 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         int event = parser.nextInt();
         position.set(Position.KEY_EVENT, event);
@@ -167,13 +167,13 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime());
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
         int rssi = parser.nextInt();
 
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
-        position.setCourse(parser.nextDouble());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
+        position.setCurso(parser.nextDouble());
 
         position.set(Position.KEY_HDOP, parser.nextDouble());
 
@@ -187,7 +187,7 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
         int lac = parser.nextHexInt(0);
         int cid = parser.nextHexInt(0);
         if (mcc != 0 && mnc != 0) {
-            position.setNetwork(new Network(CellTower.from(mcc, mnc, lac, cid, rssi)));
+            position.setRede(new Network(CellTower.from(mcc, mnc, lac, cid, rssi)));
         }
 
         position.set(Position.KEY_INPUT, parser.nextHexInt());
@@ -204,7 +204,7 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
                 position.set(Position.PREFIX_ADC + i, parser.nextHexInt());
             }
 
-            String model = getCacheManager().getObject(Device.class, deviceSession.getDeviceId()).getModel();
+            String model = getCacheManager().getObject(Device.class, deviceSession.getDeviceId()).getModelo();
             if (model == null) {
                 model = "";
             }
@@ -323,7 +323,7 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
         while (buf.readableBytes() >= 0x34) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.set(Position.KEY_EVENT, buf.readUnsignedByte());
 
@@ -332,13 +332,13 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
 
             position.setTime(new Date((946684800 + buf.readUnsignedIntLE()) * 1000)); // 946684800 = 2000-01-01
 
-            position.setValid(buf.readUnsignedByte() == 1);
+            //position.setValid(buf.readUnsignedByte() == 1);
 
             position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
             int rssi = buf.readUnsignedByte();
 
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE()));
-            position.setCourse(buf.readUnsignedShortLE());
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE()));
+            position.setCurso(buf.readUnsignedShortLE());
 
             position.set(Position.KEY_HDOP, buf.readUnsignedShortLE() * 0.1);
 
@@ -347,7 +347,7 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_ODOMETER, buf.readUnsignedIntLE());
             position.set("runtime", buf.readUnsignedIntLE());
 
-            position.setNetwork(new Network(CellTower.from(
+            position.setRede(new Network(CellTower.from(
                     buf.readUnsignedShortLE(), buf.readUnsignedShortLE(),
                     buf.readUnsignedShortLE(), buf.readUnsignedShortLE(),
                     rssi)));
@@ -392,7 +392,7 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
 
         for (int i = 0; i < count; i++) {
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             buf.readUnsignedShortLE(); // length
             buf.readUnsignedShortLE(); // index
@@ -406,7 +406,7 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
                         position.set(Position.KEY_EVENT, buf.readUnsignedByte());
                         break;
                     case 0x05:
-                        position.setValid(buf.readUnsignedByte() > 0);
+                        //position.setValid(buf.readUnsignedByte() > 0);
                         break;
                     case 0x06:
                         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
@@ -447,10 +447,10 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
                 int id = extension ? buf.readUnsignedShort() : buf.readUnsignedByte();
                 switch (id) {
                     case 0x08:
-                        position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE()));
+                        position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE()));
                         break;
                     case 0x09:
-                        position.setCourse(buf.readUnsignedShortLE());
+                        position.setCurso(buf.readUnsignedShortLE());
                         break;
                     case 0x0A:
                         position.set(Position.KEY_HDOP, buf.readUnsignedShortLE());
@@ -625,7 +625,7 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
 
                 if (current == total - 1) {
                     Position position = new Position(getProtocolName());
-                    position.setDeviceId(getDeviceSession(channel, remoteAddress, imei).getDeviceId());
+                    position.setRastreador_id(getDeviceSession(channel, remoteAddress, imei).getDeviceId());
 
                     getLastLocation(position, null);
 
@@ -646,7 +646,7 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
                 return null;
             case "D82":
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(getDeviceSession(channel, remoteAddress, imei).getDeviceId());
+                position.setRastreador_id(getDeviceSession(channel, remoteAddress, imei).getDeviceId());
                 getLastLocation(position, null);
                 String result = buf.toString(index + 1, buf.writerIndex() - index - 4, StandardCharsets.US_ASCII);
                 position.set(Position.KEY_RESULT, result);

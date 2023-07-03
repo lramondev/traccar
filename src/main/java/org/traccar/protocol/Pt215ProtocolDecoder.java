@@ -82,7 +82,7 @@ public class Pt215ProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             sendResponse(channel, remoteAddress, type, buf.retainedSlice(buf.readerIndex(), 6));
 
@@ -95,8 +95,8 @@ public class Pt215ProtocolDecoder extends BaseProtocolDecoder {
             double longitude = buf.readUnsignedInt() / 60.0 / 30000.0;
 
             int flags = buf.readUnsignedShort();
-            position.setCourse(BitUtil.to(flags, 10));
-            position.setValid(BitUtil.check(flags, 12));
+            position.setCurso(BitUtil.to(flags, 10));
+            //position.setValid(BitUtil.check(flags, 12));
 
             if (!BitUtil.check(flags, 10)) {
                 latitude = -latitude;

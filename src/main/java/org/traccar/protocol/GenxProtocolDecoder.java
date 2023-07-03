@@ -53,7 +53,7 @@ public class GenxProtocolDecoder extends BaseProtocolDecoder {
         String[] values = ((String) msg).split(",");
 
         Position position = new Position(getProtocolName());
-        position.setValid(true);
+        //position.setValid(true);
 
         for (int i = 0; i < Math.min(values.length, reportColumns.length); i++) {
             switch (reportColumns[i]) {
@@ -61,7 +61,7 @@ public class GenxProtocolDecoder extends BaseProtocolDecoder {
                 case 28:
                     DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, values[i]);
                     if (deviceSession != null) {
-                        position.setDeviceId(deviceSession.getDeviceId());
+                        position.setRastreador_id(deviceSession.getDeviceId());
                     }
                     break;
                 case 2:
@@ -77,10 +77,10 @@ public class GenxProtocolDecoder extends BaseProtocolDecoder {
                     position.set(Position.KEY_IGNITION, values[i].equals("ON"));
                     break;
                 case 13:
-                    position.setSpeed(UnitsConverter.knotsFromKph(Integer.parseInt(values[i])));
+                    position.setVelocidade(UnitsConverter.knotsFromKph(Integer.parseInt(values[i])));
                     break;
                 case 17:
-                    position.setCourse(Integer.parseInt(values[i]));
+                    position.setCurso(Integer.parseInt(values[i]));
                     break;
                 case 23:
                     position.set(Position.KEY_ODOMETER, Double.parseDouble(values[i]) * 1000);
@@ -96,7 +96,7 @@ public class GenxProtocolDecoder extends BaseProtocolDecoder {
             }
         }
 
-        return position.getDeviceId() != 0 ? position : null;
+        return position.getRastreador_id() != 0 ? position : null;
     }
 
 }

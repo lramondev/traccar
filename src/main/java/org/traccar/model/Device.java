@@ -21,27 +21,27 @@ import org.traccar.storage.StorageName;
 
 import java.util.Date;
 
-@StorageName("tc_devices")
+@StorageName("geolocal_rastreador")
 public class Device extends GroupedModel implements Disableable {
 
-    private String name;
+    private String descricao;
 
-    public String getName() {
-        return name;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescricao(String name) {
+        this.descricao = name;
     }
 
-    private String uniqueId;
+    private String imei;
 
-    public String getUniqueId() {
-        return uniqueId;
+    public String getImei() {
+        return imei;
     }
 
-    public void setUniqueId(String uniqueId) {
-        this.uniqueId = uniqueId;
+    public void setImei(String uniqueId) {
+        this.imei = uniqueId;
     }
 
     public static final String STATUS_UNKNOWN = "unknown";
@@ -59,6 +59,7 @@ public class Device extends GroupedModel implements Disableable {
         this.status = status != null ? status.trim() : null;
     }
 
+    /*
     private Date lastUpdate;
 
     @QueryIgnore
@@ -69,18 +70,20 @@ public class Device extends GroupedModel implements Disableable {
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
-
-    private long positionId;
+    */
+    
+    private long rastreador_posicao_id;
 
     @QueryIgnore
-    public long getPositionId() {
-        return positionId;
+    public long getRastreador_posicao_id() {
+        return rastreador_posicao_id;
     }
 
-    public void setPositionId(long positionId) {
-        this.positionId = positionId;
+    public void setRastreador_posicao_id(long positionId) {
+        this.rastreador_posicao_id = positionId;
     }
 
+    /* 
     private String phone;
 
     public String getPhone() {
@@ -90,17 +93,19 @@ public class Device extends GroupedModel implements Disableable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+    */
 
-    private String model;
+    private String modelo;
 
-    public String getModel() {
-        return model;
+    public String getModelo() {
+        return modelo;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setModelo(String model) {
+        this.modelo = model;
     }
 
+    /* 
     private String contact;
 
     public String getContact() {
@@ -110,6 +115,7 @@ public class Device extends GroupedModel implements Disableable {
     public void setContact(String contact) {
         this.contact = contact;
     }
+    
 
     private String category;
 
@@ -120,19 +126,21 @@ public class Device extends GroupedModel implements Disableable {
     public void setCategory(String category) {
         this.category = category;
     }
+    */
 
-    private boolean disabled;
+    private int status_id;
 
     @Override
     public boolean getDisabled() {
-        return disabled;
+        return this.status_id == 5 ? true : false;
     }
 
     @Override
     public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
+        this.status_id = disabled == true ? 5 : 1;
     }
 
+    /* 
     private Date expirationTime;
 
     @Override
@@ -235,5 +243,5 @@ public class Device extends GroupedModel implements Disableable {
     public void setOverspeedGeofenceId(long overspeedGeofenceId) {
         this.overspeedGeofenceId = overspeedGeofenceId;
     }
-
+    */
 }

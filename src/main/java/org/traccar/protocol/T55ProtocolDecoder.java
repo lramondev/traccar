@@ -183,17 +183,17 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
 
         if (deviceSession != null) {
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
         }
 
         DateBuilder dateBuilder = new DateBuilder()
                 .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
-        position.setSpeed(parser.nextDouble(0));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
 
         dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
         position.setTime(dateBuilder.getDate());
@@ -205,7 +205,7 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
             if (deviceSession == null) {
                 return null;
             }
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.set(Position.KEY_IGNITION, parser.hasNext() && parser.next().equals("1"));
             position.set(Position.KEY_FUEL_LEVEL, parser.nextInt(0));
@@ -235,14 +235,14 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         DateBuilder dateBuilder = new DateBuilder()
                 .setCurrentDate()
                 .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
         position.setTime(dateBuilder.getDate());
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
 
@@ -257,14 +257,14 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(new Date());
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
-        position.setSpeed(parser.nextDouble(0));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
 
         return position;
     }
@@ -277,15 +277,15 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime());
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
         position.setLatitude(parser.nextDouble(0));
         position.setLongitude(parser.nextDouble(0));
-        position.setSpeed(parser.nextDouble(0));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
         position.setAltitude(parser.nextDouble(0));
 
         position.set(Position.KEY_BATTERY, parser.nextDouble(0));
@@ -301,7 +301,7 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 
@@ -324,16 +324,16 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_EVENT, parser.nextInt());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
-        position.setCourse(parser.nextInt());
-        position.setValid(parser.next().equals("A"));
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
+        position.setCurso(parser.nextInt());
+        //position.setValid(parser.next().equals("A"));
 
         position.set(Position.KEY_IGNITION, parser.nextInt() > 0);
 
@@ -353,7 +353,7 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 
@@ -380,10 +380,10 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
         position.setAltitude(parser.nextDouble());
-        position.setValid(!parser.next().equals("NF"));
-        position.setAccuracy(parser.nextDouble());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
-        position.setCourse(parser.nextDouble());
+        //position.setValid(!parser.next().equals("NF"));
+        position.setPrecisao(parser.nextDouble());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
+        position.setCurso(parser.nextDouble());
 
         position.set(Position.KEY_HDOP, parser.nextDouble());
         position.set(Position.KEY_VDOP, parser.nextDouble());
@@ -391,7 +391,7 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
 
         DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
         if (deviceSession != null) {
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
             return position;
         }
 
@@ -438,7 +438,7 @@ public class T55ProtocolDecoder extends BaseProtocolDecoder {
             deviceSession = getDeviceSession(channel, remoteAddress, sentence.substring(7));
             if (deviceSession != null && position != null) {
                 Position position = this.position;
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
                 this.position = null;
                 return position;
             }

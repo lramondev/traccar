@@ -77,7 +77,7 @@ public class M2cProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_INDEX, parser.nextInt());
 
@@ -87,13 +87,13 @@ public class M2cProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_EVENT, parser.nextInt());
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setTime(parser.nextDateTime());
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
         position.setAltitude(parser.nextInt());
-        position.setCourse(parser.nextInt());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
+        position.setCurso(parser.nextInt());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
         position.set(Position.KEY_ODOMETER, parser.nextLong());

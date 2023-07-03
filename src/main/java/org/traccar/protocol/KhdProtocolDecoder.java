@@ -143,7 +143,7 @@ public class KhdProtocolDecoder extends BaseProtocolDecoder {
             if (deviceSession == null) {
                 return null;
             }
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             DateBuilder dateBuilder = new DateBuilder()
                     .setYear(BcdUtil.readInteger(buf, 2))
@@ -156,9 +156,9 @@ public class KhdProtocolDecoder extends BaseProtocolDecoder {
 
             position.setLatitude(BcdUtil.readCoordinate(buf));
             position.setLongitude(BcdUtil.readCoordinate(buf));
-            position.setSpeed(UnitsConverter.knotsFromKph(BcdUtil.readInteger(buf, 4)));
-            position.setCourse(BcdUtil.readInteger(buf, 4));
-            position.setValid((buf.readUnsignedByte() & 0x80) != 0);
+            position.setVelocidade(UnitsConverter.knotsFromKph(BcdUtil.readInteger(buf, 4)));
+            position.setCurso(BcdUtil.readInteger(buf, 4));
+            //position.setValid((buf.readUnsignedByte() & 0x80) != 0);
 
             if (type != MSG_ALARM) {
 
@@ -214,7 +214,7 @@ public class KhdProtocolDecoder extends BaseProtocolDecoder {
                                         buf.readUnsignedShort(), buf.readUnsignedShort(), buf.readUnsignedByte()));
                             }
                             if (count > 0) {
-                                position.setNetwork(network);
+                                position.setRede(network);
                             }
                             break;
                         default:

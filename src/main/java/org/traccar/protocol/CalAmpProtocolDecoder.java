@@ -71,7 +71,7 @@ public class CalAmpProtocolDecoder extends BaseProtocolDecoder {
     private Position decodePosition(DeviceSession deviceSession, int type, ByteBuf buf) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(new Date(buf.readUnsignedInt() * 1000));
         if (type != MSG_MINI_EVENT_REPORT) {
@@ -81,19 +81,19 @@ public class CalAmpProtocolDecoder extends BaseProtocolDecoder {
         position.setLongitude(buf.readInt() * 0.0000001);
         if (type != MSG_MINI_EVENT_REPORT) {
             position.setAltitude(buf.readInt() * 0.01);
-            position.setSpeed(UnitsConverter.knotsFromCps(buf.readUnsignedInt()));
+            position.setVelocidade(UnitsConverter.knotsFromCps(buf.readUnsignedInt()));
         }
-        position.setCourse(buf.readShort());
+        position.setCurso(buf.readShort());
         if (type == MSG_MINI_EVENT_REPORT) {
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
         }
 
         if (type == MSG_MINI_EVENT_REPORT) {
             position.set(Position.KEY_SATELLITES, buf.getUnsignedByte(buf.readerIndex()) & 0xf);
-            position.setValid((buf.readUnsignedByte() & 0x20) == 0);
+            //position.setValid((buf.readUnsignedByte() & 0x20) == 0);
         } else {
             position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
-            position.setValid((buf.readUnsignedByte() & 0x08) == 0);
+            //position.setValid((buf.readUnsignedByte() & 0x08) == 0);
         }
 
         if (type != MSG_MINI_EVENT_REPORT) {

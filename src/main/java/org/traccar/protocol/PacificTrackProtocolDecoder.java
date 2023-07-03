@@ -70,7 +70,7 @@ public class PacificTrackProtocolDecoder extends BaseProtocolDecoder {
                     position.set(Position.KEY_EVENT, readBitExt(buf));
                     break;
                 case 0x10:
-                    position.setValid(BitUtil.check(buf.readUnsignedByte(), 4));
+                    //position.setValid(BitUtil.check(buf.readUnsignedByte(), 4));
                     int date = buf.readUnsignedByte();
                     DateBuilder dateBuilder = new DateBuilder()
                             .setDate(2020 + BitUtil.from(date, 4), BitUtil.to(date, 4), buf.readUnsignedByte())
@@ -79,8 +79,8 @@ public class PacificTrackProtocolDecoder extends BaseProtocolDecoder {
                     position.setLatitude(buf.readUnsignedInt() / 1000000.0 - 90.0);
                     position.setLongitude(buf.readUnsignedInt() / 1000000.0 - 180.0);
                     int speedAndCourse = buf.readUnsignedMedium();
-                    position.setCourse(BitUtil.from(speedAndCourse, 12));
-                    position.setSpeed(UnitsConverter.knotsFromKph(BitUtil.to(speedAndCourse, 12) * 0.1));
+                    position.setCurso(BitUtil.from(speedAndCourse, 12));
+                    position.setVelocidade(UnitsConverter.knotsFromKph(BitUtil.to(speedAndCourse, 12) * 0.1));
                     position.set(Position.KEY_INDEX, buf.readUnsignedShort());
                     break;
                 case 0x20:
@@ -210,8 +210,8 @@ public class PacificTrackProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (deviceSession != null) {
-            position.setDeviceId(deviceSession.getDeviceId());
-            if (position.getFixTime() == null) {
+            position.setRastreador_id(deviceSession.getDeviceId());
+            if (position.getDatahora_corrigida() == null) {
                 getLastLocation(position, null);
             }
             return position;

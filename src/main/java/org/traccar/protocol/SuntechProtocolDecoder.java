@@ -134,7 +134,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         if (type.equals("Emergency") || type.equals("Alert")) {
             position.set(Position.KEY_ALARM, Position.ALARM_GENERAL);
@@ -154,10 +154,10 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
 
         position.setLatitude(Double.parseDouble(values[index++]));
         position.setLongitude(Double.parseDouble(values[index++]));
-        position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
-        position.setCourse(Double.parseDouble(values[index++]));
+        position.setVelocidade(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
+        position.setCurso(Double.parseDouble(values[index++]));
 
-        position.setValid(values[index++].equals("1"));
+        //position.setValid(values[index++].equals("1"));
 
         if (getProtocolType(deviceSession.getDeviceId()) == 1) {
             position.set(Position.KEY_ODOMETER, Integer.parseInt(values[index++]));
@@ -234,7 +234,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
         position.set(Position.KEY_TYPE, type);
 
         position.set(Position.KEY_VERSION_FW, values[index++]);
@@ -260,7 +260,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
             }
         }
 
-        position.setNetwork(network);
+        position.setRede(network);
 
         position.set(Position.KEY_BATTERY, Double.parseDouble(values[index++]));
         position.set(Position.KEY_ARCHIVE, values[index++].equals("0") ? true : null);
@@ -277,12 +277,12 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
 
         position.setLatitude(Double.parseDouble(values[index++]));
         position.setLongitude(Double.parseDouble(values[index++]));
-        position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
-        position.setCourse(Double.parseDouble(values[index++]));
+        position.setVelocidade(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
+        position.setCurso(Double.parseDouble(values[index++]));
 
         position.set(Position.KEY_SATELLITES, Integer.parseInt(values[index++]));
 
-        position.setValid(values[index++].equals("1"));
+        //position.setValid(values[index++].equals("1"));
 
         return position;
     }
@@ -304,7 +304,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
         position.set(Position.KEY_TYPE, type);
 
         if (protocol.startsWith("ST3") || protocol.equals("ST500") || protocol.equals("ST600")) {
@@ -320,7 +320,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
         if (!protocol.equals("ST500")) {
             long cid = Long.parseLong(values[index++], 16);
             if (protocol.equals("ST600")) {
-                position.setNetwork(new Network(CellTower.from(
+                position.setRede(new Network(CellTower.from(
                         Integer.parseInt(values[index++]), Integer.parseInt(values[index++]),
                         Integer.parseInt(values[index++], 16), cid, Integer.parseInt(values[index++]))));
             }
@@ -328,12 +328,12 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
 
         position.setLatitude(Double.parseDouble(values[index++]));
         position.setLongitude(Double.parseDouble(values[index++]));
-        position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
-        position.setCourse(Double.parseDouble(values[index++]));
+        position.setVelocidade(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
+        position.setCurso(Double.parseDouble(values[index++]));
 
         position.set(Position.KEY_SATELLITES, Integer.parseInt(values[index++]));
 
-        position.setValid(values[index++].equals("1"));
+        //position.setValid(values[index++].equals("1"));
 
         position.set(Position.KEY_ODOMETER, Integer.parseInt(values[index++]));
         position.set(Position.KEY_POWER, Double.parseDouble(values[index++]));
@@ -483,7 +483,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
         position.set(Position.KEY_TYPE, type);
 
         if (type.equals("RES")) {
@@ -533,7 +533,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
             cellTower.setLocationAreaCode(Integer.parseInt(values[index++], 16));
         }
         if (cellTower.getCellId() != null) {
-            position.setNetwork(new Network(cellTower));
+            position.setRede(new Network(cellTower));
         }
 
         if (BitUtil.check(mask, 10)) {
@@ -550,7 +550,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
 
         if (type.equals("BLE")) {
 
-            position.setValid(true);
+            //position.setValid(true);
 
             int count = Integer.parseInt(values[index++]);
 
@@ -567,11 +567,11 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
         } else {
 
             if (BitUtil.check(mask, 13)) {
-                position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
+                position.setVelocidade(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
             }
 
             if (BitUtil.check(mask, 14)) {
-                position.setCourse(Double.parseDouble(values[index++]));
+                position.setCurso(Double.parseDouble(values[index++]));
             }
 
             if (BitUtil.check(mask, 15)) {
@@ -579,7 +579,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
             }
 
             if (BitUtil.check(mask, 16)) {
-                position.setValid(values[index++].equals("1"));
+                //position.setValid(values[index++].equals("1"));
             }
 
             if (BitUtil.check(mask, 17)) {
@@ -645,7 +645,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         int mask = buf.readUnsignedMedium();
 
@@ -698,11 +698,11 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (BitUtil.check(mask, 13)) {
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort() / 100.0));
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort() / 100.0));
         }
 
         if (BitUtil.check(mask, 14)) {
-            position.setCourse(buf.readUnsignedShort() / 100.0);
+            position.setCurso(buf.readUnsignedShort() / 100.0);
         }
 
         if (BitUtil.check(mask, 15)) {
@@ -710,7 +710,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (BitUtil.check(mask, 16)) {
-            position.setValid(buf.readUnsignedByte() > 0);
+            //position.setValid(buf.readUnsignedByte() > 0);
         }
 
         if (BitUtil.check(mask, 17)) {
@@ -751,7 +751,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 
@@ -800,14 +800,14 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
             for (Date time : times) {
 
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
-                position.setValid(true);
+                //position.setValid(true);
                 position.setTime(time);
                 position.setLatitude(crash.readIntLE() * 0.0000001);
                 position.setLongitude(crash.readIntLE() * 0.0000001);
-                position.setSpeed(UnitsConverter.knotsFromKph(crash.readUnsignedShort() * 0.01));
-                position.setCourse(crash.readUnsignedShort() * 0.01);
+                position.setVelocidade(UnitsConverter.knotsFromKph(crash.readUnsignedShort() * 0.01));
+                position.setCurso(crash.readUnsignedShort() * 0.01);
 
                 StringBuilder value = new StringBuilder("[");
                 for (int i = 0; i < 100; i++) {

@@ -62,20 +62,20 @@ public class CommandsManager implements BroadcastInterface {
     }
 
     public boolean sendCommand(Command command) throws Exception {
-        long deviceId = command.getDeviceId();
+        long deviceId = command.getRastreador_id();
         if (command.getTextChannel()) {
             if (smsManager == null) {
                 throw new RuntimeException("SMS not configured");
             }
             Device device = storage.getObject(Device.class, new Request(
-                    new Columns.Include("positionId", "phone"), new Condition.Equals("id", deviceId)));
+                    new Columns.Include("rastreador_posicao_id"), new Condition.Equals("id", deviceId)));
             Position position = storage.getObject(Position.class, new Request(
-                    new Columns.All(), new Condition.Equals("id", device.getPositionId())));
+                    new Columns.All(), new Condition.Equals("id", device.getRastreador_posicao_id())));
             if (position != null) {
-                BaseProtocol protocol = serverManager.getProtocol(position.getProtocol());
-                protocol.sendTextCommand(device.getPhone(), command);
+                BaseProtocol protocol = serverManager.getProtocol(position.getProtocolo());
+                //protocol.sendTextCommand(device.getPhone(), command);
             } else if (command.getType().equals(Command.TYPE_CUSTOM)) {
-                smsManager.sendMessage(device.getPhone(), command.getString(Command.KEY_DATA), true);
+                //smsManager.sendMessage(device.getPhone(), command.getString(Command.KEY_DATA), true);
             } else {
                 throw new RuntimeException("Command " + command.getType() + " is not supported");
             }

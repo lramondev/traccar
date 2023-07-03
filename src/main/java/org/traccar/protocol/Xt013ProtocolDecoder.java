@@ -72,16 +72,16 @@ public class Xt013ProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime());
 
         position.setLatitude(parser.nextDouble(0));
         position.setLongitude(parser.nextDouble(0));
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
+        position.setCurso(parser.nextDouble(0));
         position.setAltitude(parser.nextDouble(0));
-        position.setValid(parser.next().equals("F"));
+        //position.setValid(parser.next().equals("F"));
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
         position.set(Position.KEY_RSSI, parser.nextDouble());

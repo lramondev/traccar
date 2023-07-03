@@ -80,8 +80,8 @@ public class NotificatorTelegram implements Notificator {
         locationMessage.chatId = messageChatId;
         locationMessage.latitude = position.getLatitude();
         locationMessage.longitude = position.getLongitude();
-        locationMessage.bearing = (int) Math.ceil(position.getCourse());
-        locationMessage.accuracy = position.getAccuracy();
+        locationMessage.bearing = (int) Math.ceil(position.getCurso());
+        locationMessage.accuracy = position.getPrecisao();
         return locationMessage;
     }
 

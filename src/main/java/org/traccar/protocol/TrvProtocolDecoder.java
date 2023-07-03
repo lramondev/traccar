@@ -169,7 +169,7 @@ public class TrvProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, null);
 
@@ -191,24 +191,24 @@ public class TrvProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             DateBuilder dateBuilder = new DateBuilder()
                     .setDate(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
-            position.setValid(parser.next().equals("A"));
+            //position.setValid(parser.next().equals("A"));
             position.setLatitude(parser.nextCoordinate());
             position.setLongitude(parser.nextCoordinate());
-            position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
+            position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
 
             dateBuilder.setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
             position.setTime(dateBuilder.getDate());
 
-            position.setCourse(parser.nextDouble());
+            position.setCurso(parser.nextDouble());
 
             decodeCommon(position, parser);
 
-            position.setNetwork(new Network(CellTower.from(
+            position.setRede(new Network(CellTower.from(
                     parser.nextInt(), parser.nextInt(), parser.nextInt(), parser.nextInt())));
 
             return position;
@@ -221,7 +221,7 @@ public class TrvProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, null);
 
@@ -248,7 +248,7 @@ public class TrvProtocolDecoder extends BaseProtocolDecoder {
                 }
             }
 
-            position.setNetwork(network);
+            position.setRede(network);
 
             return position;
 

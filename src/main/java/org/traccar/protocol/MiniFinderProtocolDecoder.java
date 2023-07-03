@@ -80,7 +80,7 @@ public class MiniFinderProtocolDecoder extends BaseProtocolDecoder {
 
     private void decodeFlags(Position position, int flags) {
 
-        position.setValid(BitUtil.to(flags, 2) > 0);
+        //position.setValid(BitUtil.to(flags, 2) > 0);
         if (BitUtil.check(flags, 1)) {
             position.set(Position.KEY_APPROXIMATE, true);
         }
@@ -113,11 +113,11 @@ public class MiniFinderProtocolDecoder extends BaseProtocolDecoder {
 
     private void decodeState(Position position, Parser parser) {
 
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
 
-        position.setCourse(parser.nextDouble(0));
-        if (position.getCourse() > 360) {
-            position.setCourse(0);
+        position.setCurso(parser.nextDouble(0));
+        if (position.getCurso() > 360) {
+            position.setCurso(0);
         }
 
         decodeFlags(position, parser.nextHexInt(0));
@@ -148,7 +148,7 @@ public class MiniFinderProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         String type = sentence.substring(1, 2);
         position.set(Position.KEY_TYPE, type);

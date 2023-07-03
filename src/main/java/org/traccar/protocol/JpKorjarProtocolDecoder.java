@@ -67,20 +67,20 @@ public class JpKorjarProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime());
 
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
-        position.setSpeed(parser.nextDouble(0));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
 
         position.set(Position.KEY_BATTERY, parser.nextDouble(0));
 
-        position.setValid(parser.nextInt(0) == 1);
+        //position.setValid(parser.nextInt(0) == 1);
 
-        position.setNetwork(new Network(CellTower.from(
+        position.setRede(new Network(CellTower.from(
                 parser.nextInt(0), parser.nextInt(0), parser.nextHexInt(0), parser.nextHexInt(0))));
 
         return position;

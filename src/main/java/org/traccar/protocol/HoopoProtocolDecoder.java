@@ -50,12 +50,12 @@ public class HoopoProtocolDecoder extends BaseProtocolDecoder {
             JsonObject eventData = json.getJsonObject("eventData");
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             Date time = new Date(OffsetDateTime.parse(json.getString("eventTime")).toInstant().toEpochMilli());
             position.setTime(time);
 
-            position.setValid(true);
+            //position.setValid(true);
             position.setLatitude(eventData.getJsonNumber("latitude").doubleValue());
             position.setLongitude(eventData.getJsonNumber("longitude").doubleValue());
 
@@ -63,7 +63,7 @@ public class HoopoProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_BATTERY_LEVEL, eventData.getInt("batteryLevel"));
 
             if (json.containsKey("movement")) {
-                position.setSpeed(json.getJsonObject("movement").getInt("Speed"));
+                position.setVelocidade(json.getJsonObject("movement").getInt("Speed"));
             }
 
             return position;

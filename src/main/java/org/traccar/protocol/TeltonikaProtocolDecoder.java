@@ -226,7 +226,7 @@ public class TeltonikaProtocolDecoder extends BaseProtocolDecoder {
         register(18, null, (p, b) -> p.set("axisY", b.readShort()));
         register(19, null, (p, b) -> p.set("axisZ", b.readShort()));
         register(21, null, (p, b) -> p.set(Position.KEY_RSSI, b.readUnsignedByte()));
-        register(24, fmbXXX, (p, b) -> p.setSpeed(UnitsConverter.knotsFromKph(b.readUnsignedShort())));
+        register(24, fmbXXX, (p, b) -> p.setVelocidade(UnitsConverter.knotsFromKph(b.readUnsignedShort())));
         register(25, null, (p, b) -> p.set("bleTemp1", b.readShort() * 0.01));
         register(26, null, (p, b) -> p.set("bleTemp2", b.readShort() * 0.01));
         register(27, null, (p, b) -> p.set("bleTemp3", b.readShort() * 0.01));
@@ -390,7 +390,7 @@ public class TeltonikaProtocolDecoder extends BaseProtocolDecoder {
             decodeCell(position, network, "io1202", "io293", "io294", "io295");
             decodeCell(position, network, "io1203", "io296", "io297", "io298");
             if (network.getCellTowers() != null) {
-                position.setNetwork(network);
+                position.setRede(network);
             }
         } else {
             Integer cid2g = (Integer) position.getAttributes().remove("cid2g");
@@ -410,7 +410,7 @@ public class TeltonikaProtocolDecoder extends BaseProtocolDecoder {
                     cellTower.setOperator(operator);
                 }
                 network.addCellTower(cellTower);
-                position.setNetwork(new Network(cellTower));
+                position.setRede(new Network(cellTower));
             }
         }
     }
@@ -456,11 +456,11 @@ public class TeltonikaProtocolDecoder extends BaseProtocolDecoder {
                 }
 
                 if (BitUtil.check(locationMask, 2)) {
-                    position.setCourse(buf.readUnsignedByte() * 360.0 / 256);
+                    position.setCurso(buf.readUnsignedByte() * 360.0 / 256);
                 }
 
                 if (BitUtil.check(locationMask, 3)) {
-                    position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+                    position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
                 }
 
                 if (BitUtil.check(locationMask, 4)) {
@@ -479,7 +479,7 @@ public class TeltonikaProtocolDecoder extends BaseProtocolDecoder {
                         cellTower.setOperator(buf.readUnsignedInt());
                     }
 
-                    position.setNetwork(new Network(cellTower));
+                    position.setRede(new Network(cellTower));
 
                 } else {
                     if (BitUtil.check(locationMask, 6)) {
@@ -505,14 +505,14 @@ public class TeltonikaProtocolDecoder extends BaseProtocolDecoder {
             position.setLongitude(buf.readInt() / 10000000.0);
             position.setLatitude(buf.readInt() / 10000000.0);
             position.setAltitude(buf.readShort());
-            position.setCourse(buf.readUnsignedShort());
+            position.setCurso(buf.readUnsignedShort());
 
             int satellites = buf.readUnsignedByte();
             position.set(Position.KEY_SATELLITES, satellites);
 
-            position.setValid(satellites != 0);
+            //position.setValid(satellites != 0);
 
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
 
             position.set(Position.KEY_EVENT, readExtByte(buf, codec, CODEC_8_EXT, CODEC_16));
             if (codec == CODEC_16) {
@@ -624,13 +624,13 @@ public class TeltonikaProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        String model = getCacheManager().getObject(Device.class, deviceSession.getDeviceId()).getModel();
+        String model = getCacheManager().getObject(Device.class, deviceSession.getDeviceId()).getModelo();
 
         for (int i = 0; i < count; i++) {
             Position position = new Position(getProtocolName());
 
-            position.setDeviceId(deviceSession.getDeviceId());
-            position.setValid(true);
+            position.setRastreador_id(deviceSession.getDeviceId());
+            //position.setValid(true);
 
             if (codec == CODEC_13) {
                 buf.readUnsignedByte(); // type
@@ -653,7 +653,7 @@ public class TeltonikaProtocolDecoder extends BaseProtocolDecoder {
                 decodeLocation(position, buf, codec, model);
             }
 
-            if (!position.getOutdated() || !position.getAttributes().isEmpty()) {
+            if (!position.getAttributes().isEmpty()) {
                 positions.add(position);
             }
         }

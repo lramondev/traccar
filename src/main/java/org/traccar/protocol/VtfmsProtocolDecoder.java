@@ -113,13 +113,13 @@ public class VtfmsProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_ALARM, decodeAlarm(parser.nextInt()));
         position.set(Position.KEY_RSSI, parser.nextInt());
         position.set(Position.KEY_SATELLITES, parser.nextInt());
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS_DMY));
 
         double latitude = parser.nextDouble();
@@ -132,18 +132,18 @@ public class VtfmsProtocolDecoder extends BaseProtocolDecoder {
             position.setLongitude(longitude);
         }
 
-        position.setCourse(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
         if (parser.hasNext()) {
             String direction = parser.next();
             for (int i = 0; i < DIRECTIONS.length; i++) {
                 if (direction.equals(DIRECTIONS[i])) {
-                    position.setCourse(i * 45.0);
+                    position.setCurso(i * 45.0);
                     break;
                 }
             }
         }
 
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
 
         position.set(Position.KEY_HOURS, UnitsConverter.msFromHours(parser.nextInt()));
         position.set("idleHours", parser.nextInt());

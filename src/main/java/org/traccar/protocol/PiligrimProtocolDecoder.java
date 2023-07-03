@@ -107,7 +107,7 @@ public class PiligrimProtocolDecoder extends BaseHttpProtocolDecoder {
                 if (type == MSG_GPS || type == MSG_GPS_SENSORS) {
 
                     Position position = new Position(getProtocolName());
-                    position.setDeviceId(deviceSession.getDeviceId());
+                    position.setRastreador_id(deviceSession.getDeviceId());
 
                     DateBuilder dateBuilder = new DateBuilder()
                             .setDay(buf.readUnsignedByte())
@@ -138,14 +138,14 @@ public class PiligrimProtocolDecoder extends BaseHttpProtocolDecoder {
 
                     int satellites = buf.readUnsignedByte();
                     position.set(Position.KEY_SATELLITES, satellites);
-                    position.setValid(satellites >= 3);
+                    //position.setValid(satellites >= 3);
 
-                    position.setSpeed(buf.readUnsignedByte());
+                    position.setVelocidade(buf.readUnsignedByte());
 
                     double course = buf.readUnsignedByte() << 1;
                     course += (flags >> 2) & 1;
                     course += buf.readUnsignedByte() / 100.0;
-                    position.setCourse(course);
+                    position.setCurso(course);
 
                     if (type == MSG_GPS_SENSORS) {
                         double power = buf.readUnsignedByte();
@@ -188,16 +188,16 @@ public class PiligrimProtocolDecoder extends BaseHttpProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             DateBuilder dateBuilder = new DateBuilder()
                     .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
-            position.setValid(parser.next().equals("A"));
+            //position.setValid(parser.next().equals("A"));
             position.setLatitude(parser.nextCoordinate());
             position.setLongitude(parser.nextCoordinate());
-            position.setSpeed(parser.nextDouble());
-            position.setCourse(parser.nextDouble());
+            position.setVelocidade(parser.nextDouble());
+            position.setCurso(parser.nextDouble());
 
             dateBuilder.setDateReverse(parser.nextInt(), parser.nextInt(), parser.nextInt());
             position.setTime(dateBuilder.getDate());

@@ -71,7 +71,7 @@ public class OpenGtsProtocolDecoder extends BaseHttpProtocolDecoder {
                         sendResponse(channel, HttpResponseStatus.BAD_REQUEST);
                         return null;
                     }
-                    position.setDeviceId(deviceSession.getDeviceId());
+                    position.setRastreador_id(deviceSession.getDeviceId());
                     break;
                 case "gprmc":
                     Parser parser = new Parser(PATTERN, value);
@@ -83,11 +83,11 @@ public class OpenGtsProtocolDecoder extends BaseHttpProtocolDecoder {
                     DateBuilder dateBuilder = new DateBuilder()
                             .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
-                    position.setValid(parser.next().equals("A"));
+                    //position.setValid(parser.next().equals("A"));
                     position.setLatitude(parser.nextCoordinate());
                     position.setLongitude(parser.nextCoordinate());
-                    position.setSpeed(parser.nextDouble());
-                    position.setCourse(parser.nextDouble(0));
+                    position.setVelocidade(parser.nextDouble());
+                    position.setCurso(parser.nextDouble(0));
 
                     dateBuilder.setDateReverse(parser.nextInt(), parser.nextInt(), parser.nextInt());
                     position.setTime(dateBuilder.getDate());
@@ -103,7 +103,7 @@ public class OpenGtsProtocolDecoder extends BaseHttpProtocolDecoder {
             }
         }
 
-        if (position.getDeviceId() != 0) {
+        if (position.getRastreador_id() != 0) {
             sendResponse(channel, HttpResponseStatus.OK);
             return position;
         } else {

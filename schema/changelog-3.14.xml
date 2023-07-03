@@ -8,6 +8,7 @@
 
   <changeSet author="author" id="changelog-3.14">
 
+    <!--
     <preConditions onFail="MARK_RAN">
       <not>
         <tableExists tableName="tc_servers" />
@@ -68,7 +69,8 @@
     <addForeignKeyConstraint baseTableName="device_driver" baseColumnNames="driverid" constraintName="fk_device_driver_driverid" referencedTableName="drivers" referencedColumnNames="id" onDelete="CASCADE" />
 
     <renameTable oldTableName="server" newTableName="servers" />
-
+    -->
+    
   </changeSet>
 
 </databaseChangeLog>

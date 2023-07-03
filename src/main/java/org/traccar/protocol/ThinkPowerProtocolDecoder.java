@@ -64,14 +64,14 @@ public class ThinkPowerProtocolDecoder extends BaseProtocolDecoder {
     private void decodeValue(Position position, int type, ByteBuf buf) {
         switch (type) {
             case 0x01:
-                position.setValid(true);
+                //position.setValid(true);
                 position.setLatitude(BufferUtil.readSignedMagnitudeInt(buf) * 0.0000001);
                 position.setLongitude(BufferUtil.readSignedMagnitudeInt(buf) * 0.0000001);
-                position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort() * 0.1));
-                position.setCourse(buf.readUnsignedShort() * 0.01);
+                position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort() * 0.1));
+                position.setCurso(buf.readUnsignedShort() * 0.01);
                 break;
             case 0x02:
-                position.setValid(buf.readUnsignedByte() > 0);
+                //position.setValid(buf.readUnsignedByte() > 0);
                 break;
             case 0x03:
                 buf.skipBytes(3); // geofence
@@ -163,7 +163,7 @@ public class ThinkPowerProtocolDecoder extends BaseProtocolDecoder {
             buf.readUnsignedByte(); // count
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.setTime(new Date(buf.readUnsignedInt() * 1000));
 

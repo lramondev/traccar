@@ -30,7 +30,7 @@ public final class GeofenceUtil {
 
     public static List<Long> getCurrentGeofences(Config config, CacheManager cacheManager, Position position) {
         List<Long> result = new ArrayList<>();
-        for (Geofence geofence : cacheManager.getDeviceObjects(position.getDeviceId(), Geofence.class)) {
+        for (Geofence geofence : cacheManager.getDeviceObjects(position.getRastreador_id(), Geofence.class)) {
             if (geofence.getGeometry().containsPoint(
                     config, geofence, position.getLatitude(), position.getLongitude())) {
                 result.add(geofence.getId());

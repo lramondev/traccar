@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.traccar.storage.QueryIgnore;
 import org.traccar.storage.StorageName;
 
-@StorageName("tc_positions")
+@StorageName("geolocal_rastreador_posicao")
 public class Position extends Message {
 
     public static final String KEY_ORIGINAL = "raw";
@@ -154,55 +154,56 @@ public class Position extends Message {
     }
 
     public Position(String protocol) {
-        this.protocol = protocol;
+        this.protocolo = protocol;
     }
 
-    private String protocol;
+    private String protocolo;
 
-    public String getProtocol() {
-        return protocol;
+    public String getProtocolo() {
+        return protocolo;
     }
 
-    public void setProtocol(String protocol) {
-        this.protocol = protocol;
+    public void setProtocolo(String protocolo) {
+        this.protocolo = protocolo;
     }
 
-    private Date serverTime = new Date();
+    private Date datahora_servidor = new Date();
 
-    public Date getServerTime() {
-        return serverTime;
+    public Date getDatahora_servidor() {
+        return datahora_servidor;
     }
 
-    public void setServerTime(Date serverTime) {
-        this.serverTime = serverTime;
+    public void setDatahora_servidor(Date serverTime) {
+        this.datahora_servidor = serverTime;
     }
 
-    private Date deviceTime;
+    private Date datahora_rastreador;
 
-    public Date getDeviceTime() {
-        return deviceTime;
+    public Date getDatahora_rastreador() {
+        return datahora_rastreador;
     }
 
-    public void setDeviceTime(Date deviceTime) {
-        this.deviceTime = deviceTime;
+    public void setDatahora_rastreador(Date deviceTime) {
+        this.datahora_rastreador = deviceTime;
     }
 
-    private Date fixTime;
+    private Date datahora_corrigida;
 
-    public Date getFixTime() {
-        return fixTime;
+    public Date getDatahora_corrigida() {
+        return datahora_corrigida;
     }
 
-    public void setFixTime(Date fixTime) {
-        this.fixTime = fixTime;
+    public void setDatahora_corrigida(Date fixTime) {
+        this.datahora_corrigida = fixTime;
     }
 
     @QueryIgnore
     public void setTime(Date time) {
-        setDeviceTime(time);
-        setFixTime(time);
+        setDatahora_rastreador(time);
+        setDatahora_corrigida(time);
     }
 
+    /* 
     private boolean outdated;
 
     @QueryIgnore
@@ -224,6 +225,7 @@ public class Position extends Message {
     public void setValid(boolean valid) {
         this.valid = valid;
     }
+    */
 
     private double latitude;
 
@@ -261,26 +263,27 @@ public class Position extends Message {
         this.altitude = altitude;
     }
 
-    private double speed; // value in knots
+    private double velocidade; // value in knots
 
-    public double getSpeed() {
-        return speed;
+    public double getVelocidade() {
+        return velocidade;
     }
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
+    public void setVelocidade(double speed) {
+        this.velocidade = speed;
     }
 
-    private double course;
+    private double curso;
 
-    public double getCourse() {
-        return course;
+    public double getCurso() {
+        return curso;
     }
 
-    public void setCourse(double course) {
-        this.course = course;
+    public void setCurso(double course) {
+        this.curso = course;
     }
 
+    /* 
     private String address;
 
     public String getAddress() {
@@ -290,27 +293,29 @@ public class Position extends Message {
     public void setAddress(String address) {
         this.address = address;
     }
+    */
 
-    private double accuracy;
+    private double precisao;
 
-    public double getAccuracy() {
-        return accuracy;
+    public double getPrecisao() {
+        return precisao;
     }
 
-    public void setAccuracy(double accuracy) {
-        this.accuracy = accuracy;
+    public void setPrecisao(double accuracy) {
+        this.precisao = accuracy;
     }
 
-    private Network network;
+    private Network rede;
 
-    public Network getNetwork() {
-        return network;
+    public Network getRede() {
+        return rede;
     }
 
-    public void setNetwork(Network network) {
-        this.network = network;
+    public void setRede(Network network) {
+        this.rede = network;
     }
 
+      /* 
     private List<Long> geofenceIds;
 
     public List<Long> getGeofenceIds() {
@@ -324,6 +329,7 @@ public class Position extends Message {
             this.geofenceIds = null;
         }
     }
+    */
 
     @JsonIgnore
     @QueryIgnore

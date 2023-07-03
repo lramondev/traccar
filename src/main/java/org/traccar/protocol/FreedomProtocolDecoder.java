@@ -60,16 +60,16 @@ public class FreedomProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setValid(true);
+        //position.setValid(true);
 
         position.setTime(parser.nextDateTime());
 
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
 
-        position.setSpeed(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
 
         return position;
     }

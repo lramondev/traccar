@@ -83,29 +83,29 @@ public class OwnTracksProtocolDecoder extends BaseHttpProtocolDecoder {
             return null;
         }
 
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(new Date(root.getJsonNumber("tst").longValue() * 1000));
         if (root.containsKey("sent")) {
-            position.setDeviceTime(new Date(root.getJsonNumber("sent").longValue() * 1000));
+            position.setDatahora_rastreador(new Date(root.getJsonNumber("sent").longValue() * 1000));
         }
 
-        position.setValid(true);
+        //position.setValid(true);
 
         position.setLatitude(root.getJsonNumber("lat").doubleValue());
         position.setLongitude(root.getJsonNumber("lon").doubleValue());
 
         if (root.containsKey("vel")) {
-            position.setSpeed(UnitsConverter.knotsFromKph(root.getInt("vel")));
+            position.setVelocidade(UnitsConverter.knotsFromKph(root.getInt("vel")));
         }
         if (root.containsKey("alt")) {
             position.setAltitude(root.getInt("alt"));
         }
         if (root.containsKey("cog")) {
-            position.setCourse(root.getInt("cog"));
+            position.setCurso(root.getInt("cog"));
         }
         if (root.containsKey("acc")) {
-            position.setAccuracy(root.getInt("acc"));
+            position.setPrecisao(root.getInt("acc"));
         }
         if (root.containsKey("t")) {
             String trigger = root.getString("t");

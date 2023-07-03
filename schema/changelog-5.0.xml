@@ -8,6 +8,7 @@
 
   <changeSet author="author" id="changelog-5.0">
 
+    <!--
     <preConditions onFail="MARK_RAN">
       <not>
         <columnExists tableName="tc_servers" columnName="disablereports" />
@@ -17,6 +18,7 @@
     <addColumn tableName="tc_servers">
       <column name="disablereports" type="BOOLEAN" defaultValueBoolean="false" />
     </addColumn>
+    
 
     <addColumn tableName="tc_users">
       <column name="disablereports" type="BOOLEAN" defaultValueBoolean="false" />
@@ -27,7 +29,7 @@
 
     <renameColumn tableName="tc_orders" oldColumnName="toaddresstmp" newColumnName="toaddress" columnDataType="VARCHAR(512)" />
     <renameColumn tableName="tc_orders" oldColumnName="fromaddresstmp" newColumnName="fromaddress" columnDataType="VARCHAR(512)" />
-
+-->
   </changeSet>
 
 </databaseChangeLog>

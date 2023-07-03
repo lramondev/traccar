@@ -70,7 +70,7 @@ public class Vt200ProtocolDecoder extends BaseProtocolDecoder {
         if (type == 0x2086 || type == 0x2084 || type == 0x2082 || type == 0x3089) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             if (type == 0x3089) {
                 position.set(Position.KEY_IGNITION, buf.readUnsignedByte() == 1);
@@ -87,7 +87,7 @@ public class Vt200ProtocolDecoder extends BaseProtocolDecoder {
                 position.setLongitude(decodeCoordinate(BcdUtil.readInteger(buf, 9)));
 
                 int flags = buf.readUnsignedByte();
-                position.setValid(BitUtil.check(flags, 0));
+                //position.setValid(BitUtil.check(flags, 0));
                 if (!BitUtil.check(flags, 1)) {
                     position.setLatitude(-position.getLatitude());
                 }
@@ -97,8 +97,8 @@ public class Vt200ProtocolDecoder extends BaseProtocolDecoder {
             }
 
             if (type != 0x3089) {
-                position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
-                position.setCourse(buf.readUnsignedByte() * 2);
+                position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+                position.setCurso(buf.readUnsignedByte() * 2);
 
                 position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
                 position.set(Position.KEY_RSSI, buf.readUnsignedByte());
@@ -113,7 +113,7 @@ public class Vt200ProtocolDecoder extends BaseProtocolDecoder {
         } else if (type == 0x3088) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, null);
 

@@ -41,8 +41,8 @@ public class MotionHandler extends BaseDataHandler {
     protected Position handlePosition(Position position) {
         if (!position.hasAttribute(Position.KEY_MOTION)) {
             double threshold = AttributeUtil.lookup(
-                    cacheManager, Keys.EVENT_MOTION_SPEED_THRESHOLD, position.getDeviceId());
-            position.set(Position.KEY_MOTION, position.getSpeed() > threshold);
+                    cacheManager, Keys.EVENT_MOTION_SPEED_THRESHOLD, position.getRastreador_id());
+            position.set(Position.KEY_MOTION, position.getVelocidade() > threshold);
         }
         return position;
     }

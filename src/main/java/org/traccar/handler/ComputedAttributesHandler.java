@@ -86,7 +86,7 @@ public class ComputedAttributesHandler extends BaseDataHandler {
     private MapContext prepareContext(Position position) {
         MapContext result = new MapContext();
         if (includeDeviceAttributes) {
-            Device device = cacheManager.getObject(Device.class, position.getDeviceId());
+            Device device = cacheManager.getObject(Device.class, position.getRastreador_id());
             if (device != null) {
                 for (String key : device.getAttributes().keySet()) {
                     result.set(key, device.getAttributes().get(key));
@@ -127,7 +127,7 @@ public class ComputedAttributesHandler extends BaseDataHandler {
 
     @Override
     protected Position handlePosition(Position position) {
-        Collection<Attribute> attributes = cacheManager.getDeviceObjects(position.getDeviceId(), Attribute.class);
+        Collection<Attribute> attributes = cacheManager.getDeviceObjects(position.getRastreador_id(), Attribute.class);
         for (Attribute attribute : attributes) {
             if (attribute.getAttribute() != null) {
                 Object result = null;
@@ -139,9 +139,9 @@ public class ComputedAttributesHandler extends BaseDataHandler {
                 if (result != null) {
                     try {
                         switch (attribute.getAttribute()) {
-                            case "valid":
+                            /*case "valid":
                                 position.setValid((Boolean) result);
-                                break;
+                                break;*/
                             case "latitude":
                                 position.setLatitude(((Number) result).doubleValue());
                                 break;
@@ -152,16 +152,16 @@ public class ComputedAttributesHandler extends BaseDataHandler {
                                 position.setAltitude(((Number) result).doubleValue());
                                 break;
                             case "speed":
-                                position.setSpeed(((Number) result).doubleValue());
+                                position.setVelocidade(((Number) result).doubleValue());
                                 break;
                             case "course":
-                                position.setCourse(((Number) result).doubleValue());
+                                position.setCurso(((Number) result).doubleValue());
                                 break;
-                            case "address":
+                            /*case "address":
                                 position.setAddress((String) result);
-                                break;
+                                break;*/
                             case "accuracy":
-                                position.setAccuracy(((Number) result).doubleValue());
+                                position.setPrecisao(((Number) result).doubleValue());
                                 break;
                             default:
                                 switch (attribute.getType()) {

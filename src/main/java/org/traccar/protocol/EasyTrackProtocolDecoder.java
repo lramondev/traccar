@@ -135,11 +135,11 @@ public class EasyTrackProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_COMMAND, parser.next());
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
 
         DateBuilder dateBuilder = new DateBuilder()
                 .setDate(parser.nextHexInt(), parser.nextHexInt(), parser.nextHexInt())
@@ -158,10 +158,10 @@ public class EasyTrackProtocolDecoder extends BaseProtocolDecoder {
             position.setLongitude(parser.nextHexInt() / 600000.0);
         }
 
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextHexInt() / 100.0));
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextHexInt() / 100.0));
         double course = parser.nextHexInt() * 0.01;
         if (course < 360) {
-            position.setCourse(course);
+            position.setCurso(course);
         }
 
         long status = parser.nextHexLong();
@@ -201,7 +201,7 @@ public class EasyTrackProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 
@@ -214,7 +214,7 @@ public class EasyTrackProtocolDecoder extends BaseProtocolDecoder {
         int lac = parser.nextInt();
         int mcc = parser.nextInt();
         int mnc = parser.nextInt();
-        position.setNetwork(new Network(CellTower.from(mcc, mnc, lac, cid)));
+        position.setRede(new Network(CellTower.from(mcc, mnc, lac, cid)));
 
         return position;
     }

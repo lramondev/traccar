@@ -107,7 +107,7 @@ public class CastelProtocolDecoder extends BaseProtocolDecoder {
     private Position readPosition(DeviceSession deviceSession, ByteBuf buf) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         DateBuilder dateBuilder = new DateBuilder()
                 .setDateReverse(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
@@ -116,8 +116,8 @@ public class CastelProtocolDecoder extends BaseProtocolDecoder {
 
         double lat = buf.readUnsignedIntLE() / 3600000.0;
         double lon = buf.readUnsignedIntLE() / 3600000.0;
-        position.setSpeed(UnitsConverter.knotsFromCps(buf.readUnsignedShortLE()));
-        position.setCourse(buf.readUnsignedShortLE() * 0.1);
+        position.setVelocidade(UnitsConverter.knotsFromCps(buf.readUnsignedShortLE()));
+        position.setCurso(buf.readUnsignedShortLE() * 0.1);
 
         int flags = buf.readUnsignedByte();
         if ((flags & 0x02) == 0) {
@@ -128,7 +128,7 @@ public class CastelProtocolDecoder extends BaseProtocolDecoder {
         }
         position.setLatitude(lat);
         position.setLongitude(lon);
-        position.setValid((flags & 0x0C) > 0);
+        //position.setValid((flags & 0x0C) > 0);
         position.set(Position.KEY_SATELLITES, flags >> 4);
 
         return position;
@@ -137,7 +137,7 @@ public class CastelProtocolDecoder extends BaseProtocolDecoder {
     private Position createPosition(DeviceSession deviceSession) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 
@@ -445,7 +445,7 @@ public class CastelProtocolDecoder extends BaseProtocolDecoder {
 
                 decodeStat(position, buf);
 
-                position.setNetwork(new Network(
+                position.setRede(new Network(
                         CellTower.fromLacCid(getConfig(), buf.readUnsignedShortLE(), buf.readUnsignedShortLE())));
 
                 return position;
@@ -501,7 +501,7 @@ public class CastelProtocolDecoder extends BaseProtocolDecoder {
                 buf.readUnsignedByte(); // geo-fencing flags
                 buf.readUnsignedByte(); // additional flags
 
-                position.setNetwork(new Network(
+                position.setRede(new Network(
                         CellTower.fromLacCid(getConfig(), buf.readUnsignedShortLE(), buf.readUnsignedShortLE())));
 
                 positions.add(position);

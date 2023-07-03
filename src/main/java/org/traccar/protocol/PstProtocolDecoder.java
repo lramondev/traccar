@@ -97,9 +97,9 @@ public class PstProtocolDecoder extends BaseProtocolDecoder {
         if (type == MSG_STATUS) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
-            position.setDeviceTime(readDate(buf));
+            position.setDatahora_rastreador(readDate(buf));
 
             int status = buf.readUnsignedByte();
             position.set(Position.KEY_BLOCKED, BitUtil.check(status, 4));
@@ -125,12 +125,12 @@ public class PstProtocolDecoder extends BaseProtocolDecoder {
                         }
                         break;
                     case 0x10:
-                        position.setValid(true);
-                        position.setFixTime(readDate(buf));
+                        //position.setValid(true);
+                        position.setDatahora_corrigida(readDate(buf));
                         position.setLatitude(readCoordinate(buf));
                         position.setLongitude(readCoordinate(buf));
-                        position.setSpeed(buf.readUnsignedByte());
-                        position.setCourse(buf.readUnsignedByte() * 2);
+                        position.setVelocidade(buf.readUnsignedByte());
+                        position.setCurso(buf.readUnsignedByte() * 2);
                         position.setAltitude(buf.readShort());
                         buf.readUnsignedInt(); // gps condition
                         break;
@@ -140,7 +140,7 @@ public class PstProtocolDecoder extends BaseProtocolDecoder {
                 }
             }
 
-            return position.getFixTime() != null ? position : null;
+            return position.getDatahora_corrigida() != null ? position : null;
         }
 
         return null;

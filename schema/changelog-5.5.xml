@@ -7,9 +7,9 @@
   logicalFilePath="changelog-5.5">
 
   <changeSet author="author" id="changelog-5.5">
-
+    <!--
     <dropColumn tableName="tc_commands_queue" columnName="description" />
-
+    -->
   </changeSet>
 
 </databaseChangeLog>

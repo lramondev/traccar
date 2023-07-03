@@ -25,6 +25,7 @@ import org.traccar.storage.Storage;
 import org.traccar.storage.StorageException;
 import org.traccar.storage.query.Columns;
 import org.traccar.storage.query.Request;
+import org.traccar.storage.query.Condition;
 
 import javax.inject.Inject;
 import java.util.HashMap;
@@ -65,9 +66,10 @@ public class TaskDeviceInactivityCheck implements ScheduleTask {
 
         try {
             for (Device device : storage.getObjects(Device.class, new Request(new Columns.All()))) {
-                if (device.getLastUpdate() != null && checkDevice(device, currentTime, checkPeriod)) {
+                Position lastPosition = storage.getObject(Position.class, new Request(new Columns.All(), new Condition.LatestPositions(device.getId())));
+                if (lastPosition.getDatahora_rastreador() != null && checkDevice(device, currentTime, checkPeriod)) {
                     Event event = new Event(Event.TYPE_DEVICE_INACTIVE, device.getId());
-                    event.set(ATTRIBUTE_LAST_UPDATE, device.getLastUpdate().getTime());
+                    event.set(ATTRIBUTE_LAST_UPDATE, lastPosition.getDatahora_rastreador().getTime());
                     events.put(event, null);
                 }
             }
@@ -79,24 +81,31 @@ public class TaskDeviceInactivityCheck implements ScheduleTask {
     }
 
     private boolean checkDevice(Device device, long currentTime, long checkPeriod) {
-        long deviceInactivityStart = device.getLong(ATTRIBUTE_DEVICE_INACTIVITY_START);
-        if (deviceInactivityStart > 0) {
-            long timeThreshold = device.getLastUpdate().getTime() + deviceInactivityStart;
-            if (currentTime >= timeThreshold) {
-
-                if (currentTime - checkPeriod < timeThreshold) {
-                    return true;
+        try {
+            long deviceInactivityStart = device.getLong(ATTRIBUTE_DEVICE_INACTIVITY_START);
+            Position lastPosition = storage.getObject(Position.class, new Request(new Columns.All(), new Condition.LatestPositions(device.getId())));
+    
+            if (deviceInactivityStart > 0) {
+                long timeThreshold = lastPosition.getDatahora_rastreador().getTime() + deviceInactivityStart;
+                if (currentTime >= timeThreshold) {
+    
+                    if (currentTime - checkPeriod < timeThreshold) {
+                        return true;
+                    }
+    
+                    long deviceInactivityPeriod = device.getLong(ATTRIBUTE_DEVICE_INACTIVITY_PERIOD);
+                    if (deviceInactivityPeriod > 0) {
+                        long count = (currentTime - timeThreshold - 1) / deviceInactivityPeriod;
+                        timeThreshold += count * deviceInactivityPeriod;
+                        return currentTime - checkPeriod < timeThreshold;
+                    }
+    
                 }
-
-                long deviceInactivityPeriod = device.getLong(ATTRIBUTE_DEVICE_INACTIVITY_PERIOD);
-                if (deviceInactivityPeriod > 0) {
-                    long count = (currentTime - timeThreshold - 1) / deviceInactivityPeriod;
-                    timeThreshold += count * deviceInactivityPeriod;
-                    return currentTime - checkPeriod < timeThreshold;
-                }
-
             }
+        } catch (StorageException e) {
+            LOGGER.warn("Get devices error", e);
         }
+
         return false;
     }
 

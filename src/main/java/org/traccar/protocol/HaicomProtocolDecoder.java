@@ -69,7 +69,7 @@ public class HaicomProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_VERSION_FW, parser.next());
 
@@ -77,7 +77,7 @@ public class HaicomProtocolDecoder extends BaseProtocolDecoder {
 
         int flags = parser.nextInt(0);
 
-        position.setValid(BitUtil.check(flags, 0));
+        //position.setValid(BitUtil.check(flags, 0));
 
         double latitude = parser.nextDouble(0) + parser.nextDouble(0) / 60000;
         if (BitUtil.check(flags, 2)) {
@@ -93,8 +93,8 @@ public class HaicomProtocolDecoder extends BaseProtocolDecoder {
             position.setLongitude(-longitude);
         }
 
-        position.setSpeed(parser.nextDouble(0) / 10);
-        position.setCourse(parser.nextDouble(0) / 10);
+        position.setVelocidade(parser.nextDouble(0) / 10);
+        position.setCurso(parser.nextDouble(0) / 10);
 
         position.set(Position.KEY_STATUS, parser.next());
         position.set("gprsCount", parser.next());

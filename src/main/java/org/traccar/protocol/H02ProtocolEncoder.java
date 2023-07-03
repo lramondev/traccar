@@ -47,7 +47,7 @@ public class H02ProtocolEncoder extends StringProtocolEncoder {
     }
 
     protected Object encodeCommand(Command command, Date time) {
-        String uniqueId = getUniqueId(command.getDeviceId());
+        String uniqueId = getUniqueId(command.getRastreador_id());
 
         switch (command.getType()) {
             case Command.TYPE_ALARM_ARM:
@@ -62,7 +62,7 @@ public class H02ProtocolEncoder extends StringProtocolEncoder {
                 String frequency = command.getAttributes().get(Command.KEY_FREQUENCY).toString();
                 if (AttributeUtil.lookup(
                         getCacheManager(), Keys.PROTOCOL_ALTERNATIVE.withPrefix(getProtocolName()),
-                        command.getDeviceId())) {
+                        command.getRastreador_id())) {
                     return formatCommand(time, uniqueId, "D1", frequency);
                 } else {
                     return formatCommand(time, uniqueId, "S71", "22", frequency);

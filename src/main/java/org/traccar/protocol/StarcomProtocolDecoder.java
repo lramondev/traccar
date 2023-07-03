@@ -38,7 +38,7 @@ public class StarcomProtocolDecoder extends BaseProtocolDecoder {
         sentence = sentence.substring(sentence.indexOf('|') + 1, sentence.lastIndexOf('|'));
 
         Position position = new Position();
-        position.setProtocol(getProtocolName());
+        position.setProtocolo(getProtocolName());
 
         for (String entry : sentence.split(",")) {
             int delimiter = entry.indexOf('=');
@@ -48,11 +48,11 @@ public class StarcomProtocolDecoder extends BaseProtocolDecoder {
                 case "unit":
                     DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, value);
                     if (deviceSession != null) {
-                        position.setDeviceId(deviceSession.getDeviceId());
+                        position.setRastreador_id(deviceSession.getDeviceId());
                     }
                     break;
                 case "gps_valid":
-                    position.setValid(Integer.parseInt(value) != 0);
+                    //position.setValid(Integer.parseInt(value) != 0);
                     break;
                 case "datetime_actual":
                     position.setTime(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(value));
@@ -67,10 +67,10 @@ public class StarcomProtocolDecoder extends BaseProtocolDecoder {
                     position.setAltitude(Double.parseDouble(value));
                     break;
                 case "velocity":
-                    position.setSpeed(UnitsConverter.knotsFromKph(Integer.parseInt(value)));
+                    position.setVelocidade(UnitsConverter.knotsFromKph(Integer.parseInt(value)));
                     break;
                 case "heading":
-                    position.setCourse(Integer.parseInt(value));
+                    position.setCurso(Integer.parseInt(value));
                     break;
                 case "eventid":
                     position.set(Position.KEY_EVENT, Integer.parseInt(value));

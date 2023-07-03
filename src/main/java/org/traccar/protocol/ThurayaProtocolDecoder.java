@@ -69,7 +69,7 @@ public class ThurayaProtocolDecoder extends BaseProtocolDecoder {
 
     private void decodeLocation(ByteBuf buf, Position position) {
 
-        position.setValid(true);
+        //position.setValid(true);
 
         DateBuilder dateBuilder = new DateBuilder();
 
@@ -101,8 +101,8 @@ public class ThurayaProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_IGNITION, false);
         }
 
-        position.setCourse(BitUtil.to(data, 12));
-        position.setSpeed(buf.readShort());
+        position.setCurso(BitUtil.to(data, 12));
+        position.setVelocidade(buf.readShort());
 
         position.set(Position.KEY_RPM, buf.readShort());
 
@@ -158,7 +158,7 @@ public class ThurayaProtocolDecoder extends BaseProtocolDecoder {
         if (type == MSG_EVENT) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             decodeLocation(buf, position);
 
@@ -177,7 +177,7 @@ public class ThurayaProtocolDecoder extends BaseProtocolDecoder {
             for (int i = 0; i < count; i++) {
 
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 decodeLocation(buf, position);
 

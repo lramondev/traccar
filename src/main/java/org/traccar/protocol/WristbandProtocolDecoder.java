@@ -77,15 +77,15 @@ public class WristbandProtocolDecoder extends BaseProtocolDecoder {
     private Position decodePosition(DeviceSession deviceSession, String sentence) throws ParseException {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         String[] values = sentence.split(",");
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setLongitude(Double.parseDouble(values[0]));
         position.setLatitude(Double.parseDouble(values[1]));
         position.setTime(new SimpleDateFormat("yyyyMMddHHmm").parse(values[2]));
-        position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(values[3])));
+        position.setVelocidade(UnitsConverter.knotsFromKph(Double.parseDouble(values[3])));
 
         return position;
     }
@@ -93,7 +93,7 @@ public class WristbandProtocolDecoder extends BaseProtocolDecoder {
     private Position decodeStatus(DeviceSession deviceSession, String sentence) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 
@@ -105,7 +105,7 @@ public class WristbandProtocolDecoder extends BaseProtocolDecoder {
     private Position decodeNetwork(DeviceSession deviceSession, String sentence, boolean wifi) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 
@@ -129,7 +129,7 @@ public class WristbandProtocolDecoder extends BaseProtocolDecoder {
             network.addCellTower(CellTower.from(mcc, mnc, lac, cid, rssi));
         }
 
-        position.setNetwork(network);
+        position.setRede(network);
 
         return position;
     }

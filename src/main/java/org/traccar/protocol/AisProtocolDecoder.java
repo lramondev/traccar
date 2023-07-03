@@ -63,7 +63,7 @@ public class AisProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.setTime(new Date());
 
@@ -74,11 +74,11 @@ public class AisProtocolDecoder extends BaseProtocolDecoder {
                 position.set("turn", buf.readSigned(8));
             }
 
-            position.setSpeed(buf.readUnsigned(10) * 0.1);
-            position.setValid(buf.readUnsigned(1) != 0);
+            position.setVelocidade(buf.readUnsigned(10) * 0.1);
+            //position.setValid(buf.readUnsigned(1) != 0);
             position.setLongitude(buf.readSigned(28) * 0.0001 / 60.0);
             position.setLatitude(buf.readSigned(27) * 0.0001 / 60.0);
-            position.setCourse(buf.readUnsigned(12) * 0.1);
+            position.setCurso(buf.readUnsigned(12) * 0.1);
 
             position.set("heading", buf.readUnsigned(9));
 

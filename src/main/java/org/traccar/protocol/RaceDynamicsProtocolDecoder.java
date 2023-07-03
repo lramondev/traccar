@@ -126,15 +126,15 @@ public class RaceDynamicsProtocolDecoder extends BaseProtocolDecoder {
                 if (parser.matches()) {
 
                     Position position = new Position(getProtocolName());
-                    position.setDeviceId(deviceSession.getDeviceId());
+                    position.setRastreador_id(deviceSession.getDeviceId());
 
                     DateBuilder dateBuilder = new DateBuilder()
                             .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
-                    position.setValid(parser.next().equals("A"));
+                    //position.setValid(parser.next().equals("A"));
                     position.setLatitude(parser.nextCoordinate());
                     position.setLongitude(parser.nextCoordinate());
-                    position.setSpeed(parser.nextDouble());
+                    position.setVelocidade(parser.nextDouble());
 
                     dateBuilder.setDateReverse(parser.nextInt(), parser.nextInt(), parser.nextInt());
                     position.setTime(dateBuilder.getDate());

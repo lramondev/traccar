@@ -92,15 +92,15 @@ public class EelinkProtocolEncoder extends BaseProtocolEncoder {
 
         switch (command.getType()) {
             case Command.TYPE_CUSTOM:
-                return encodeContent(command.getDeviceId(), command.getString(Command.KEY_DATA));
+                return encodeContent(command.getRastreador_id(), command.getString(Command.KEY_DATA));
             case Command.TYPE_POSITION_SINGLE:
-                return encodeContent(command.getDeviceId(), "WHERE#");
+                return encodeContent(command.getRastreador_id(), "WHERE#");
             case Command.TYPE_ENGINE_STOP:
-                return encodeContent(command.getDeviceId(), "RELAY,1#");
+                return encodeContent(command.getRastreador_id(), "RELAY,1#");
             case Command.TYPE_ENGINE_RESUME:
-                return encodeContent(command.getDeviceId(), "RELAY,0#");
+                return encodeContent(command.getRastreador_id(), "RELAY,0#");
             case Command.TYPE_REBOOT_DEVICE:
-                return encodeContent(command.getDeviceId(), "RESET#");
+                return encodeContent(command.getRastreador_id(), "RESET#");
             default:
                 return null;
         }

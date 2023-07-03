@@ -96,7 +96,7 @@ public class SkypatrolProtocolDecoder extends BaseProtocolDecoder {
             if (deviceSession == null) {
                 return null;
             }
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             if (BitUtil.check(mask, 3)) {
                 position.set(Position.PREFIX_IO + 1, buf.readUnsignedShort());
@@ -122,7 +122,7 @@ public class SkypatrolProtocolDecoder extends BaseProtocolDecoder {
             }
 
             if (BitUtil.check(mask, 9)) {
-                position.setValid(buf.readUnsignedByte() == 1); // gps status
+                //position.setValid(buf.readUnsignedByte() == 1); // gps status
             }
 
             if (BitUtil.check(mask, 10)) {
@@ -134,11 +134,11 @@ public class SkypatrolProtocolDecoder extends BaseProtocolDecoder {
             }
 
             if (BitUtil.check(mask, 12)) {
-                position.setSpeed(buf.readUnsignedShort() / 10.0);
+                position.setVelocidade(buf.readUnsignedShort() / 10.0);
             }
 
             if (BitUtil.check(mask, 13)) {
-                position.setCourse(buf.readUnsignedShort() / 10.0);
+                position.setCurso(buf.readUnsignedShort() / 10.0);
             }
 
             if (BitUtil.check(mask, 14)) {

@@ -56,7 +56,7 @@ public class RuptelaProtocolDecoder extends BaseProtocolDecoder {
 
     private Position decodeCommandResponse(DeviceSession deviceSession, int type, ByteBuf buf) {
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 
@@ -230,7 +230,7 @@ public class RuptelaProtocolDecoder extends BaseProtocolDecoder {
 
             for (int i = 0; i < count; i++) {
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 position.setTime(new Date(buf.readUnsignedInt() * 1000));
                 buf.readUnsignedByte(); // timestamp extension
@@ -241,15 +241,15 @@ public class RuptelaProtocolDecoder extends BaseProtocolDecoder {
 
                 buf.readUnsignedByte(); // priority (reserved)
 
-                position.setValid(true);
+                //position.setValid(true);
                 position.setLongitude(buf.readInt() / 10000000.0);
                 position.setLatitude(buf.readInt() / 10000000.0);
                 position.setAltitude(buf.readUnsignedShort() / 10.0);
-                position.setCourse(buf.readUnsignedShort() / 100.0);
+                position.setCurso(buf.readUnsignedShort() / 100.0);
 
                 position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
 
-                position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
+                position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
 
                 position.set(Position.KEY_HDOP, buf.readUnsignedByte() / 10.0);
 
@@ -314,13 +314,13 @@ public class RuptelaProtocolDecoder extends BaseProtocolDecoder {
 
             for (int i = 0; i < count; i++) {
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 buf.readUnsignedByte(); // reserved
 
                 position.setTime(new Date(buf.readUnsignedInt() * 1000));
 
-                position.setValid(true);
+                //position.setValid(true);
                 position.setLongitude(buf.readInt() / 10000000.0);
                 position.setLatitude(buf.readInt() / 10000000.0);
 
@@ -366,7 +366,7 @@ public class RuptelaProtocolDecoder extends BaseProtocolDecoder {
                     }
                 } else {
                     Position position = new Position(getProtocolName());
-                    position.setDeviceId(deviceSession.getDeviceId());
+                    position.setRastreador_id(deviceSession.getDeviceId());
                     getLastLocation(position, null);
                     position.set(Position.KEY_IMAGE, writeMediaFile(imei, photo, "jpg"));
                     photo.release();

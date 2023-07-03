@@ -91,7 +91,7 @@ public class Avl301ProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             DateBuilder dateBuilder = new DateBuilder()
                     .setDate(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
@@ -105,11 +105,11 @@ public class Avl301ProtocolDecoder extends BaseProtocolDecoder {
 
             double latitude = buf.readUnsignedInt() / 600000.0;
             double longitude = buf.readUnsignedInt() / 600000.0;
-            position.setSpeed(buf.readUnsignedByte());
+            position.setVelocidade(buf.readUnsignedByte());
 
             int union = buf.readUnsignedShort(); // course and flags
-            position.setCourse(union & 0x03FF);
-            position.setValid((union & 0x1000) != 0);
+            position.setCurso(union & 0x03FF);
+            //position.setValid((union & 0x1000) != 0);
             if ((union & 0x0400) != 0) {
                 latitude = -latitude;
             }
@@ -124,7 +124,7 @@ public class Avl301ProtocolDecoder extends BaseProtocolDecoder {
                 position.set("acc", (union & 0x8000) != 0);
             }
 
-            position.setNetwork(new Network(
+            position.setRede(new Network(
                     CellTower.fromLacCid(getConfig(), buf.readUnsignedShort(), buf.readUnsignedMedium())));
 
             position.set(Position.KEY_ALARM, Position.ALARM_GENERAL);

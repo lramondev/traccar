@@ -99,7 +99,7 @@ public class ProgressProtocolDecoder extends BaseProtocolDecoder {
 
             for (int j = 0; j < recordCount; j++) {
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 if (type == MSG_LOGMSG) {
                     position.set(Position.KEY_ARCHIVE, true);
@@ -120,12 +120,12 @@ public class ProgressProtocolDecoder extends BaseProtocolDecoder {
                 position.setTime(new Date(buf.readUnsignedIntLE() * 1000));
                 position.setLatitude(buf.readIntLE() * 180.0 / 0x7FFFFFFF);
                 position.setLongitude(buf.readIntLE() * 180.0 / 0x7FFFFFFF);
-                position.setSpeed(buf.readUnsignedIntLE() * 0.01);
-                position.setCourse(buf.readUnsignedShortLE() * 0.01);
+                position.setVelocidade(buf.readUnsignedIntLE() * 0.01);
+                position.setCurso(buf.readUnsignedShortLE() * 0.01);
                 position.setAltitude(buf.readUnsignedShortLE() * 0.01);
 
                 int satellites = buf.readUnsignedByte();
-                position.setValid(satellites >= 3);
+                //position.setValid(satellites >= 3);
                 position.set(Position.KEY_SATELLITES, satellites);
 
                 position.set(Position.KEY_RSSI, buf.readUnsignedByte());

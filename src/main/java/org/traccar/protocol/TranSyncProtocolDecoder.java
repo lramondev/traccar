@@ -74,7 +74,7 @@ public class TranSyncProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         buf.readUnsignedShort(); // index
         buf.readUnsignedByte(); // type
@@ -87,14 +87,14 @@ public class TranSyncProtocolDecoder extends BaseProtocolDecoder {
         double latitude = buf.readUnsignedInt() / 1800000.0;
         double longitude = buf.readUnsignedInt() / 1800000.0;
 
-        position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
-        position.setCourse(buf.readUnsignedShort());
+        position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+        position.setCurso(buf.readUnsignedShort());
 
         int mnc = buf.readUnsignedByte();
         int cid = buf.readUnsignedShort();
         int status0 = buf.readUnsignedByte();
 
-        position.setValid(BitUtil.check(status0, 0));
+        //position.setValid(BitUtil.check(status0, 0));
         position.setLatitude(BitUtil.check(status0, 1) ? latitude : -latitude);
         position.setLongitude(BitUtil.check(status0, 2) ? longitude : -longitude);
 
@@ -124,7 +124,7 @@ public class TranSyncProtocolDecoder extends BaseProtocolDecoder {
         CellTower cellTower = CellTower.fromLacCid(getConfig(), lac, cid);
         cellTower.setMobileNetworkCode(mnc);
         cellTower.setSignalStrength(rssi);
-        position.setNetwork(new Network(cellTower));
+        position.setRede(new Network(cellTower));
 
         position.set(Position.KEY_BATTERY, (double) (buf.readUnsignedByte() / 10));
         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());

@@ -57,13 +57,13 @@ public class Dsf22ProtocolDecoder extends BaseProtocolDecoder {
         for (int i = 0; i < count; i++) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
-            position.setValid(true);
+            //position.setValid(true);
             position.setLatitude(buf.readIntLE() / 10000000.0);
             position.setLongitude(buf.readIntLE() / 10000000.0);
             position.setTime(new Date(buf.readUnsignedIntLE() * 1000));
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
 
             position.set(Position.KEY_FUEL_LEVEL, buf.readUnsignedShortLE() * 0.001);
 

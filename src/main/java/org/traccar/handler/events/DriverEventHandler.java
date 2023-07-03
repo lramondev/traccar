@@ -46,7 +46,7 @@ public class DriverEventHandler extends BaseEventHandler {
         String driverUniqueId = position.getString(Position.KEY_DRIVER_UNIQUE_ID);
         if (driverUniqueId != null) {
             String oldDriverUniqueId = null;
-            Position lastPosition = cacheManager.getPosition(position.getDeviceId());
+            Position lastPosition = cacheManager.getPosition(position.getRastreador_id());
             if (lastPosition != null) {
                 oldDriverUniqueId = lastPosition.getString(Position.KEY_DRIVER_UNIQUE_ID);
             }

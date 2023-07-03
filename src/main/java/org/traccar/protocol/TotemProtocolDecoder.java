@@ -284,7 +284,7 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         if (parser.hasNext()) {
             position.set(Position.KEY_ALARM, decodeAlarm123(Short.parseShort(parser.next(), 16)));
@@ -298,11 +298,11 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
         }
         dateBuilder.setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
-        position.setSpeed(parser.nextDouble(0));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
 
         if (pattern == PATTERN1) {
             day   = parser.nextInt(0);
@@ -352,7 +352,7 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
         int lac = parser.nextHexInt(0);
         int cid = parser.nextHexInt(0);
         if (lac != 0 && cid != 0) {
-            position.setNetwork(new Network(CellTower.fromLacCid(getConfig(), lac, cid)));
+            position.setRede(new Network(CellTower.fromLacCid(getConfig(), lac, cid)));
         }
 
         position.set(Position.PREFIX_TEMP + 1, parser.next());
@@ -374,7 +374,7 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         if (parser.hasNext()) {
             position.set(Position.KEY_ALARM, decodeAlarm123(Short.parseShort(parser.next(), 16)));
@@ -390,13 +390,13 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.PREFIX_TEMP + 1, parser.next());
         position.set(Position.PREFIX_TEMP + 2, parser.next());
 
-        position.setNetwork(new Network(
+        position.setRede(new Network(
                 CellTower.fromLacCid(getConfig(), parser.nextHexInt(0), parser.nextHexInt(0))));
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
         position.set(Position.KEY_SATELLITES, parser.nextInt());
-        position.setCourse(parser.nextDouble(0));
-        position.setSpeed(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
         position.set(Position.KEY_PDOP, parser.nextDouble());
         position.set(Position.KEY_ODOMETER, parser.nextInt(0) * 1000);
 
@@ -430,7 +430,7 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_ALARM, decodeAlarm4(type));
 
@@ -466,9 +466,9 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
 
         if (parser.hasNext()) {
             position.set(Position.PREFIX_TEMP + 2, parser.next());
-            position.setValid(BitUtil.check(status, 32 - 20));
+            //position.setValid(BitUtil.check(status, 32 - 20));
         } else {
-            position.setValid(BitUtil.check(status, 32 - 18));
+            //position.setValid(BitUtil.check(status, 32 - 18));
         }
 
         int lac = parser.nextHexInt();
@@ -483,10 +483,10 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
         }
         position.set(Position.KEY_SATELLITES, parser.nextInt());
         cellTower.setSignalStrength(parser.nextInt());
-        position.setNetwork(new Network(cellTower));
+        position.setRede(new Network(cellTower));
 
-        position.setCourse(parser.nextDouble());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
+        position.setCurso(parser.nextDouble());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
         position.set(Position.KEY_HDOP, parser.nextDouble());
         position.set(Position.KEY_ODOMETER, parser.nextInt() * 1000);
 
@@ -509,9 +509,9 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setTime(parser.nextDateTime());
         position.setLongitude(parser.nextDouble());
         position.setLatitude(parser.nextDouble());
@@ -534,9 +534,9 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setTime(parser.nextDateTime());
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());

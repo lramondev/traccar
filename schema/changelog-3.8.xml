@@ -8,6 +8,7 @@
 
   <changeSet author="author" id="changelog-3.8">
 
+    <!--
     <preConditions onFail="MARK_RAN">
       <not>
         <tableExists tableName="tc_servers" />
@@ -28,7 +29,7 @@
         <constraints nullable="false" />
       </column>
     </createTable>
-    
+
     <addForeignKeyConstraint baseTableName="attribute_aliases" baseColumnNames="deviceid" constraintName="fk_attribute_aliases_deviceid" referencedTableName="devices" referencedColumnNames="id" onDelete="CASCADE" />
     <addUniqueConstraint tableName="attribute_aliases" columnNames="deviceid, attribute" constraintName="uk_deviceid_attribute" />
 
@@ -98,8 +99,9 @@
     <modifyDataType tableName="users" columnName="attributes" newDataType="VARCHAR(4000)" />
     <modifyDataType tableName="devices" columnName="attributes" newDataType="VARCHAR(4000)" />
     <modifyDataType tableName="groups" columnName="attributes" newDataType="VARCHAR(4000)" />
-    <modifyDataType tableName="server" columnName="attributes" newDataType="VARCHAR(4000)" />
+    <modifyDataType tableName="server" columnName="attributes" newDataType="VARCHAR(4000)" />-->
 
+    <!--
     <addColumn tableName="devices">
       <column name="phone" type="VARCHAR(128)" />
     </addColumn>
@@ -112,7 +114,7 @@
     <addColumn tableName="devices">
       <column name="category" type="VARCHAR(128)" />
     </addColumn>
-
+  
     <addColumn tableName="users">
       <column name="disabled" type="BOOLEAN" defaultValueBoolean="false" />
     </addColumn>
@@ -125,7 +127,7 @@
     <addColumn tableName="users">
       <column name="token" type="VARCHAR(128)" />
     </addColumn>
-
+    -->
   </changeSet>
 
 </databaseChangeLog>

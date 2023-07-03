@@ -173,7 +173,7 @@ public class T800xProtocolDecoder extends BaseProtocolDecoder {
         } else if (type == MSG_NETWORK && header == 0x2727 || type == MSG_NETWORK_2) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, readDate(buf));
 
@@ -192,7 +192,7 @@ public class T800xProtocolDecoder extends BaseProtocolDecoder {
         } else if ((type == MSG_DRIVER_BEHAVIOR_1 || type == MSG_DRIVER_BEHAVIOR_2) && header == 0x2626) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             switch (buf.readUnsignedByte()) {
                 case 0:
@@ -219,17 +219,17 @@ public class T800xProtocolDecoder extends BaseProtocolDecoder {
 
             if (type == MSG_DRIVER_BEHAVIOR_2) {
                 int status = buf.readUnsignedByte();
-                position.setValid(!BitUtil.check(status, 7));
+                //position.setValid(!BitUtil.check(status, 7));
                 buf.skipBytes(5); // acceleration
             } else {
-                position.setValid(true);
+                //position.setValid(true);
             }
 
             position.setAltitude(buf.readFloatLE());
             position.setLongitude(buf.readFloatLE());
             position.setLatitude(buf.readFloatLE());
-            position.setSpeed(UnitsConverter.knotsFromKph(BcdUtil.readInteger(buf, 4) * 0.1));
-            position.setCourse(buf.readUnsignedShort());
+            position.setVelocidade(UnitsConverter.knotsFromKph(BcdUtil.readInteger(buf, 4) * 0.1));
+            position.setCurso(buf.readUnsignedShort());
 
             position.set(Position.KEY_RPM, buf.readUnsignedShort());
 
@@ -242,7 +242,7 @@ public class T800xProtocolDecoder extends BaseProtocolDecoder {
         } else if (type == MSG_COMMAND) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, null);
 
@@ -266,7 +266,7 @@ public class T800xProtocolDecoder extends BaseProtocolDecoder {
             Channel channel, DeviceSession deviceSession, ByteBuf buf, int type, int index, ByteBuf imei) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, readDate(buf));
 
@@ -345,7 +345,7 @@ public class T800xProtocolDecoder extends BaseProtocolDecoder {
             Channel channel, DeviceSession deviceSession, ByteBuf buf, int type, int index, ByteBuf imei) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_INDEX, index);
 
@@ -415,13 +415,13 @@ public class T800xProtocolDecoder extends BaseProtocolDecoder {
 
         if (BitUtil.check(status, 6)) {
 
-            position.setValid(true);
+            //position.setValid(true);
             position.setTime(readDate(buf));
             position.setAltitude(buf.readFloatLE());
             position.setLongitude(buf.readFloatLE());
             position.setLatitude(buf.readFloatLE());
-            position.setSpeed(UnitsConverter.knotsFromKph(BcdUtil.readInteger(buf, 4) * 0.1));
-            position.setCourse(buf.readUnsignedShort());
+            position.setVelocidade(UnitsConverter.knotsFromKph(BcdUtil.readInteger(buf, 4) * 0.1));
+            position.setCurso(buf.readUnsignedShort());
 
         } else {
 
@@ -436,7 +436,7 @@ public class T800xProtocolDecoder extends BaseProtocolDecoder {
                     network.addCellTower(CellTower.from(
                             mcc, mnc, buf.readUnsignedShortLE(), buf.readUnsignedShortLE()));
                 }
-                position.setNetwork(network);
+                position.setRede(network);
             }
 
         }

@@ -83,9 +83,9 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
             DeviceSession deviceSession, ByteBuf buf, int sequenceNumber) {
         Position position = new Position(getProtocolName());
 
-        position.setValid(true);
+        //position.setValid(true);
         position.set(Position.KEY_INDEX, sequenceNumber);
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         buf.readUnsignedShortLE(); // report trigger
         position.set(Position.KEY_FLAGS, buf.readUnsignedShortLE());
@@ -98,8 +98,8 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_SATELLITES_VISIBLE, buf.readUnsignedShortLE());
         position.set("gpsAntennaState", buf.readUnsignedShortLE());
 
-        position.setSpeed(buf.readUnsignedShortLE() * 0.194384);
-        position.setCourse(buf.readUnsignedShortLE());
+        position.setVelocidade(buf.readUnsignedShortLE() * 0.194384);
+        position.setCurso(buf.readUnsignedShortLE());
 
         position.set(Position.KEY_ODOMETER, buf.readUnsignedIntLE());
         position.set(Position.KEY_DISTANCE, buf.readUnsignedIntLE());
@@ -117,9 +117,9 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
             DeviceSession deviceSession, ByteBuf buf, int sequenceNumber) {
         Position position = new Position(getProtocolName());
 
-        position.setValid(true);
+        //position.setValid(true);
         position.set(Position.KEY_INDEX, sequenceNumber);
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         buf.readUnsignedShortLE(); // report trigger
         buf.readUnsignedByte(); // reserved
@@ -134,8 +134,8 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
         position.set(Position.KEY_SATELLITES_VISIBLE, buf.readUnsignedByte());
 
-        position.setSpeed(buf.readUnsignedShortLE() * 0.194384);
-        position.setCourse(buf.readUnsignedShortLE());
+        position.setVelocidade(buf.readUnsignedShortLE() * 0.194384);
+        position.setCurso(buf.readUnsignedShortLE());
 
         position.set(Position.KEY_ODOMETER, buf.readUnsignedIntLE());
         position.set("maximumSpeed", buf.readUnsignedShortLE());
@@ -155,17 +155,17 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
 
         position.set(Position.KEY_INDEX, sequenceNumber);
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
         position.setTime(convertTimestamp(timestamp));
 
         position.setLatitude(buf.readMediumLE() * 0.00002);
         position.setLongitude(buf.readMediumLE() * 0.00002);
 
-        position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
-        position.setCourse(buf.readUnsignedByte() * 2);
+        position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+        position.setCurso(buf.readUnsignedByte() * 2);
 
         short flags = buf.readUnsignedByte();
-        position.setValid((flags & 0x80) == 0x80 && (flags & 0x40) == 0x40);
+        //position.setValid((flags & 0x80) == 0x80 && (flags & 0x40) == 0x40);
 
         buf.readUnsignedByte(); // reserved
 
@@ -177,7 +177,7 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
 
         position.set(Position.KEY_INDEX, sequenceNumber);
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
         position.setTime(convertTimestamp(timestamp));
 
         position.setLatitude(buf.readIntLE() * 0.0000001);
@@ -185,10 +185,10 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
 
         buf.readUnsignedByte(); // report trigger
 
-        position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+        position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
 
         short flags = buf.readUnsignedByte();
-        position.setValid((flags & 0x80) == 0x80 && (flags & 0x40) == 0x40);
+        //position.setValid((flags & 0x80) == 0x80 && (flags & 0x40) == 0x40);
 
         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
         position.set(Position.KEY_ODOMETER, buf.readUnsignedIntLE());
@@ -201,7 +201,7 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
 
         position.set(Position.KEY_INDEX, sequenceNumber);
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         buf.readUnsignedByte(); // report trigger
         buf.readUnsignedByte(); // position fix source
@@ -209,7 +209,7 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
         buf.readUnsignedByte(); // GNSS assistance age
 
         long flags = buf.readUnsignedIntLE();
-        position.setValid((flags & 0x0400) == 0x0400);
+        //position.setValid((flags & 0x0400) == 0x0400);
 
         position.setTime(convertTimestamp(buf.readUnsignedIntLE()));
 
@@ -220,8 +220,8 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
         position.set(Position.KEY_SATELLITES_VISIBLE, buf.readUnsignedByte());
 
-        position.setSpeed(buf.readUnsignedShortLE() * 0.194384);
-        position.setCourse(buf.readUnsignedShortLE() * 0.1);
+        position.setVelocidade(buf.readUnsignedShortLE() * 0.194384);
+        position.setCurso(buf.readUnsignedShortLE() * 0.1);
 
         position.set("maximumSpeed", buf.readUnsignedByte());
         position.set("minimumSpeed", buf.readUnsignedByte());
@@ -239,21 +239,21 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
 
         position.set(Position.KEY_INDEX, sequenceNumber);
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
         position.setTime(convertTimestamp(timestamp));
 
         buf.readUnsignedByte(); // tracking mode
 
         short flags = buf.readUnsignedByte();
-        position.setValid((flags & 0x01) == 0x01);
+        //position.setValid((flags & 0x01) == 0x01);
 
         buf.readUnsignedShortLE(); // duration
 
         position.setLatitude(buf.readIntLE() * 0.0000001);
         position.setLongitude(buf.readIntLE() * 0.0000001);
 
-        position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
-        position.setCourse(buf.readUnsignedByte() * 2.0);
+        position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+        position.setCurso(buf.readUnsignedByte() * 2.0);
 
         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
         position.set(Position.KEY_BATTERY, buf.readUnsignedShortLE() * 0.001);

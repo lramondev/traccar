@@ -70,7 +70,7 @@ public class GranitProtocolDecoder extends BaseProtocolDecoder {
 
     private void decodeStructure(ByteBuf buf, Position position) {
         short flags = buf.readUnsignedByte();
-        position.setValid(BitUtil.check(flags, 7));
+        //position.setValid(BitUtil.check(flags, 7));
         if (BitUtil.check(flags, 1)) {
             position.set(Position.KEY_ALARM, Position.ALARM_GENERAL);
         }
@@ -89,25 +89,25 @@ public class GranitProtocolDecoder extends BaseProtocolDecoder {
         double latitude = latDegrees + latMinutes / 60000.0;
         double longitude = lonDegrees + lonMinutes / 60000.0;
 
-        if (position.getValid()) {
+        //if (position.getValid()) {
             if (!BitUtil.check(flags, 4)) {
                 latitude = -latitude;
             }
             if (!BitUtil.check(flags, 5)) {
                 longitude = -longitude;
             }
-        }
+        //}
 
         position.setLongitude(longitude);
         position.setLatitude(latitude);
 
-        position.setSpeed(buf.readUnsignedByte());
+        position.setVelocidade(buf.readUnsignedByte());
 
         int course = buf.readUnsignedByte();
         if (BitUtil.check(flags, 6)) {
             course = course | 0x100;
         }
-        position.setCourse(course);
+        position.setCurso(course);
 
         position.set(Position.KEY_DISTANCE, buf.readShortLE());
 
@@ -149,11 +149,11 @@ public class GranitProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession != null && indexTilde == -1) {
             String bufString = buf.toString(StandardCharsets.US_ASCII);
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.setTime(new Date());
             getLastLocation(position, new Date());
-            position.setValid(false);
+            //position.setValid(false);
             position.set(Position.KEY_RESULT, bufString);
             return position;
         }
@@ -176,7 +176,7 @@ public class GranitProtocolDecoder extends BaseProtocolDecoder {
                 sendResponseCurrent(channel, deviceId, unixTime);
             }
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.setTime(new Date(unixTime * 1000));
 
@@ -208,7 +208,7 @@ public class GranitProtocolDecoder extends BaseProtocolDecoder {
                 for (int i = 0; i < 6; i++) {
                     if (buf.getUnsignedByte(buf.readerIndex()) != 0xFE) {
                         Position position = new Position(getProtocolName());
-                        position.setDeviceId(deviceSession.getDeviceId());
+                        position.setRastreador_id(deviceSession.getDeviceId());
                         position.setTime(new Date((unixTime + i * timeIncrement) * 1000));
                         decodeStructure(buf, position);
                         position.set(Position.KEY_ARCHIVE, true);

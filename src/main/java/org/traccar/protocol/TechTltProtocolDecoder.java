@@ -74,7 +74,7 @@ public class TechTltProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 
@@ -98,19 +98,19 @@ public class TechTltProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS_DMY));
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
-        position.setCourse(parser.nextDouble());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
+        position.setCurso(parser.nextDouble());
         position.setAltitude(parser.nextDouble());
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
 
-        position.setNetwork(new Network(CellTower.fromLacCid(getConfig(), parser.nextInt(), parser.nextInt())));
+        position.setRede(new Network(CellTower.fromLacCid(getConfig(), parser.nextInt(), parser.nextInt())));
 
         return position;
     }

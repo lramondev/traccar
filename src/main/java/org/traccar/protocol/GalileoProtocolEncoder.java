@@ -60,9 +60,9 @@ public class GalileoProtocolEncoder extends BaseProtocolEncoder {
 
         switch (command.getType()) {
             case Command.TYPE_CUSTOM:
-                return encodeText(getUniqueId(command.getDeviceId()), command.getString(Command.KEY_DATA));
+                return encodeText(getUniqueId(command.getRastreador_id()), command.getString(Command.KEY_DATA));
             case Command.TYPE_OUTPUT_CONTROL:
-                return encodeText(getUniqueId(command.getDeviceId()),
+                return encodeText(getUniqueId(command.getRastreador_id()),
                         "Out " + command.getInteger(Command.KEY_INDEX) + "," + command.getString(Command.KEY_DATA));
             default:
                 return null;

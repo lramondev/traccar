@@ -84,7 +84,7 @@ public class BlackKiteProtocolDecoder extends BaseProtocolDecoder {
             // Check if new message started
             int tag = buf.readUnsignedByte();
             if (tags.contains(tag)) {
-                if (hasLocation && position.getFixTime() != null) {
+                if (hasLocation && position.getDatahora_corrigida() != null) {
                     positions.add(position);
                 }
                 tags.clear();
@@ -105,14 +105,14 @@ public class BlackKiteProtocolDecoder extends BaseProtocolDecoder {
 
                 case TAG_COORDINATES:
                     hasLocation = true;
-                    position.setValid((buf.readUnsignedByte() & 0xf0) == 0x00);
+                    //position.setValid((buf.readUnsignedByte() & 0xf0) == 0x00);
                     position.setLatitude(buf.readIntLE() / 1000000.0);
                     position.setLongitude(buf.readIntLE() / 1000000.0);
                     break;
 
                 case TAG_SPEED_COURSE:
-                    position.setSpeed(buf.readUnsignedShortLE() * 0.0539957);
-                    position.setCourse(buf.readUnsignedShortLE() * 0.1);
+                    position.setVelocidade(buf.readUnsignedShortLE() * 0.0539957);
+                    position.setCurso(buf.readUnsignedShortLE() * 0.1);
                     break;
 
                 case TAG_ALTITUDE:
@@ -170,7 +170,7 @@ public class BlackKiteProtocolDecoder extends BaseProtocolDecoder {
             }
         }
 
-        if (hasLocation && position.getFixTime() != null) {
+        if (hasLocation && position.getDatahora_corrigida() != null) {
             positions.add(position);
         }
 
@@ -182,7 +182,7 @@ public class BlackKiteProtocolDecoder extends BaseProtocolDecoder {
         sendResponse(channel, buf.readUnsignedShortLE());
 
         for (Position p : positions) {
-            p.setDeviceId(deviceSession.getDeviceId());
+            p.setRastreador_id(deviceSession.getDeviceId());
         }
 
         if (positions.isEmpty()) {

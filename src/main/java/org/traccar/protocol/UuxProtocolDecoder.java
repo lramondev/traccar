@@ -90,7 +90,7 @@ public class UuxProtocolDecoder extends BaseProtocolDecoder {
         if (type == MSG_GENERAL) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.setTime(dateBuilder.getDate());
 
@@ -98,7 +98,7 @@ public class UuxProtocolDecoder extends BaseProtocolDecoder {
             buf.readUnsignedShort(); // flags
 
             buf.readUnsignedByte(); // position status
-            position.setValid(true);
+            //position.setValid(true);
 
             position.set(Position.KEY_SATELLITES, readInt(buf, 2));
 
@@ -110,8 +110,8 @@ public class UuxProtocolDecoder extends BaseProtocolDecoder {
             longitude += readDouble(buf, 7) / 60;
             position.setLongitude(buf.readUnsignedByte() == 'W' ? -longitude : longitude);
 
-            position.setSpeed(readInt(buf, 3));
-            position.setCourse(readInt(buf, 3));
+            position.setVelocidade(readInt(buf, 3));
+            position.setCurso(readInt(buf, 3));
             readInt(buf, 3); // alternative speed
 
             position.set(Position.KEY_ODOMETER, buf.readUnsignedByte() * 10000 + buf.readUnsignedByte() * 256
@@ -130,7 +130,7 @@ public class UuxProtocolDecoder extends BaseProtocolDecoder {
         } else if (type == MSG_IMMOBILIZER) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, dateBuilder.getDate());
 

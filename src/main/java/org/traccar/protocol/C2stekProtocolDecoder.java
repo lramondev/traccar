@@ -100,14 +100,14 @@ public class C2stekProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime());
-        position.setValid(parser.nextInt() > 0);
+        //position.setValid(parser.nextInt() > 0);
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble()));
-        position.setCourse(parser.nextDouble());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
+        position.setCurso(parser.nextDouble());
         position.setAltitude(parser.nextDouble());
 
         position.set(Position.KEY_BATTERY, parser.nextInt() * 0.001);

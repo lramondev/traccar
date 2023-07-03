@@ -76,23 +76,23 @@ public class RoboTrackProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
-            position.setDeviceTime(new Date(buf.readUnsignedIntLE() * 1000));
+            position.setDatahora_rastreador(new Date(buf.readUnsignedIntLE() * 1000));
 
             if (type == MSG_GPS) {
 
-                position.setValid(true);
-                position.setFixTime(position.getDeviceTime());
+                //position.setValid(true);
+                position.setDatahora_corrigida(position.getDatahora_rastreador());
                 position.setLatitude(buf.readIntLE() * 0.000001);
                 position.setLongitude(buf.readIntLE() * 0.000001);
-                position.setSpeed(UnitsConverter.knotsFromKph(buf.readByte()));
+                position.setVelocidade(UnitsConverter.knotsFromKph(buf.readByte()));
 
             } else {
 
-                getLastLocation(position, position.getDeviceTime());
+                getLastLocation(position, position.getDatahora_rastreador());
 
-                position.setNetwork(new Network(CellTower.from(
+                position.setRede(new Network(CellTower.from(
                         buf.readUnsignedShortLE(), buf.readUnsignedShortLE(),
                         buf.readUnsignedShortLE(), buf.readUnsignedShortLE())));
 

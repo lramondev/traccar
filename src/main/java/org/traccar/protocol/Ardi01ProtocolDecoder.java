@@ -63,18 +63,18 @@ public class Ardi01ProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime());
 
         position.setLongitude(parser.nextDouble(0));
         position.setLatitude(parser.nextDouble(0));
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
+        position.setCurso(parser.nextDouble(0));
         position.setAltitude(parser.nextDouble(0));
 
         int satellites = parser.nextInt(0);
-        position.setValid(satellites >= 3);
+        //position.setValid(satellites >= 3);
         position.set(Position.KEY_SATELLITES, satellites);
 
         position.set(Position.KEY_EVENT, parser.next());

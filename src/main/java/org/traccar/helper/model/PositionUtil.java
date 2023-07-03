@@ -37,8 +37,8 @@ public final class PositionUtil {
     }
 
     public static boolean isLatest(CacheManager cacheManager, Position position) {
-        Position lastPosition = cacheManager.getPosition(position.getDeviceId());
-        return lastPosition == null || position.getFixTime().compareTo(lastPosition.getFixTime()) >= 0;
+        Position lastPosition = cacheManager.getPosition(position.getRastreador_id());
+        return lastPosition == null || position.getDatahora_corrigida().compareTo(lastPosition.getDatahora_corrigida()) >= 0;
     }
 
     public static double calculateDistance(Position first, Position last, boolean useOdometer) {
@@ -73,7 +73,7 @@ public final class PositionUtil {
         var positions = storage.getObjects(Position.class, new Request(
                 new Columns.All(), new Condition.LatestPositions()));
         return positions.stream()
-                .filter(position -> deviceIds.contains(position.getDeviceId()))
+                .filter(position -> deviceIds.contains(position.getRastreador_id()))
                 .collect(Collectors.toList());
     }
 

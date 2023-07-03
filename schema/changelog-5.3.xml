@@ -8,6 +8,7 @@
 
   <changeSet author="author" id="changelog-5.3">
 
+    <!--
     <addColumn tableName="tc_servers">
       <column name="fixedemail" type="BOOLEAN" defaultValueBoolean="false" />
     </addColumn>
@@ -16,7 +17,7 @@
       <column name="fixedemail" type="BOOLEAN" defaultValueBoolean="false" />
     </addColumn>
 
-    <addColumn tableName="tc_devices">
+    <addColumn tableName="geolocal_rastreador">
       <column name="expirationtime" type="TIMESTAMP" />
     </addColumn>
 
@@ -35,6 +36,7 @@
     <dropIndex indexName="idx_users_token" tableName="tc_users" />
 
     <dropColumn tableName="tc_users" columnName="token" />
+    -->
 
   </changeSet>
 

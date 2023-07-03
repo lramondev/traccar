@@ -33,7 +33,7 @@ public abstract class StringProtocolEncoder extends BaseProtocolEncoder {
         for (int i = 0; i < keys.length; i++) {
             String value = null;
             if (keys[i].equals(Command.KEY_UNIQUE_ID)) {
-                value = getUniqueId(command.getDeviceId());
+                value = getUniqueId(command.getRastreador_id());
             } else {
                 Object object = command.getAttributes().get(keys[i]);
                 if (valueFormatter != null) {

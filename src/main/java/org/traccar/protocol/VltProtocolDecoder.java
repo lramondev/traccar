@@ -70,12 +70,12 @@ public class VltProtocolDecoder extends BaseHttpProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_EVENT, parser.nextInt());
         position.set(Position.KEY_ARCHIVE, parser.next().equals("H") ? true : null);
 
-        position.setValid(parser.nextInt() > 0);
+        //position.setValid(parser.nextInt() > 0);
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
@@ -85,13 +85,13 @@ public class VltProtocolDecoder extends BaseHttpProtocolDecoder {
         int lac = parser.nextHexInt();
         int cid = parser.nextInt();
 
-        position.setSpeed(parser.nextDouble());
-        position.setCourse(parser.nextDouble());
+        position.setVelocidade(parser.nextDouble());
+        position.setCurso(parser.nextDouble());
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
         position.set(Position.KEY_HDOP, parser.nextInt());
 
-        position.setNetwork(new Network(CellTower.from(mcc, mnc, lac, cid, parser.nextInt())));
+        position.setRede(new Network(CellTower.from(mcc, mnc, lac, cid, parser.nextInt())));
 
         position.set(Position.KEY_IGNITION, parser.nextInt() > 0);
         position.set(Position.KEY_CHARGE, parser.nextInt() > 0);

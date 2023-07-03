@@ -184,7 +184,7 @@ public class LaipacProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 
@@ -211,19 +211,19 @@ public class LaipacProtocolDecoder extends BaseProtocolDecoder {
 
         Position position = new Position(getProtocolName());
 
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
         DateBuilder dateBuilder = new DateBuilder()
                 .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
         String status = parser.next();
         String upperCaseStatus = status.toUpperCase();
-        position.setValid(upperCaseStatus.equals("A") || upperCaseStatus.equals("R") || upperCaseStatus.equals("P"));
+        //position.setValid(upperCaseStatus.equals("A") || upperCaseStatus.equals("R") || upperCaseStatus.equals("P"));
         position.set(Position.KEY_STATUS, status);
 
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
-        position.setSpeed(parser.nextDouble(0));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
 
         dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
         position.setTime(dateBuilder.getDate());
@@ -242,7 +242,7 @@ public class LaipacProtocolDecoder extends BaseProtocolDecoder {
         Integer mcc = parser.nextInt();
         Integer mnc = parser.nextInt();
         if (lac != null && cid != null && mcc != null && mnc != null) {
-            position.setNetwork(new Network(CellTower.from(mcc, mnc, lac, cid)));
+            position.setRede(new Network(CellTower.from(mcc, mnc, lac, cid)));
         }
 
         parser.next(); // unused

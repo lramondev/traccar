@@ -72,13 +72,13 @@ public class NotificationManager {
     }
 
     private void updateEvent(Event event, Position position) {
-        try {
+        /*try {
             event.setId(storage.addObject(event, new Request(new Columns.Exclude("id"))));
         } catch (StorageException error) {
             LOGGER.warn("Event save error", error);
         }
 
-        var notifications = cacheManager.getDeviceObjects(event.getDeviceId(), Notification.class).stream()
+        var notifications = cacheManager.getDeviceObjects(event.getRastreador_id(), Notification.class).stream()
                 .filter(notification -> notification.getType().equals(event.getType()))
                 .filter(notification -> {
                     if (event.getType().equals(Event.TYPE_ALARM)) {
@@ -97,14 +97,15 @@ public class NotificationManager {
                     return calendar == null || calendar.checkMoment(event.getEventTime());
                 })
                 .collect(Collectors.toUnmodifiableList());
-
-        if (!notifications.isEmpty()) {
+                
+        if (!notifications.isEmpty()) {*/
+            /*
             if (position != null && position.getAddress() == null && geocodeOnRequest && geocoder != null) {
                 position.setAddress(geocoder.getAddress(position.getLatitude(), position.getLongitude(), null));
             }
-
-            notifications.forEach(notification -> {
-                cacheManager.getNotificationUsers(notification.getId(), event.getDeviceId()).forEach(user -> {
+            */
+            /*notifications.forEach(notification -> {
+                cacheManager.getNotificationUsers(notification.getId(), event.getRastreador_id()).forEach(user -> {
                     for (String notificator : notification.getNotificatorsTypes()) {
                         try {
                             notificatorManager.getNotificator(notificator).send(notification, user, event, position);
@@ -116,7 +117,7 @@ public class NotificationManager {
             });
         }
 
-        forwardEvent(event, position);
+        forwardEvent(event, position);*/
     }
 
     private void forwardEvent(Event event, Position position) {
@@ -124,7 +125,7 @@ public class NotificationManager {
             EventData eventData = new EventData();
             eventData.setEvent(event);
             eventData.setPosition(position);
-            eventData.setDevice(cacheManager.getObject(Device.class, event.getDeviceId()));
+            eventData.setDevice(cacheManager.getObject(Device.class, event.getRastreador_id()));
             if (event.getGeofenceId() != 0) {
                 eventData.setGeofence(cacheManager.getObject(Geofence.class, event.getGeofenceId()));
             }
@@ -144,12 +145,12 @@ public class NotificationManager {
             Event event = entry.getKey();
             Position position = entry.getValue();
             try {
-                cacheManager.addDevice(event.getDeviceId());
+                cacheManager.addDevice(event.getRastreador_id());
                 updateEvent(event, position);
             } catch (StorageException e) {
                 throw new RuntimeException(e);
             } finally {
-                cacheManager.removeDevice(event.getDeviceId());
+                cacheManager.removeDevice(event.getRastreador_id());
             }
         }
     }

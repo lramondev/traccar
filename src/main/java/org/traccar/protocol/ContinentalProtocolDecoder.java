@@ -69,20 +69,20 @@ public class ContinentalProtocolDecoder extends BaseProtocolDecoder {
         if (type == MSG_STATUS) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
-            position.setFixTime(new Date(buf.readUnsignedInt() * 1000L));
+            position.setDatahora_corrigida(new Date(buf.readUnsignedInt() * 1000L));
 
             boolean extended = buf.getUnsignedByte(buf.readerIndex()) != 0;
             position.setLatitude(readCoordinate(buf, extended));
             position.setLongitude(readCoordinate(buf, extended));
 
-            position.setCourse(buf.readUnsignedShort());
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
+            position.setCurso(buf.readUnsignedShort());
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
 
-            position.setValid(buf.readUnsignedByte() > 0);
+            //position.setValid(buf.readUnsignedByte() > 0);
 
-            position.setDeviceTime(new Date(buf.readUnsignedInt() * 1000L));
+            position.setDatahora_rastreador(new Date(buf.readUnsignedInt() * 1000L));
 
             position.set(Position.KEY_EVENT, buf.readUnsignedShort());
 

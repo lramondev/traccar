@@ -51,16 +51,16 @@ public class TeraTrackProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         position.setTime(dateFormat.parse(json.getString("DateTime")));
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setLatitude(Double.parseDouble(json.getString("Latitude")));
         position.setLongitude(Double.parseDouble(json.getString("Longitude")));
-        position.setSpeed(UnitsConverter.knotsFromKph(Integer.parseInt(json.getString("Speed"))));
+        position.setVelocidade(UnitsConverter.knotsFromKph(Integer.parseInt(json.getString("Speed"))));
 
         position.set(Position.KEY_ODOMETER, Integer.parseInt(json.getString("Mileage")));
         position.set(Position.KEY_LOCK, json.getString("LockOpen").equals("0"));

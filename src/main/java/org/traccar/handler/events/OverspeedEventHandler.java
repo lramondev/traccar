@@ -65,12 +65,12 @@ public class OverspeedEventHandler extends BaseEventHandler {
     @Override
     protected Map<Event, Position> analyzePosition(Position position) {
 
-        long deviceId = position.getDeviceId();
-        Device device = cacheManager.getObject(Device.class, position.getDeviceId());
+        long deviceId = position.getRastreador_id();
+        Device device = cacheManager.getObject(Device.class, position.getRastreador_id());
         if (device == null) {
             return null;
         }
-        if (!PositionUtil.isLatest(cacheManager, position) || !position.getValid()) {
+        if (!PositionUtil.isLatest(cacheManager, position)) {
             return null;
         }
 
@@ -84,6 +84,7 @@ public class OverspeedEventHandler extends BaseEventHandler {
         double geofenceSpeedLimit = 0;
         long overspeedGeofenceId = 0;
 
+        /*
         if (position.getGeofenceIds() != null) {
             for (long geofenceId : position.getGeofenceIds()) {
                 Geofence geofence = cacheManager.getObject(Geofence.class, geofenceId);
@@ -98,6 +99,7 @@ public class OverspeedEventHandler extends BaseEventHandler {
                 }
             }
         }
+        */
         if (geofenceSpeedLimit > 0) {
             speedLimit = geofenceSpeedLimit;
         }

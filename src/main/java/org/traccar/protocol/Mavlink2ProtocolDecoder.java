@@ -56,11 +56,11 @@ public class Mavlink2ProtocolDecoder extends BaseProtocolDecoder {
         if (type == 33) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.set("timeBoot", buf.readUnsignedIntLE()); // time since system boot
 
-            position.setValid(true);
+            //position.setValid(true);
             position.setTime(new Date());
             position.setLatitude(buf.readIntLE() / 10000000.0);
             position.setLongitude(buf.readIntLE() / 10000000.0);
@@ -71,9 +71,9 @@ public class Mavlink2ProtocolDecoder extends BaseProtocolDecoder {
             int groundSpeedY = buf.readShortLE();
             buf.readShortLE(); // ground speed z
             double speed = Math.sqrt(Math.pow(groundSpeedX, 2) + Math.pow(groundSpeedY, 2));
-            position.setSpeed(UnitsConverter.knotsFromCps(speed));
+            position.setVelocidade(UnitsConverter.knotsFromCps(speed));
 
-            position.setCourse(buf.readUnsignedShortLE() / 100.0);
+            position.setCurso(buf.readUnsignedShortLE() / 100.0);
 
             return position;
 

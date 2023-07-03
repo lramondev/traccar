@@ -49,12 +49,11 @@ public class GeocoderHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(final ChannelHandlerContext ctx, Object message) {
         if (message instanceof Position && !ignorePositions) {
             final Position position = (Position) message;
-            if (processInvalidPositions || position.getValid()) {
+            if (processInvalidPositions) {
                 if (reuseDistance != 0) {
-                    Position lastPosition = cacheManager.getPosition(position.getDeviceId());
-                    if (lastPosition != null && lastPosition.getAddress() != null
-                            && position.getDouble(Position.KEY_DISTANCE) <= reuseDistance) {
-                        position.setAddress(lastPosition.getAddress());
+                    Position lastPosition = cacheManager.getPosition(position.getRastreador_id());
+                    if (lastPosition != null && position.getDouble(Position.KEY_DISTANCE) <= reuseDistance) {
+                        //position.setAddress(lastPosition.getAddress());
                         ctx.fireChannelRead(position);
                         return;
                     }
@@ -64,7 +63,7 @@ public class GeocoderHandler extends ChannelInboundHandlerAdapter {
                         new Geocoder.ReverseGeocoderCallback() {
                     @Override
                     public void onSuccess(String address) {
-                        position.setAddress(address);
+                        //position.setAddress(address);
                         ctx.fireChannelRead(position);
                     }
 

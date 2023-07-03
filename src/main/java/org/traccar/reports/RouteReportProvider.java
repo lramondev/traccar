@@ -87,7 +87,7 @@ public class RouteReportProvider {
         for (Device device: DeviceUtil.getAccessibleDevices(storage, userId, deviceIds, groupIds)) {
             var positions = PositionUtil.getPositions(storage, device.getId(), from, to);
             DeviceReportSection deviceRoutes = new DeviceReportSection();
-            deviceRoutes.setDeviceName(device.getName());
+            deviceRoutes.setDeviceName(device.getDescricao());
             sheetNames.add(WorkbookUtil.createSafeSheetName(getUniqueSheetName(deviceRoutes.getDeviceName())));
             if (device.getGroupId() > 0) {
                 Group group = storage.getObject(Group.class, new Request(

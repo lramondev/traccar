@@ -27,7 +27,7 @@ public class FifotrackProtocolEncoder extends StringProtocolEncoder {
     }
 
     private Object formatCommand(Command command, String content) {
-        String uniqueId = getUniqueId(command.getDeviceId());
+        String uniqueId = getUniqueId(command.getRastreador_id());
         int length = 1 + uniqueId.length() + 3 + content.length();
         String result = String.format("##%02d,%s,1,%s*", length, uniqueId, content);
         result += Checksum.sum(result) + "\r\n";

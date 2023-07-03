@@ -42,7 +42,7 @@ public class FuelEventHandler extends BaseEventHandler {
     @Override
     protected Map<Event, Position> analyzePosition(Position position) {
 
-        Device device = cacheManager.getObject(Device.class, position.getDeviceId());
+        Device device = cacheManager.getObject(Device.class, position.getRastreador_id());
         if (device == null) {
             return null;
         }
@@ -51,7 +51,7 @@ public class FuelEventHandler extends BaseEventHandler {
         }
 
         if (position.hasAttribute(Position.KEY_FUEL_LEVEL)) {
-            Position lastPosition = cacheManager.getPosition(position.getDeviceId());
+            Position lastPosition = cacheManager.getPosition(position.getRastreador_id());
             if (lastPosition != null && lastPosition.hasAttribute(Position.KEY_FUEL_LEVEL)) {
                 double before = lastPosition.getDouble(Position.KEY_FUEL_LEVEL);
                 double after = position.getDouble(Position.KEY_FUEL_LEVEL);
@@ -59,13 +59,13 @@ public class FuelEventHandler extends BaseEventHandler {
 
                 if (change > 0) {
                     double threshold = AttributeUtil.lookup(
-                            cacheManager, Keys.EVENT_FUEL_INCREASE_THRESHOLD, position.getDeviceId());
+                            cacheManager, Keys.EVENT_FUEL_INCREASE_THRESHOLD, position.getRastreador_id());
                     if (threshold > 0 && change >= threshold) {
                         return Map.of(new Event(Event.TYPE_DEVICE_FUEL_INCREASE, position), position);
                     }
                 } else if (change < 0) {
                     double threshold = AttributeUtil.lookup(
-                            cacheManager, Keys.EVENT_FUEL_DROP_THRESHOLD, position.getDeviceId());
+                            cacheManager, Keys.EVENT_FUEL_DROP_THRESHOLD, position.getRastreador_id());
                     if (threshold > 0 && Math.abs(change) >= threshold) {
                         return Map.of(new Event(Event.TYPE_DEVICE_FUEL_DROP, position), position);
                     }

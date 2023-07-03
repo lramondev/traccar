@@ -47,7 +47,7 @@ public class AlertEventHandler extends BaseEventHandler {
         if (alarm != null) {
             boolean ignoreAlert = false;
             if (ignoreDuplicateAlerts) {
-                Position lastPosition = cacheManager.getPosition(position.getDeviceId());
+                Position lastPosition = cacheManager.getPosition(position.getRastreador_id());
                 if (lastPosition != null && alarm.equals(lastPosition.getAttributes().get(Position.KEY_ALARM))) {
                     ignoreAlert = true;
                 }

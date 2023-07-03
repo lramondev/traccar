@@ -65,13 +65,13 @@ public class RfTrackProtocolDecoder extends BaseHttpProtocolDecoder {
                             sendResponse(channel, HttpResponseStatus.BAD_REQUEST);
                             return null;
                         }
-                        position.setDeviceId(deviceSession.getDeviceId());
+                        position.setRastreador_id(deviceSession.getDeviceId());
                         break;
                     case "v":
                         position.set(Position.KEY_VERSION_FW, value);
                         break;
                     case "t":
-                        position.setDeviceTime(new Date(Long.parseLong(value)));
+                        position.setDatahora_rastreador(new Date(Long.parseLong(value)));
                         break;
                     case "bat":
                         int battery = Integer.parseInt(value);
@@ -100,12 +100,12 @@ public class RfTrackProtocolDecoder extends BaseHttpProtocolDecoder {
                         break;
                     case "gps":
                         JsonObject location = Json.createReader(new StringReader(value)).readObject();
-                        position.setValid(true);
-                        position.setAccuracy(location.getJsonNumber("a").doubleValue());
+                        //position.setValid(true);
+                        position.setPrecisao(location.getJsonNumber("a").doubleValue());
                         position.setLongitude(location.getJsonNumber("x").doubleValue());
                         position.setLatitude(location.getJsonNumber("y").doubleValue());
                         position.setAltitude(location.getJsonNumber("z").doubleValue());
-                        position.setFixTime(new Date(location.getJsonNumber("t").longValue()));
+                        position.setDatahora_corrigida(new Date(location.getJsonNumber("t").longValue()));
                         break;
                     case "gsm":
                         JsonObject cellInfo = Json.createReader(new StringReader(value)).readObject();
@@ -144,16 +144,16 @@ public class RfTrackProtocolDecoder extends BaseHttpProtocolDecoder {
             }
         }
 
-        if (position.getFixTime() == null) {
-            getLastLocation(position, position.getDeviceTime());
+        if (position.getDatahora_corrigida() == null) {
+            getLastLocation(position, position.getDatahora_rastreador());
         }
 
         if (network.getCellTowers() != null || network.getWifiAccessPoints() != null) {
-            position.setNetwork(network);
+            position.setRede(network);
         }
 
         String response = "{}";
-        for (Command command : getCommandsManager().readQueuedCommands(position.getDeviceId(), 1)) {
+        for (Command command : getCommandsManager().readQueuedCommands(position.getRastreador_id(), 1)) {
             response = command.getString(Command.KEY_DATA);
         }
         sendResponse(channel, HttpResponseStatus.OK, Unpooled.copiedBuffer(response, StandardCharsets.UTF_8));

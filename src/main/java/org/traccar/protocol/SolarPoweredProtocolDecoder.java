@@ -56,7 +56,7 @@ public class SolarPoweredProtocolDecoder extends BaseProtocolDecoder {
         if (type == MSG_ACTIVE_REPORTING) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             while (buf.readableBytes() > 2) {
                 int tag = buf.readUnsignedByte();
@@ -76,7 +76,7 @@ public class SolarPoweredProtocolDecoder extends BaseProtocolDecoder {
                         if (BitUtil.check(status, 2)) {
                             position.setLongitude(-position.getLongitude());
                         }
-                        position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+                        position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
                         int temperature = buf.readUnsignedByte();
                         if (BitUtil.check(temperature, 7)) {
                             position.set(Position.KEY_DEVICE_TEMP, -BitUtil.to(temperature, 7));
@@ -84,7 +84,7 @@ public class SolarPoweredProtocolDecoder extends BaseProtocolDecoder {
                             position.set(Position.KEY_DEVICE_TEMP, BitUtil.to(temperature, 7));
                         }
                         position.set(Position.KEY_BATTERY, buf.readUnsignedByte() * 0.02);
-                        position.setCourse(buf.readUnsignedByte());
+                        position.setCurso(buf.readUnsignedByte());
                         break;
                     case 0x82:
                         int alarmMask = buf.readUnsignedByte();

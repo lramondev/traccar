@@ -66,13 +66,13 @@ public class NetProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
         int flags = parser.nextHexInt();
 
-        position.setValid(BitUtil.check(flags, 3));
+        //position.setValid(BitUtil.check(flags, 3));
         int hemisphereLatitude = BitUtil.check(flags, 1) ? -1 : 1;
         int hemisphereLongitude = BitUtil.check(flags, 0) ? -1 : 1;
 
@@ -80,9 +80,9 @@ public class NetProtocolDecoder extends BaseProtocolDecoder {
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN) * hemisphereLongitude);
 
         position.set(Position.KEY_STATUS, parser.nextHexLong());
-        position.setSpeed(parser.nextHexInt() * 0.01);
+        position.setVelocidade(parser.nextHexInt() * 0.01);
         position.set(Position.KEY_ODOMETER, parser.nextHexInt() * 1852.0 / 16);
-        position.setCourse(parser.nextHexInt());
+        position.setCurso(parser.nextHexInt());
 
         parser.nextHexInt(); // alarm
 

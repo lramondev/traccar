@@ -67,7 +67,7 @@ public class CradlepointProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         int time = parser.nextInt();
         DateBuilder dateBuilder = new DateBuilder(new Date());
@@ -76,11 +76,11 @@ public class CradlepointProtocolDecoder extends BaseProtocolDecoder {
         dateBuilder.setSecond(time % 100);
         position.setTime(dateBuilder.getDate());
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
-        position.setSpeed(parser.nextDouble(0));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
 
         position.set("carrid", parser.next());
         position.set("serdis", parser.next());

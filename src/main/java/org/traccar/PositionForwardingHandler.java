@@ -132,7 +132,7 @@ public class PositionForwardingHandler extends BaseDataHandler {
         if (positionForwarder != null) {
             PositionData positionData = new PositionData();
             positionData.setPosition(position);
-            positionData.setDevice(cacheManager.getObject(Device.class, position.getDeviceId()));
+            positionData.setDevice(cacheManager.getObject(Device.class, position.getRastreador_id()));
             new AsyncRequestAndCallback(positionData).send();
         }
         return position;

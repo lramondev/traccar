@@ -24,8 +24,8 @@ import org.traccar.helper.model.DeviceUtil;
 import org.traccar.schedule.ScheduleManager;
 import org.traccar.storage.DatabaseModule;
 import org.traccar.storage.Storage;
-import org.traccar.web.WebModule;
-import org.traccar.web.WebServer;
+//import org.traccar.web.WebModule;
+//import org.traccar.web.WebServer;
 
 import java.io.File;
 import java.lang.management.ManagementFactory;
@@ -117,7 +117,7 @@ public final class Main {
 
     public static void run(String configFile) {
         try {
-            injector = Guice.createInjector(new MainModule(configFile), new DatabaseModule(), new WebModule());
+            injector = Guice.createInjector(new MainModule(configFile), new DatabaseModule()/*, new WebModule()*/);
             logSystemInfo();
             LOGGER.info("Version: " + Main.class.getPackage().getImplementationVersion());
             LOGGER.info("Starting server...");
@@ -127,7 +127,7 @@ public final class Main {
             }
 
             var services = Stream.of(
-                    ServerManager.class, WebServer.class, ScheduleManager.class, BroadcastService.class)
+                    ServerManager.class, /*WebServer.class,*/ ScheduleManager.class, BroadcastService.class)
                     .map(injector::getInstance)
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());

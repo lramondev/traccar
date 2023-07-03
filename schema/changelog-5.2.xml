@@ -8,14 +8,16 @@
 
   <changeSet author="author" id="changelog-5.2">
 
-    <addColumn tableName="tc_devices">
+    <addColumn tableName="geolocal_rastreador">
       <column name="status" type="CHAR(8)" />
     </addColumn>
 
-    <addColumn tableName="tc_devices">
+    <!--
+    <addColumn tableName="geolocal_rastreador">
       <column name="geofenceids" type="VARCHAR(128)" />
     </addColumn>
-
+    -->
+    
   </changeSet>
 
 </databaseChangeLog>

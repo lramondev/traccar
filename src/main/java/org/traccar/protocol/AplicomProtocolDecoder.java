@@ -208,19 +208,19 @@ public class AplicomProtocolDecoder extends BaseProtocolDecoder {
     private void decodeD(Position position, ByteBuf buf, int selector, int event) {
 
         if ((selector & 0x0008) != 0) {
-            position.setValid((buf.readUnsignedByte() & 0x40) != 0);
+            //position.setValid((buf.readUnsignedByte() & 0x40) != 0);
         } else {
             getLastLocation(position, null);
         }
 
         if ((selector & 0x0004) != 0) {
-            position.setDeviceTime(new Date(buf.readUnsignedInt() * 1000));
+            position.setDatahora_rastreador(new Date(buf.readUnsignedInt() * 1000));
         }
 
         if ((selector & 0x0008) != 0) {
-            position.setFixTime(new Date(buf.readUnsignedInt() * 1000));
-            if (position.getDeviceTime() == null) {
-                position.setDeviceTime(position.getFixTime());
+            position.setDatahora_corrigida(new Date(buf.readUnsignedInt() * 1000));
+            if (position.getDatahora_rastreador() == null) {
+                position.setDatahora_rastreador(position.getDatahora_corrigida());
             }
             position.setLatitude(buf.readInt() / 1000000.0);
             position.setLongitude(buf.readInt() / 1000000.0);
@@ -228,9 +228,9 @@ public class AplicomProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if ((selector & 0x0010) != 0) {
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
             position.set("maximumSpeed", buf.readUnsignedByte());
-            position.setCourse(buf.readUnsignedByte() * 2.0);
+            position.setCurso(buf.readUnsignedByte() * 2.0);
         }
 
         if ((selector & 0x0040) != 0) {
@@ -678,7 +678,7 @@ public class AplicomProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         int event = buf.readUnsignedByte();
         position.set(Position.KEY_EVENT, event);

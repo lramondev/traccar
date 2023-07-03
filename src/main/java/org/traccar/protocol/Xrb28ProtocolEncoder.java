@@ -27,7 +27,7 @@ public class Xrb28ProtocolEncoder extends BaseProtocolEncoder {
     }
 
     private String formatCommand(Command command, String content) {
-        return String.format("\u00ff\u00ff*SCOS,OM,%s,%s#\n", getUniqueId(command.getDeviceId()), content);
+        return String.format("\u00ff\u00ff*SCOS,OM,%s,%s#\n", getUniqueId(command.getRastreador_id()), content);
     }
 
     @Override

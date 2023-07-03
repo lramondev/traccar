@@ -43,7 +43,7 @@ public final class NotificatorWeb implements Notificator {
 
         Event copy = new Event();
         copy.setId(event.getId());
-        copy.setDeviceId(event.getDeviceId());
+        copy.setRastreador_id(event.getRastreador_id());
         copy.setType(event.getType());
         copy.setEventTime(event.getEventTime());
         copy.setPositionId(event.getPositionId());

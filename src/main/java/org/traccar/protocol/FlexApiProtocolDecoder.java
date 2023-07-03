@@ -50,13 +50,13 @@ public class FlexApiProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         JsonObject payload = root.getJsonObject("payload");
 
         if (topic.contains("/gnss/")) {
 
-            position.setValid(true);
+            //position.setValid(true);
 
             if (payload.containsKey("time")) {
                 position.setTime(new Date(payload.getInt("time") * 1000L));
@@ -68,10 +68,10 @@ public class FlexApiProtocolDecoder extends BaseProtocolDecoder {
                 position.setLongitude(payload.getJsonNumber("gnss.longitude").doubleValue());
             }
 
-            position.setValid(payload.getInt("gnss.fix") > 0);
+            //position.setValid(payload.getInt("gnss.fix") > 0);
             position.setAltitude(payload.getJsonNumber("gnss.altitude").doubleValue());
-            position.setSpeed(payload.getJsonNumber("gnss.speed").doubleValue());
-            position.setCourse(payload.getJsonNumber("gnss.heading").doubleValue());
+            position.setVelocidade(payload.getJsonNumber("gnss.speed").doubleValue());
+            position.setCurso(payload.getJsonNumber("gnss.heading").doubleValue());
 
             position.set(Position.KEY_SATELLITES, payload.getInt("gnss.num_sv"));
             position.set(Position.KEY_HDOP, payload.getJsonNumber("gnss.hdop").doubleValue());
@@ -105,7 +105,7 @@ public class FlexApiProtocolDecoder extends BaseProtocolDecoder {
                     default:
                         break;
                 }
-                position.setNetwork(new Network(cellTower));
+                position.setRede(new Network(cellTower));
             }
 
         } else if (topic.contains("/obd/")) {

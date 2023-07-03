@@ -50,7 +50,7 @@ public class LeafSpyProtocolDecoder extends BaseHttpProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setValid(true);
+        //position.setValid(true);
 
         for (Map.Entry<String, List<String>> entry : params.entrySet()) {
             for (String value : entry.getValue()) {
@@ -61,7 +61,7 @@ public class LeafSpyProtocolDecoder extends BaseHttpProtocolDecoder {
                             sendResponse(channel, HttpResponseStatus.BAD_REQUEST);
                             return null;
                         }
-                        position.setDeviceId(deviceSession.getDeviceId());
+                        position.setRastreador_id(deviceSession.getDeviceId());
                         break;
                     case "Lat":
                         position.setLatitude(Double.parseDouble(value));
@@ -71,7 +71,7 @@ public class LeafSpyProtocolDecoder extends BaseHttpProtocolDecoder {
                         break;
                     case "RPM":
                         position.set(Position.KEY_RPM, Integer.parseInt(value));
-                        position.setSpeed(convertSpeed(Double.parseDouble(value) / 63, "kmh"));
+                        position.setVelocidade(convertSpeed(Double.parseDouble(value) / 63, "kmh"));
                         break;
                     case "Elv":
                         position.setAltitude(Double.parseDouble(value));
@@ -109,15 +109,15 @@ public class LeafSpyProtocolDecoder extends BaseHttpProtocolDecoder {
             }
         }
 
-        if (position.getFixTime() == null) {
+        if (position.getDatahora_corrigida() == null) {
             position.setTime(new Date());
         }
 
         if (position.getLatitude() == 0 && position.getLongitude() == 0) {
-            getLastLocation(position, position.getDeviceTime());
+            getLastLocation(position, position.getDatahora_rastreador());
         }
 
-        if (position.getDeviceId() != 0) {
+        if (position.getRastreador_id() != 0) {
             sendResponse(channel, HttpResponseStatus.OK,
                     Unpooled.copiedBuffer("\"status\":\"0\"", StandardCharsets.US_ASCII));
             return position;

@@ -7,12 +7,12 @@
   logicalFilePath="changelog-4.9">
 
   <changeSet author="author" id="changelog-4.9">
-
+    <!--
     <createIndex tableName="tc_events" indexName="event_deviceid_servertime">
       <column name="deviceid" />
       <column name="servertime" />
     </createIndex>
-
+    -->
   </changeSet>
 
 </databaseChangeLog>

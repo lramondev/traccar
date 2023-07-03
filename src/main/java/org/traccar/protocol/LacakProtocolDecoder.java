@@ -51,7 +51,7 @@ public class LacakProtocolDecoder extends BaseHttpProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         JsonObject location = root.getJsonObject("location");
 
@@ -61,9 +61,9 @@ public class LacakProtocolDecoder extends BaseHttpProtocolDecoder {
             JsonObject coordinates = location.getJsonObject("coords");
             position.setLatitude(coordinates.getJsonNumber("latitude").doubleValue());
             position.setLongitude(coordinates.getJsonNumber("longitude").doubleValue());
-            position.setAccuracy(coordinates.getJsonNumber("accuracy").doubleValue());
-            position.setSpeed(coordinates.getJsonNumber("speed").doubleValue());
-            position.setCourse(coordinates.getJsonNumber("heading").doubleValue());
+            position.setPrecisao(coordinates.getJsonNumber("accuracy").doubleValue());
+            position.setVelocidade(coordinates.getJsonNumber("speed").doubleValue());
+            position.setCurso(coordinates.getJsonNumber("heading").doubleValue());
             position.setAltitude(coordinates.getJsonNumber("altitude").doubleValue());
         }
 

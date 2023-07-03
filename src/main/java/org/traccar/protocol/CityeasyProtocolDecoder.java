@@ -93,19 +93,19 @@ public class CityeasyProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             if (parser.hasNext(15)) {
 
                 position.setTime(parser.nextDateTime());
 
-                position.setValid(parser.next().equals("A"));
+                //position.setValid(parser.next().equals("A"));
                 position.set(Position.KEY_SATELLITES, parser.nextInt());
 
                 position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
                 position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
 
-                position.setSpeed(parser.nextDouble(0));
+                position.setVelocidade(parser.nextDouble(0));
                 position.set(Position.KEY_HDOP, parser.nextDouble(0));
                 position.setAltitude(parser.nextDouble(0));
 
@@ -115,7 +115,7 @@ public class CityeasyProtocolDecoder extends BaseProtocolDecoder {
 
             }
 
-            position.setNetwork(new Network(CellTower.from(
+            position.setRede(new Network(CellTower.from(
                     parser.nextInt(0), parser.nextInt(0), parser.nextInt(0), parser.nextInt(0))));
 
             return position;

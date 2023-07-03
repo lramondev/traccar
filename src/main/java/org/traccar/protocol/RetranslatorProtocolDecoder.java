@@ -55,7 +55,7 @@ public class RetranslatorProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
         position.setTime(new Date(buf.readUnsignedInt() * 1000));
 
         buf.readUnsignedInt(); // bit flags
@@ -72,12 +72,12 @@ public class RetranslatorProtocolDecoder extends BaseProtocolDecoder {
             buf.readByte();
 
             if (name.equals("posinfo")) {
-                position.setValid(true);
+                //position.setValid(true);
                 position.setLongitude(buf.readDoubleLE());
                 position.setLatitude(buf.readDoubleLE());
                 position.setAltitude(buf.readDoubleLE());
-                position.setSpeed(buf.readShort());
-                position.setCourse(buf.readShort());
+                position.setVelocidade(buf.readShort());
+                position.setCurso(buf.readShort());
                 position.set(Position.KEY_SATELLITES, buf.readByte());
             } else {
                 switch (dataType) {
@@ -105,7 +105,7 @@ public class RetranslatorProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (position.getLatitude() == 0 && position.getLongitude() == 0) {
-            getLastLocation(position, position.getDeviceTime());
+            getLastLocation(position, position.getDatahora_rastreador());
         }
 
         return position;

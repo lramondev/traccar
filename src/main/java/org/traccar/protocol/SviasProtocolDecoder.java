@@ -78,13 +78,13 @@ public class SviasProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_MIN));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_MIN));
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble() * 0.01));
-        position.setCourse(parser.nextDouble() * 0.01);
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble() * 0.01));
+        position.setCurso(parser.nextDouble() * 0.01);
 
         position.set(Position.KEY_ODOMETER, parser.nextInt() * 100);
 
@@ -93,7 +93,7 @@ public class SviasProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_ALARM, BitUtil.check(input, 0) ? Position.ALARM_SOS : null);
         position.set(Position.KEY_IGNITION, BitUtil.check(input, 4));
-        position.setValid(BitUtil.check(output, 0));
+        //position.setValid(BitUtil.check(output, 0));
 
         position.set(Position.KEY_POWER, parser.nextInt() * 0.001);
         position.set(Position.KEY_BATTERY_LEVEL, parser.nextInt());

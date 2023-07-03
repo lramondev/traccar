@@ -34,7 +34,7 @@ public class BceProtocolEncoder extends BaseProtocolEncoder {
         if (command.getType().equals(Command.TYPE_OUTPUT_CONTROL)) {
             ByteBuf buf = Unpooled.buffer();
 
-            buf.writeLongLE(Long.parseLong(getUniqueId(command.getDeviceId())));
+            buf.writeLongLE(Long.parseLong(getUniqueId(command.getRastreador_id())));
             buf.writeShortLE(1 + 1 + 3 + 1); // length
             buf.writeByte(BceProtocolDecoder.MSG_OUTPUT_CONTROL);
             buf.writeByte(command.getInteger(Command.KEY_INDEX) == 1 ? 0x0A : 0x0B);

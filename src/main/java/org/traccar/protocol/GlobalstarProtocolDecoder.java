@@ -133,9 +133,9 @@ public class GlobalstarProtocolDecoder extends BaseHttpProtocolDecoder {
             if (deviceSession != null) {
 
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
-                position.setValid(true);
+                //position.setValid(true);
                 position.setTime(new Date(Long.parseLong(xPath.evaluate("unixTime", node)) * 1000));
 
                 ByteBuf buf = Unpooled.wrappedBuffer(
@@ -149,7 +149,7 @@ public class GlobalstarProtocolDecoder extends BaseHttpProtocolDecoder {
                     position.set(Position.KEY_ALARM, Position.ALARM_VIBRATION);
                 }
 
-                position.setCourse(BitUtil.from(flags, 5) * 45);
+                position.setCurso(BitUtil.from(flags, 5) * 45);
 
                 double latitude = buf.readUnsignedMedium() * 90.0 / (1 << 23);
                 position.setLatitude(latitude > 90 ? latitude - 180 : latitude);
@@ -158,7 +158,7 @@ public class GlobalstarProtocolDecoder extends BaseHttpProtocolDecoder {
                 position.setLongitude(longitude > 180 ? longitude - 360 : longitude);
 
                 int speed = buf.readUnsignedByte();
-                position.setSpeed(UnitsConverter.knotsFromKph(speed));
+                position.setVelocidade(UnitsConverter.knotsFromKph(speed));
 
                 position.set("batteryReplace", BitUtil.check(buf.readUnsignedByte(), 7));
 

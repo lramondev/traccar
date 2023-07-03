@@ -56,7 +56,7 @@ public class OsmAndProtocolDecoder extends BaseHttpProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setValid(true);
+        //position.setValid(true);
 
         Network network = new Network();
         Double latitude = null;
@@ -72,10 +72,10 @@ public class OsmAndProtocolDecoder extends BaseHttpProtocolDecoder {
                             sendResponse(channel, HttpResponseStatus.BAD_REQUEST);
                             return null;
                         }
-                        position.setDeviceId(deviceSession.getDeviceId());
+                        position.setRastreador_id(deviceSession.getDeviceId());
                         break;
                     case "valid":
-                        position.setValid(Boolean.parseBoolean(value) || "1".equals(value));
+                        //position.setValid(Boolean.parseBoolean(value) || "1".equals(value));
                         break;
                     case "timestamp":
                         try {
@@ -122,17 +122,17 @@ public class OsmAndProtocolDecoder extends BaseHttpProtocolDecoder {
                                 wifi[0].replace('-', ':'), Integer.parseInt(wifi[1])));
                         break;
                     case "speed":
-                        position.setSpeed(convertSpeed(Double.parseDouble(value), "kn"));
+                        position.setVelocidade(convertSpeed(Double.parseDouble(value), "kn"));
                         break;
                     case "bearing":
                     case "heading":
-                        position.setCourse(Double.parseDouble(value));
+                        position.setCurso(Double.parseDouble(value));
                         break;
                     case "altitude":
                         position.setAltitude(Double.parseDouble(value));
                         break;
                     case "accuracy":
-                        position.setAccuracy(Double.parseDouble(value));
+                        position.setPrecisao(Double.parseDouble(value));
                         break;
                     case "hdop":
                         position.set(Position.KEY_HDOP, Double.parseDouble(value));
@@ -167,24 +167,24 @@ public class OsmAndProtocolDecoder extends BaseHttpProtocolDecoder {
             }
         }
 
-        if (position.getFixTime() == null) {
+        if (position.getDatahora_corrigida() == null) {
             position.setTime(new Date());
         }
 
         if (network.getCellTowers() != null || network.getWifiAccessPoints() != null) {
-            position.setNetwork(network);
+            position.setRede(network);
         }
 
         if (latitude != null && longitude != null) {
             position.setLatitude(latitude);
             position.setLongitude(longitude);
         } else {
-            getLastLocation(position, position.getDeviceTime());
+            getLastLocation(position, position.getDatahora_rastreador());
         }
 
-        if (position.getDeviceId() != 0) {
+        if (position.getRastreador_id() != 0) {
             String response = null;
-            for (Command command : getCommandsManager().readQueuedCommands(position.getDeviceId(), 1)) {
+            for (Command command : getCommandsManager().readQueuedCommands(position.getRastreador_id(), 1)) {
                 response = command.getString(Command.KEY_DATA);
             }
             if (response != null) {

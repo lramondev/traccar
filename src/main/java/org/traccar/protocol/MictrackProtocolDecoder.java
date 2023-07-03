@@ -89,12 +89,12 @@ public class MictrackProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_SATELLITES, Integer.parseInt(values[index++]));
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setTime(decodeTime(values[index++]));
         position.setLatitude(Double.parseDouble(values[index++]));
         position.setLongitude(Double.parseDouble(values[index++]));
-        position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
-        position.setCourse(Integer.parseInt(values[index++]));
+        position.setVelocidade(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
+        position.setCurso(Integer.parseInt(values[index++]));
 
         int event = Integer.parseInt(values[index++]);
         position.set(Position.KEY_ALARM, decodeAlarm(event));
@@ -141,7 +141,7 @@ public class MictrackProtocolDecoder extends BaseProtocolDecoder {
             decodeCell(network, values[index++]);
         }
 
-        position.setNetwork(network);
+        position.setRede(network);
 
         int event = Integer.parseInt(values[index++]);
         position.set(Position.KEY_ALARM, decodeAlarm(event));
@@ -190,7 +190,7 @@ public class MictrackProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, null);
 
@@ -206,7 +206,7 @@ public class MictrackProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, null);
 
@@ -227,7 +227,7 @@ public class MictrackProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
         position.set(Position.KEY_TYPE, Integer.parseInt(fragments[1]));
 
         switch (fragments[3]) {
@@ -281,17 +281,17 @@ public class MictrackProtocolDecoder extends BaseProtocolDecoder {
             if (parser.matches()) {
 
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 DateBuilder dateBuilder = new DateBuilder()
                         .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
-                position.setValid(parser.next().equals("A"));
+                //position.setValid(parser.next().equals("A"));
                 position.setLatitude(parser.nextCoordinate());
                 position.setLongitude(parser.nextCoordinate());
 
-                position.setSpeed(parser.nextDouble(0));
-                position.setCourse(parser.nextDouble(0));
+                position.setVelocidade(parser.nextDouble(0));
+                position.setCurso(parser.nextDouble(0));
                 position.setAltitude(parser.nextDouble(0));
 
                 dateBuilder.setDateReverse(parser.nextInt(), parser.nextInt(), parser.nextInt());

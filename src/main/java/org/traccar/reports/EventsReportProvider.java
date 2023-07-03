@@ -141,7 +141,7 @@ public class EventsReportProvider {
                 }
             }
             DeviceReportSection deviceEvents = new DeviceReportSection();
-            deviceEvents.setDeviceName(device.getName());
+            deviceEvents.setDeviceName(device.getDescricao());
             sheetNames.add(WorkbookUtil.createSafeSheetName(deviceEvents.getDeviceName()));
             if (device.getGroupId() > 0) {
                 Group group = storage.getObject(Group.class, new Request(

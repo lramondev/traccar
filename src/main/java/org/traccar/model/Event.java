@@ -25,13 +25,13 @@ public class Event extends Message {
     public Event(String type, Position position) {
         setType(type);
         setPositionId(position.getId());
-        setDeviceId(position.getDeviceId());
-        eventTime = position.getDeviceTime();
+        setRastreador_id(position.getRastreador_id());
+        eventTime = position.getDatahora_rastreador();
     }
 
     public Event(String type, long deviceId) {
         setType(type);
-        setDeviceId(deviceId);
+        setRastreador_id(deviceId);
         eventTime = new Date();
     }
 

@@ -8,6 +8,7 @@
 
   <changeSet author="author" id="changelog-4.0-clean">
 
+    <!--
     <preConditions onFail="MARK_RAN">
       <not>
         <changeSetExecuted changeLogFile="changelog-3.3" id="changelog-3.3" author="author" />
@@ -118,28 +119,30 @@
         <constraints nullable="false" />
       </column>
     </createTable>
+    -->
 
-    <createTable tableName="tc_devices">
+    <createTable tableName="geolocal_rastreador">
       <column name="id" type="INT" autoIncrement="true">
         <constraints primaryKey="true" />
       </column>
-      <column name="name" type="VARCHAR(128)">
+      <column name="descricao" type="VARCHAR(128)">
         <constraints nullable="false" />
       </column>
-      <column name="uniqueid" type="VARCHAR(128)">
+      <column name="imei" type="VARCHAR(128)">
         <constraints nullable="false" unique="true" />
       </column>
-      <column name="lastupdate" type="timestamp" />
-      <column name="positionid" type="INT" />
-      <column name="groupid" type="INT" />
+      <!--<column name="datahora_atualizacao" type="timestamp" />-->
+      <column name="rastreador_posicao_id" type="INT" />
+      <!--<column name="groupid" type="INT" />
       <column name="attributes" type="VARCHAR(4000)" />
-      <column name="phone" type="VARCHAR(128)" />
-      <column name="model" type="VARCHAR(128)" />
-      <column name="contact" type="VARCHAR(512)" />
+      <column name="phone" type="VARCHAR(128)" />-->
+      <column name="modelo" type="VARCHAR(128)" />
+      <!--<column name="contact" type="VARCHAR(512)" />
       <column name="category" type="VARCHAR(128)" />
-      <column name="disabled" type="BOOLEAN" defaultValueBoolean="false" />
+      <column name="disabled" type="BOOLEAN" defaultValueBoolean="false" />-->
     </createTable>
 
+    <!--
     <createTable tableName="tc_drivers">
       <column name="id" type="INT" autoIncrement="true">
         <constraints primaryKey="true" />
@@ -287,27 +290,31 @@
       <column name="calendarid" type="INT" />
       <column name="notificators" type="VARCHAR(128)" />
     </createTable>
+    -->
 
-    <createTable tableName="tc_positions">
+    <createTable tableName="geolocal_rastreador_posicao">
       <column name="id" type="INT" autoIncrement="true">
         <constraints primaryKey="true" />
       </column>
-      <column name="protocol" type="VARCHAR(128)" />
-      <column name="deviceid" type="INT">
+      <column name="protocolo" type="VARCHAR(128)" />
+      <column name="rastreador_id" type="INT">
         <constraints nullable="false" />
       </column>
-      <column name="servertime" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+
+      <column name="datahora_servidor" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
         <constraints nullable="false" />
       </column>
-      <column name="devicetime" type="TIMESTAMP">
+      <column name="datahora_rastreador" type="TIMESTAMP">
         <constraints nullable="false" />
       </column>
-      <column name="fixtime" type="TIMESTAMP">
+      <column name="datahora_corrigida" type="TIMESTAMP">
         <constraints nullable="false" />
       </column>
+      <!--
       <column name="valid" type="BOOLEAN">
         <constraints nullable="false" />
       </column>
+      -->
       <column name="latitude" type="DOUBLE">
         <constraints nullable="false" />
       </column>
@@ -317,20 +324,21 @@
       <column name="altitude" type="FLOAT">
         <constraints nullable="false" />
       </column>
-      <column name="speed" type="FLOAT">
+      <column name="velocidade" type="FLOAT">
         <constraints nullable="false" />
       </column>
-      <column name="course" type="FLOAT">
+      <column name="curso" type="FLOAT">
         <constraints nullable="false" />
       </column>
-      <column name="address" type="VARCHAR(512)" />
+      <column name="endereco" type="VARCHAR(512)" />
       <column name="attributes" type="VARCHAR(4000)" />
-      <column name="accuracy" type="DOUBLE" defaultValueNumeric="0">
+      <column name="precisao" type="DOUBLE" defaultValueNumeric="0">
         <constraints nullable="false" />
       </column>
-      <column name="network" type="VARCHAR(4000)" />
+      <column name="rede" type="VARCHAR(4000)" />
     </createTable>
 
+    <!--
     <createTable tableName="tc_servers">
       <column name="id" type="INT" autoIncrement="true">
         <constraints primaryKey="true" />
@@ -539,23 +547,23 @@
     </createTable>
 
     <addForeignKeyConstraint baseTableName="tc_device_command" baseColumnNames="commandid" constraintName="fk_device_command_commandid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_commands" />
-    <addForeignKeyConstraint baseTableName="tc_device_command" baseColumnNames="deviceid" constraintName="fk_device_command_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_devices" />
+    <addForeignKeyConstraint baseTableName="tc_device_command" baseColumnNames="deviceid" constraintName="fk_device_command_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="geolocal_rastreador" />
 
-    <addForeignKeyConstraint baseTableName="tc_device_driver" baseColumnNames="deviceid" constraintName="fk_device_driver_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_devices" />
+    <addForeignKeyConstraint baseTableName="tc_device_driver" baseColumnNames="deviceid" constraintName="fk_device_driver_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="geolocal_rastreador" />
     <addForeignKeyConstraint baseTableName="tc_device_driver" baseColumnNames="driverid" constraintName="fk_device_driver_driverid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_drivers" />
 
-    <addForeignKeyConstraint baseTableName="tc_device_geofence" baseColumnNames="deviceid" constraintName="fk_device_geofence_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_devices" />
+    <addForeignKeyConstraint baseTableName="tc_device_geofence" baseColumnNames="deviceid" constraintName="fk_device_geofence_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="geolocal_rastreador" />
     <addForeignKeyConstraint baseTableName="tc_device_geofence" baseColumnNames="geofenceid" constraintName="fk_device_geofence_geofenceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_geofences" />
 
-    <addForeignKeyConstraint baseTableName="tc_device_maintenance" baseColumnNames="deviceid" constraintName="fk_device_maintenance_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_devices" />
+    <addForeignKeyConstraint baseTableName="tc_device_maintenance" baseColumnNames="deviceid" constraintName="fk_device_maintenance_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="geolocal_rastreador" />
     <addForeignKeyConstraint baseTableName="tc_device_maintenance" baseColumnNames="maintenanceid" constraintName="fk_device_maintenance_maintenanceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_maintenances" />
 
-    <addForeignKeyConstraint baseTableName="tc_device_notification" baseColumnNames="deviceid" constraintName="fk_device_notification_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_devices" />
+    <addForeignKeyConstraint baseTableName="tc_device_notification" baseColumnNames="deviceid" constraintName="fk_device_notification_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="geolocal_rastreador" />
     <addForeignKeyConstraint baseTableName="tc_device_notification" baseColumnNames="notificationid" constraintName="fk_device_notification_notificationid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_notifications" />
 
-    <addForeignKeyConstraint baseTableName="tc_devices" baseColumnNames="groupid" constraintName="fk_devices_groupid" onDelete="SET NULL" referencedColumnNames="id" referencedTableName="tc_groups" />
+    <addForeignKeyConstraint baseTableName="geolocal_rastreador" baseColumnNames="groupid" constraintName="fk_devices_groupid" onDelete="SET NULL" referencedColumnNames="id" referencedTableName="tc_groups" />
 
-    <addForeignKeyConstraint baseTableName="tc_events" baseColumnNames="deviceid" constraintName="fk_events_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_devices" />
+    <addForeignKeyConstraint baseTableName="tc_events" baseColumnNames="deviceid" constraintName="fk_events_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="geolocal_rastreador" />
 
     <addForeignKeyConstraint baseTableName="tc_geofences" baseColumnNames="calendarid" constraintName="fk_geofence_calendar_calendarid" onDelete="SET NULL" referencedColumnNames="id" referencedTableName="tc_calendars" />
 
@@ -578,9 +586,9 @@
     <addForeignKeyConstraint baseTableName="tc_group_notification" baseColumnNames="notificationid" constraintName="fk_group_notification_notificationid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_notifications" />
 
     <addForeignKeyConstraint baseTableName="tc_notifications" baseColumnNames="calendarid" constraintName="fk_notification_calendar_calendarid" onDelete="SET NULL" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="tc_calendars" />
-
-    <addForeignKeyConstraint baseTableName="tc_positions" baseColumnNames="deviceid" constraintName="fk_positions_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_devices" />
-
+    -->
+    <addForeignKeyConstraint baseTableName="geolocal_rastreador_posicao" baseColumnNames="rastreador_id" constraintName="fk_positions_rastreador_id" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="geolocal_rastreador" />
+    <!--
     <addForeignKeyConstraint baseTableName="tc_user_attribute" baseColumnNames="attributeid" constraintName="fk_user_attribute_attributeid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_attributes" />
     <addForeignKeyConstraint baseTableName="tc_user_attribute" baseColumnNames="userid" constraintName="fk_user_attribute_userid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_users" />
 
@@ -591,9 +599,9 @@
     <addForeignKeyConstraint baseTableName="tc_user_command" baseColumnNames="userid" constraintName="fk_user_command_userid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_users" />
 
     <addForeignKeyConstraint baseTableName="tc_device_attribute" baseColumnNames="attributeid" constraintName="fk_user_device_attribute_attributeid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_attributes" />
-    <addForeignKeyConstraint baseTableName="tc_device_attribute" baseColumnNames="deviceid" constraintName="fk_user_device_attribute_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_devices" />
+    <addForeignKeyConstraint baseTableName="tc_device_attribute" baseColumnNames="deviceid" constraintName="fk_user_device_attribute_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="geolocal_rastreador" />
 
-    <addForeignKeyConstraint baseTableName="tc_user_device" baseColumnNames="deviceid" constraintName="fk_user_device_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_devices" />
+    <addForeignKeyConstraint baseTableName="tc_user_device" baseColumnNames="deviceid" constraintName="fk_user_device_deviceid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="geolocal_rastreador" />
     <addForeignKeyConstraint baseTableName="tc_user_device" baseColumnNames="userid" constraintName="fk_user_device_userid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_users" />
 
     <addForeignKeyConstraint baseTableName="tc_user_driver" baseColumnNames="driverid" constraintName="fk_user_driver_driverid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_drivers" />
@@ -620,10 +628,13 @@
       <column name="zoom" valueNumeric="0" />
     </insert>
 
+    -->
+
   </changeSet>
   
   <changeSet author="author" id="changelog-4.0-clean-common">
 
+    <!--
     <preConditions onFail="MARK_RAN">
       <not>
         <changeSetExecuted changeLogFile="changelog-3.3" id="changelog-3.3" author="author" />
@@ -635,7 +646,7 @@
 
     <addForeignKeyConstraint baseTableName="tc_groups" baseColumnNames="groupid" constraintName="fk_groups_groupid" onDelete="SET NULL" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="tc_groups" />
     <addForeignKeyConstraint baseTableName="tc_user_user" baseColumnNames="manageduserid" constraintName="fk_user_user_manageduserid" onDelete="CASCADE" referencedColumnNames="id" referencedTableName="tc_users" />
-
+    -->
   </changeSet>
 
 </databaseChangeLog>

@@ -7,7 +7,7 @@
   logicalFilePath="changelog-3.11">
 
   <changeSet author="author" id="changelog-3.11">
-
+    <!--
     <preConditions onFail="MARK_RAN">
       <not>
         <tableExists tableName="tc_servers" />
@@ -33,7 +33,7 @@
     <addColumn tableName="users">
       <column name="timezone" type="VARCHAR(128)" />
     </addColumn>
-
+    -->
   </changeSet>
 
 </databaseChangeLog>

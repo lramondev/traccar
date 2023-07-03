@@ -50,7 +50,7 @@ public class PricolProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set("eventType", buf.readUnsignedByte());
         position.set("packetVersion", buf.readUnsignedByte());
@@ -62,7 +62,7 @@ public class PricolProtocolDecoder extends BaseProtocolDecoder {
                 .setDateReverse(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
                 .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte()).getDate());
 
-        position.setValid(true);
+        //position.setValid(true);
 
         double lat = buf.getUnsignedShort(buf.readerIndex()) / 100;
         lat += (buf.readUnsignedShort() % 100 * 10000 + buf.readUnsignedShort()) / 600000.0;
@@ -72,7 +72,7 @@ public class PricolProtocolDecoder extends BaseProtocolDecoder {
         lon += (buf.readUnsignedMedium() % 100 * 10000 + buf.readUnsignedShort()) / 600000.0;
         position.setLongitude(buf.readUnsignedByte() == 'W' ? -lon : lon);
 
-        position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+        position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
 
         position.set(Position.KEY_INPUT, buf.readUnsignedShort());
         position.set(Position.KEY_OUTPUT, buf.readUnsignedByte());

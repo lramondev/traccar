@@ -311,7 +311,7 @@ public class AtrackProtocolDecoder extends BaseProtocolDecoder {
                 && cellTower.getMobileNetworkCode() != null
                 && cellTower.getCellId() != null
                 && cellTower.getLocationAreaCode() != null) {
-            position.setNetwork(new Network(cellTower));
+            position.setRede(new Network(cellTower));
         } else if (cellTower.getSignalStrength() != null) {
             position.set(Position.KEY_RSSI, cellTower.getSignalStrength());
         }
@@ -640,7 +640,7 @@ public class AtrackProtocolDecoder extends BaseProtocolDecoder {
             && cellTower.getMobileNetworkCode() != null
             && cellTower.getCellId() != null && cellTower.getCellId() != 0
             && cellTower.getLocationAreaCode() != null) {
-            position.setNetwork(new Network(cellTower));
+            position.setRede(new Network(cellTower));
         } else if (cellTower.getSignalStrength() != null) {
             position.set(Position.KEY_RSSI, cellTower.getSignalStrength());
         }
@@ -699,7 +699,7 @@ public class AtrackProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         } else {
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
             return position;
         }
     }
@@ -766,9 +766,9 @@ public class AtrackProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setValid(true);
+        //position.setValid(true);
 
         String time = parser.next();
         if (time.length() >= 14) {
@@ -785,14 +785,14 @@ public class AtrackProtocolDecoder extends BaseProtocolDecoder {
 
         position.setLongitude(parser.nextInt() * 0.000001);
         position.setLatitude(parser.nextInt() * 0.000001);
-        position.setCourse(parser.nextInt());
+        position.setCurso(parser.nextInt());
 
         position.set(Position.KEY_EVENT, parser.nextInt());
         position.set(Position.KEY_ODOMETER, parser.nextDouble() * 100);
         position.set(Position.KEY_HDOP, parser.nextInt() * 0.1);
         position.set(Position.KEY_INPUT, parser.nextInt());
 
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
 
         position.set(Position.KEY_OUTPUT, parser.nextInt());
         position.set(Position.PREFIX_ADC + 1, parser.nextInt());
@@ -830,7 +830,7 @@ public class AtrackProtocolDecoder extends BaseProtocolDecoder {
 
         if (index == count - 1) {
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, new Date(time * 1000));
 
@@ -851,7 +851,7 @@ public class AtrackProtocolDecoder extends BaseProtocolDecoder {
         while (buf.readableBytes() >= MIN_DATA_LENGTH) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             if (longDate) {
 
@@ -863,15 +863,15 @@ public class AtrackProtocolDecoder extends BaseProtocolDecoder {
                 buf.skipBytes(7 + 7);
 
             } else {
-                position.setFixTime(new Date(buf.readUnsignedInt() * 1000));
-                position.setDeviceTime(new Date(buf.readUnsignedInt() * 1000));
+                position.setDatahora_corrigida(new Date(buf.readUnsignedInt() * 1000));
+                position.setDatahora_rastreador(new Date(buf.readUnsignedInt() * 1000));
                 buf.readUnsignedInt(); // send time
             }
 
-            position.setValid(true);
+            //position.setValid(true);
             position.setLongitude(buf.readInt() * 0.000001);
             position.setLatitude(buf.readInt() * 0.000001);
-            position.setCourse(buf.readUnsignedShort());
+            position.setCurso(buf.readUnsignedShort());
 
             int type = buf.readUnsignedByte();
             position.set(Position.KEY_TYPE, type);
@@ -881,7 +881,7 @@ public class AtrackProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_HDOP, buf.readUnsignedShort() * 0.1);
             position.set(Position.KEY_INPUT, buf.readUnsignedByte());
 
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
 
             position.set(Position.KEY_OUTPUT, buf.readUnsignedByte());
             position.set(Position.PREFIX_ADC + 1, buf.readUnsignedShort() * 0.001);

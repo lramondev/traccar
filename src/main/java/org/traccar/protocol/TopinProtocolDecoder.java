@@ -140,21 +140,21 @@ public class TopinProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             DateBuilder dateBuilder = new DateBuilder()
                     .setDate(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
                     .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte());
             position.setTime(dateBuilder.getDate());
 
-            position.setValid(type == MSG_GPS_2);
+            //position.setValid(type == MSG_GPS_2);
             position.setLatitude(readCoordinate(buf));
             position.setLongitude(readCoordinate(buf));
 
             buf.skipBytes(4 + 4); // second coordinates
 
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
-            position.setCourse(buf.readUnsignedByte() * 2);
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+            position.setCurso(buf.readUnsignedByte() * 2);
 
             position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
 
@@ -163,7 +163,7 @@ public class TopinProtocolDecoder extends BaseProtocolDecoder {
         } else if (type == MSG_GPS || type == MSG_GPS_OFFLINE) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             ByteBuf time = buf.slice(buf.readerIndex(), 6);
 
@@ -189,7 +189,7 @@ public class TopinProtocolDecoder extends BaseProtocolDecoder {
         } else if (type == MSG_STATUS) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, null);
 
@@ -219,7 +219,7 @@ public class TopinProtocolDecoder extends BaseProtocolDecoder {
         } else if (type == MSG_WIFI || type == MSG_WIFI_OFFLINE) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             ByteBuf time = buf.readSlice(6);
             DateBuilder dateBuilder = new DateBuilder()
@@ -253,7 +253,7 @@ public class TopinProtocolDecoder extends BaseProtocolDecoder {
                 position.set(Position.KEY_ALARM, decodeAlarm(buf.readUnsignedByte()));
             }
 
-            position.setNetwork(network);
+            position.setRede(network);
 
             ByteBuf content = Unpooled.buffer();
             content.writeBytes(time);
@@ -264,7 +264,7 @@ public class TopinProtocolDecoder extends BaseProtocolDecoder {
         } else if (type == MSG_VIBRATION) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, null);
 

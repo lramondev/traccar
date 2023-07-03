@@ -192,8 +192,8 @@ public class TaipProtocolDecoder extends BaseProtocolDecoder {
             position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
         }
 
-        position.setSpeed(UnitsConverter.knotsFromMph(parser.nextDouble(0)));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(UnitsConverter.knotsFromMph(parser.nextDouble(0)));
+        position.setCurso(parser.nextDouble(0));
 
         if (parser.hasNext(2)) {
             valid = parser.nextInt() > 0;
@@ -232,7 +232,7 @@ public class TaipProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.PREFIX_TEMP + 2, parser.nextInt() * 0.01);
         }
 
-        position.setValid(valid == null || valid);
+        //position.setValid(valid == null || valid);
 
         if (event != null) {
             position.set(Position.KEY_EVENT, event);
@@ -274,7 +274,7 @@ public class TaipProtocolDecoder extends BaseProtocolDecoder {
                             uniqueId = value;
                             deviceSession = getDeviceSession(channel, remoteAddress, value);
                             if (deviceSession != null) {
-                                position.setDeviceId(deviceSession.getDeviceId());
+                                position.setRastreador_id(deviceSession.getDeviceId());
                             }
                             break;
                         case "io":

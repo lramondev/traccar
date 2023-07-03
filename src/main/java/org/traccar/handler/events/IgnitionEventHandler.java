@@ -42,7 +42,7 @@ public class IgnitionEventHandler extends BaseEventHandler {
 
     @Override
     protected Map<Event, Position> analyzePosition(Position position) {
-        Device device = cacheManager.getObject(Device.class, position.getDeviceId());
+        Device device = cacheManager.getObject(Device.class, position.getRastreador_id());
         if (device == null || !PositionUtil.isLatest(cacheManager, position)) {
             return null;
         }
@@ -52,7 +52,7 @@ public class IgnitionEventHandler extends BaseEventHandler {
         if (position.hasAttribute(Position.KEY_IGNITION)) {
             boolean ignition = position.getBoolean(Position.KEY_IGNITION);
 
-            Position lastPosition = cacheManager.getPosition(position.getDeviceId());
+            Position lastPosition = cacheManager.getPosition(position.getRastreador_id());
             if (lastPosition != null && lastPosition.hasAttribute(Position.KEY_IGNITION)) {
                 boolean oldIgnition = lastPosition.getBoolean(Position.KEY_IGNITION);
 

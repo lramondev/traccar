@@ -67,7 +67,7 @@ public class AppelloProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         if (parser.hasNext(6)) {
             position.setTime(parser.nextDateTime());
@@ -77,14 +77,14 @@ public class AppelloProtocolDecoder extends BaseProtocolDecoder {
 
         position.setLatitude(parser.nextDouble(0));
         position.setLongitude(parser.nextDouble(0));
-        position.setSpeed(parser.nextDouble(0));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
 
         position.set(Position.KEY_SATELLITES, parser.nextInt(0));
 
         position.setAltitude(parser.nextDouble(0));
 
-        position.setValid(parser.next().equals("F"));
+        //position.setValid(parser.next().equals("F"));
 
         return position;
     }

@@ -7,9 +7,9 @@
   logicalFilePath="changelog-4.13">
 
   <changeSet author="author" id="changelog-4.13">
-
+    <!--
     <renameColumn tableName="tc_events" columnDataType="TIMESTAMP" oldColumnName="servertime" newColumnName="eventtime" />
-
+    -->
   </changeSet>
 
 </databaseChangeLog>

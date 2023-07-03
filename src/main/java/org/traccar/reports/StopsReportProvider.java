@@ -77,7 +77,7 @@ public class StopsReportProvider {
         for (Device device: DeviceUtil.getAccessibleDevices(storage, userId, deviceIds, groupIds)) {
             Collection<StopReportItem> stops = reportUtils.detectTripsAndStops(device, from, to, StopReportItem.class);
             DeviceReportSection deviceStops = new DeviceReportSection();
-            deviceStops.setDeviceName(device.getName());
+            deviceStops.setDeviceName(device.getDescricao());
             sheetNames.add(WorkbookUtil.createSafeSheetName(deviceStops.getDeviceName()));
             if (device.getGroupId() > 0) {
                 Group group = storage.getObject(Group.class, new Request(

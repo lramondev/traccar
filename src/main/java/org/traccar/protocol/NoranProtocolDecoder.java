@@ -86,7 +86,7 @@ public class NoranProtocolDecoder extends BaseProtocolDecoder {
                 buf.readUnsignedIntLE(); // GIS port
             }
 
-            position.setValid(BitUtil.check(buf.readUnsignedByte(), 0));
+            //position.setValid(BitUtil.check(buf.readUnsignedByte(), 0));
 
             short alarm = buf.readUnsignedByte();
             switch (alarm) {
@@ -107,11 +107,11 @@ public class NoranProtocolDecoder extends BaseProtocolDecoder {
             }
 
             if (newFormat) {
-                position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedIntLE()));
-                position.setCourse(buf.readFloatLE());
+                position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedIntLE()));
+                position.setCurso(buf.readFloatLE());
             } else {
-                position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
-                position.setCourse(buf.readUnsignedShortLE());
+                position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+                position.setCurso(buf.readUnsignedShortLE());
             }
             position.setLongitude(buf.readFloatLE());
             position.setLatitude(buf.readFloatLE());
@@ -139,7 +139,7 @@ public class NoranProtocolDecoder extends BaseProtocolDecoder {
             if (deviceSession == null) {
                 return null;
             }
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             if (newFormat) {
                 DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");

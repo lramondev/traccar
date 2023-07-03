@@ -80,11 +80,11 @@ public class Gl100ProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setValid(parser.nextInt(0) == 0);
-        position.setSpeed(parser.nextDouble(0));
-        position.setCourse(parser.nextDouble(0));
+        //position.setValid(parser.nextInt(0) == 0);
+        position.setVelocidade(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
         position.setAltitude(parser.nextDouble(0));
         position.setLongitude(parser.nextDouble(0));
         position.setLatitude(parser.nextDouble(0));

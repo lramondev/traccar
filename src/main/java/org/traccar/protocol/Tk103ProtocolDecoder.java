@@ -288,7 +288,7 @@ public class Tk103ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
@@ -322,7 +322,7 @@ public class Tk103ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 
@@ -336,7 +336,7 @@ public class Tk103ProtocolDecoder extends BaseProtocolDecoder {
                     Integer.parseInt(values[2]), Integer.parseInt(values[3])));
         }
 
-        position.setNetwork(network);
+        position.setRede(network);
 
         position.set(Position.KEY_ODOMETER, parser.nextLong(16, 0));
 
@@ -355,11 +355,11 @@ public class Tk103ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 
-        position.setNetwork(new Network(CellTower.from(
+        position.setRede(new Network(CellTower.from(
                 parser.nextInt(0), parser.nextInt(0), parser.nextHexInt(0), parser.nextHexInt(0))));
 
         return position;
@@ -377,7 +377,7 @@ public class Tk103ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         decodeType(position, parser.next(), "0");
 
@@ -401,7 +401,7 @@ public class Tk103ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (network.getCellTowers() != null || network.getWifiAccessPoints() != null) {
-            position.setNetwork(network);
+            position.setRede(network);
         }
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
@@ -421,7 +421,7 @@ public class Tk103ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
@@ -442,7 +442,7 @@ public class Tk103ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 
@@ -459,7 +459,7 @@ public class Tk103ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 
@@ -605,7 +605,7 @@ public class Tk103ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         String type = parser.next();
         String data = null;
@@ -624,20 +624,20 @@ public class Tk103ProtocolDecoder extends BaseProtocolDecoder {
             dateBuilder.setDate(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
         }
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
 
-        position.setSpeed(convertSpeed(parser.nextDouble(0), "kmh"));
+        position.setVelocidade(convertSpeed(parser.nextDouble(0), "kmh"));
 
         dateBuilder.setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
         position.setTime(dateBuilder.getDate());
 
         if (parser.hasNext()) {
-            position.setCourse(parser.nextDouble());
+            position.setCurso(parser.nextDouble());
         }
         if (parser.hasNext()) {
-            position.setCourse(parser.nextDouble());
+            position.setCurso(parser.nextDouble());
         }
 
         if (parser.hasNext(7)) {
@@ -674,7 +674,7 @@ public class Tk103ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (parser.hasNext()) {
-            position.setCourse(parser.nextDouble());
+            position.setCurso(parser.nextDouble());
         }
 
         if (parser.hasNext()) {

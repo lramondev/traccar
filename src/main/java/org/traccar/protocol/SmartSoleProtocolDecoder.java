@@ -67,20 +67,20 @@ public class SmartSoleProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setFixTime(parser.nextDateTime());
+        position.setDatahora_corrigida(parser.nextDateTime());
 
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
         position.setAltitude(parser.nextInt());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
-        position.setValid(parser.nextInt() == 1);
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
+        //position.setValid(parser.nextInt() == 1);
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
         position.set(Position.KEY_HDOP, parser.nextDouble());
 
-        position.setDeviceTime(parser.nextDateTime());
+        position.setDatahora_rastreador(parser.nextDateTime());
 
         position.set(Position.KEY_BATTERY, parser.nextDouble());
         position.set(Position.KEY_STATUS, parser.nextInt());

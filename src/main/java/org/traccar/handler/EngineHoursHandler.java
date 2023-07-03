@@ -38,11 +38,11 @@ public class EngineHoursHandler extends BaseDataHandler {
     @Override
     protected Position handlePosition(Position position) {
         if (!position.hasAttribute(Position.KEY_HOURS)) {
-            Position last = cacheManager.getPosition(position.getDeviceId());
+            Position last = cacheManager.getPosition(position.getRastreador_id());
             if (last != null) {
                 long hours = last.getLong(Position.KEY_HOURS);
                 if (last.getBoolean(Position.KEY_IGNITION) && position.getBoolean(Position.KEY_IGNITION)) {
-                    hours += position.getFixTime().getTime() - last.getFixTime().getTime();
+                    hours += position.getDatahora_corrigida().getTime() - last.getDatahora_corrigida().getTime();
                 }
                 if (hours != 0) {
                     position.set(Position.KEY_HOURS, hours);

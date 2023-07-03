@@ -51,16 +51,16 @@ public class BceProtocolDecoder extends BaseProtocolDecoder {
     private void decodeMask1(ByteBuf buf, int mask, Position position) {
 
         if (BitUtil.check(mask, 0)) {
-            position.setValid(true);
+            //position.setValid(true);
             position.setLongitude(buf.readFloatLE());
             position.setLatitude(buf.readFloatLE());
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
 
             int status = buf.readUnsignedByte();
             position.set(Position.KEY_SATELLITES, BitUtil.to(status, 4));
             position.set(Position.KEY_HDOP, BitUtil.from(status, 4));
 
-            position.setCourse(buf.readUnsignedByte() * 2);
+            position.setCurso(buf.readUnsignedByte() * 2);
             position.setAltitude(buf.readUnsignedShortLE());
 
             position.set(Position.KEY_ODOMETER, buf.readUnsignedIntLE());
@@ -96,7 +96,7 @@ public class BceProtocolDecoder extends BaseProtocolDecoder {
             int cid = buf.readUnsignedShortLE();
             buf.readUnsignedByte(); // time advance
             int rssi = -buf.readUnsignedByte();
-            position.setNetwork(new Network(CellTower.from(mcc, mnc, lac, cid, rssi)));
+            position.setRede(new Network(CellTower.from(mcc, mnc, lac, cid, rssi)));
         }
     }
 
@@ -278,7 +278,7 @@ public class BceProtocolDecoder extends BaseProtocolDecoder {
             while (buf.readerIndex() < dataEnd) {
 
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 int structEnd = buf.readUnsignedByte() + buf.readerIndex();
 
@@ -318,9 +318,9 @@ public class BceProtocolDecoder extends BaseProtocolDecoder {
 
                 buf.readerIndex(structEnd);
 
-                if (position.getValid()) {
-                    positions.add(position);
-                } else if (!position.getAttributes().isEmpty()) {
+                //if (position.getValid()) {
+                    //positions.add(position);
+                /* } else */if (!position.getAttributes().isEmpty()) {
                     getLastLocation(position, null);
                     positions.add(position);
                 }

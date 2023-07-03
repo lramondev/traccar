@@ -62,10 +62,10 @@ public class CastelProtocolEncoder extends BaseProtocolEncoder {
         switch (command.getType()) {
             case Command.TYPE_ENGINE_STOP:
                 content.writeByte(1);
-                return encodeContent(command.getDeviceId(), CastelProtocolDecoder.MSG_CC_PETROL_CONTROL, content);
+                return encodeContent(command.getRastreador_id(), CastelProtocolDecoder.MSG_CC_PETROL_CONTROL, content);
             case Command.TYPE_ENGINE_RESUME:
                 content.writeByte(0);
-                return encodeContent(command.getDeviceId(), CastelProtocolDecoder.MSG_CC_PETROL_CONTROL, content);
+                return encodeContent(command.getRastreador_id(), CastelProtocolDecoder.MSG_CC_PETROL_CONTROL, content);
             default:
                 return null;
         }

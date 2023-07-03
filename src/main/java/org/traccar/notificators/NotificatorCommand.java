@@ -52,7 +52,7 @@ public class NotificatorCommand implements Notificator {
         try {
             Command command = storage.getObject(Command.class, new Request(
                     new Columns.All(), new Condition.Equals("id", notification.getCommandId())));
-            command.setDeviceId(event.getDeviceId());
+            command.setRastreador_id(event.getRastreador_id());
             commandsManager.sendCommand(command);
         } catch (Exception e) {
             throw new MessageException(e);

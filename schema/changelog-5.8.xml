@@ -8,10 +8,13 @@
 
   <changeSet author="author" id="changelog-5.8">
 
-    <dropColumn tableName="tc_devices" columnName="geofenceids" />
-    <addColumn tableName="tc_positions">
+    <!--<dropColumn tableName="geolocal_rastreador" columnName="geofenceids" />
+    
+    
+    <addColumn tableName="geolocal_rastreador_posicao">
       <column name="geofenceids" type="VARCHAR(128)" />
     </addColumn>
+    -->
 
   </changeSet>
 

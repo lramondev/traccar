@@ -81,7 +81,7 @@ public class SabertekProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         if (parser.hasNext(6)) {
             position.setTime(parser.nextDateTime());
@@ -119,11 +119,11 @@ public class SabertekProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_ALARM, Position.ALARM_CORNERING);
         }
 
-        position.setValid(parser.nextInt() == 1);
+        //position.setValid(parser.nextInt() == 1);
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
-        position.setCourse(parser.nextInt());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
+        position.setCurso(parser.nextInt());
         position.setAltitude(parser.nextInt());
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());

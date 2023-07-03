@@ -91,11 +91,11 @@ public class MegastekProtocolDecoder extends BaseProtocolDecoder {
         DateBuilder dateBuilder = new DateBuilder()
                 .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
-        position.setSpeed(parser.nextDouble(0));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
 
         dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
         position.setTime(dateBuilder.getDate());
@@ -167,7 +167,7 @@ public class MegastekProtocolDecoder extends BaseProtocolDecoder {
                 if (deviceSession == null) {
                     return null;
                 }
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 String sat = parser.next();
                 if (sat.contains("/")) {
@@ -187,7 +187,7 @@ public class MegastekProtocolDecoder extends BaseProtocolDecoder {
                 }
 
                 if (parser.hasNext(4)) {
-                    position.setNetwork(new Network(CellTower.from(
+                    position.setRede(new Network(CellTower.from(
                             parser.nextInt(0), parser.nextInt(0), parser.nextHexInt(0), parser.nextHexInt(0))));
                 }
 
@@ -197,7 +197,7 @@ public class MegastekProtocolDecoder extends BaseProtocolDecoder {
                 if (deviceSession == null) {
                     return null;
                 }
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
             }
 
@@ -210,9 +210,9 @@ public class MegastekProtocolDecoder extends BaseProtocolDecoder {
                 if (deviceSession == null) {
                     return null;
                 }
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
-                position.setNetwork(new Network(CellTower.from(parser.nextInt(0), parser.nextInt(0),
+                position.setRede(new Network(CellTower.from(parser.nextInt(0), parser.nextInt(0),
                         parser.nextHexInt(0), parser.nextHexInt(0), parser.nextInt(0))));
 
                 position.set(Position.KEY_BATTERY_LEVEL, parser.nextDouble());
@@ -298,7 +298,7 @@ public class MegastekProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         if (parser.next().equals("S")) {
             position.set(Position.KEY_ARCHIVE, true);
@@ -306,15 +306,15 @@ public class MegastekProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
 
         position.set(Position.KEY_SATELLITES, parser.nextInt(0));
         position.set(Position.KEY_HDOP, parser.nextDouble(0));
 
-        position.setSpeed(parser.nextDouble(0));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
         position.setAltitude(parser.nextDouble(0));
 
         if (parser.hasNext()) {
@@ -332,7 +332,7 @@ public class MegastekProtocolDecoder extends BaseProtocolDecoder {
                 if (rssi != null) {
                     tower.setSignalStrength(rssi);
                 }
-                position.setNetwork(new Network(tower));
+                position.setRede(new Network(tower));
             }
         }
 

@@ -29,7 +29,7 @@ public class StartekProtocolEncoder extends StringProtocolEncoder {
 
     @Override
     protected String formatCommand(Command command, String format, String... keys) {
-        String uniqueId = getUniqueId(command.getDeviceId());
+        String uniqueId = getUniqueId(command.getRastreador_id());
         String payload = super.formatCommand(command, format, keys);
         int length = 1 + uniqueId.length() + 1 + payload.length();
         String sentence = "$$:" + length + "," + uniqueId + "," + payload;

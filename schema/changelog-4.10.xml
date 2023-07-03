@@ -7,11 +7,11 @@
   logicalFilePath="changelog-4.10">
 
   <changeSet author="author" id="changelog-4.10">
-
+    <!--
     <addColumn tableName="tc_statistics">
       <column name="protocols" type="VARCHAR(4096)" />
     </addColumn>
-
+    -->
   </changeSet>
 
 </databaseChangeLog>

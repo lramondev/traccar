@@ -88,13 +88,13 @@ public class CarcellProtocolDecoder extends BaseProtocolDecoder {
 
         Position position = new Position(getProtocolName());
         position.set(Position.KEY_ARCHIVE, parser.next().equals("%"));
-        position.setValid(true);
+        //position.setValid(true);
 
         DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         if (parser.hasNext(8)) {
             position.setLatitude(parser.nextCoordinate(CoordinateFormat.HEM_DEG_MIN_MIN));
@@ -106,8 +106,8 @@ public class CarcellProtocolDecoder extends BaseProtocolDecoder {
             position.setLongitude(parser.nextCoordinate(CoordinateFormat.HEM_DEG));
         }
 
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt(0)));
-        position.setCourse(parser.nextInt(0));
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt(0)));
+        position.setCurso(parser.nextInt(0));
 
         if (parser.hasNext(3)) {
             position.set("x", parser.nextInt(0));

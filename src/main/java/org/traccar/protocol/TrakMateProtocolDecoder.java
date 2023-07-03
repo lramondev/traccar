@@ -116,7 +116,7 @@ public class TrakMateProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
@@ -142,7 +142,7 @@ public class TrakMateProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         parser.next(); // seq
         position.set(Position.KEY_ALARM, decodeAlarm(parser.nextInt()));
@@ -153,8 +153,8 @@ public class TrakMateProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS_DMY));
 
-        position.setSpeed(parser.nextDouble());
-        position.setCourse(parser.nextDouble());
+        position.setVelocidade(parser.nextDouble());
+        position.setCurso(parser.nextDouble());
 
         return position;
     }
@@ -172,7 +172,7 @@ public class TrakMateProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         parser.next(); // seq
 
@@ -181,8 +181,8 @@ public class TrakMateProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS_DMY));
 
-        position.setSpeed(parser.nextDouble());
-        position.setCourse(parser.nextDouble());
+        position.setVelocidade(parser.nextDouble());
+        position.setCurso(parser.nextDouble());
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
         position.set(Position.KEY_IGNITION, parser.nextInt() > 0);
@@ -203,7 +203,7 @@ public class TrakMateProtocolDecoder extends BaseProtocolDecoder {
         position.set("pulseOdometer", parser.nextDouble());
         position.set(Position.KEY_STATUS, parser.nextInt());
 
-        position.setValid(parser.nextInt() > 0);
+        //position.setValid(parser.nextInt() > 0);
 
         position.set(Position.KEY_ARCHIVE, parser.nextInt() > 0);
 

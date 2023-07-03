@@ -80,7 +80,7 @@ public class NvsProtocolDecoder extends BaseProtocolDecoder {
 
             for (int i = 0; i < count; i++) {
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 position.setTime(new Date(buf.readUnsignedInt() * 1000));
 
@@ -89,12 +89,12 @@ public class NvsProtocolDecoder extends BaseProtocolDecoder {
                 position.setLongitude(buf.readInt() / 10000000.0);
                 position.setLatitude(buf.readInt() / 10000000.0);
                 position.setAltitude(buf.readShort());
-                position.setCourse(buf.readUnsignedShort());
+                position.setCurso(buf.readUnsignedShort());
 
                 position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
 
-                position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
-                position.setValid(buf.readUnsignedByte() != 0);
+                position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
+                //position.setValid(buf.readUnsignedByte() != 0);
 
                 buf.readUnsignedByte(); // used systems
 

@@ -60,12 +60,12 @@ public class CautelaProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         DateBuilder dateBuilder = new DateBuilder();
         dateBuilder.setDateReverse(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
 

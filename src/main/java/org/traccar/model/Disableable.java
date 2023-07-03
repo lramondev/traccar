@@ -23,17 +23,17 @@ public interface Disableable {
 
     void setDisabled(boolean disabled);
 
-    Date getExpirationTime();
+    /*Date getExpirationTime();
 
     void setExpirationTime(Date expirationTime);
-
+    */
     default void checkDisabled() throws SecurityException {
         if (getDisabled()) {
             throw new SecurityException(getClass().getSimpleName() + " is disabled");
         }
-        if (getExpirationTime() != null && System.currentTimeMillis() > getExpirationTime().getTime()) {
+        /*if (getExpirationTime() != null && System.currentTimeMillis() > getExpirationTime().getTime()) {
             throw new SecurityException(getClass().getSimpleName() + " has expired");
-        }
+        }*/
     }
 
 }

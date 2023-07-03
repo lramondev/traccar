@@ -81,7 +81,7 @@ public class TekProtocolDecoder extends BaseProtocolDecoder {
         if (type == 4 || type == 8) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             int count = buf.readUnsignedShort();
             buf.readUnsignedByte(); // hours / tickets
@@ -111,7 +111,7 @@ public class TekProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             DateBuilder dateBuilder = new DateBuilder()
                     .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
@@ -122,9 +122,9 @@ public class TekProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_HDOP, parser.nextDouble());
 
             position.setAltitude(parser.nextDouble());
-            position.setValid(parser.nextInt() > 0);
-            position.setCourse(parser.nextDouble());
-            position.setSpeed(parser.nextDouble());
+            //position.setValid(parser.nextInt() > 0);
+            position.setCurso(parser.nextDouble());
+            position.setVelocidade(parser.nextDouble());
 
             dateBuilder.setDateReverse(parser.nextInt(), parser.nextInt(), parser.nextInt());
             position.setTime(dateBuilder.getDate());

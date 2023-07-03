@@ -186,7 +186,7 @@ public class Gps103ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         String alarm = parser.next();
         position.set(Position.KEY_ALARM, decodeAlarm(alarm));
@@ -221,7 +221,7 @@ public class Gps103ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (parser.hasNext(2)) {
-            position.setNetwork(new Network(CellTower.fromLacCid(
+            position.setRede(new Network(CellTower.fromLacCid(
                     getConfig(), parser.nextHexInt(0), parser.nextHexInt(0))));
         }
 
@@ -245,12 +245,12 @@ public class Gps103ProtocolDecoder extends BaseProtocolDecoder {
             }
             position.setTime(dateBuilder.getDate());
 
-            position.setValid(parser.next().equals("A"));
-            position.setFixTime(position.getDeviceTime());
+            //position.setValid(parser.next().equals("A"));
+            position.setDatahora_corrigida(position.getDatahora_rastreador());
             position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_HEM));
             position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN_HEM));
-            position.setSpeed(parser.nextDouble(0));
-            position.setCourse(parser.nextDouble(0));
+            position.setVelocidade(parser.nextDouble(0));
+            position.setCurso(parser.nextDouble(0));
             position.setAltitude(parser.nextDouble(0));
 
             if (parser.hasNext()) {
@@ -285,7 +285,7 @@ public class Gps103ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, parser.nextDateTime());
 
@@ -320,7 +320,7 @@ public class Gps103ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_EVENT, parser.next());
         position.set("sensorId", parser.next());
@@ -330,11 +330,11 @@ public class Gps103ProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_RSSI, parser.nextInt());
 
-        position.setValid(parser.nextInt() > 0);
+        //position.setValid(parser.nextInt() > 0);
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
-        position.setCourse(parser.nextInt());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
+        position.setCurso(parser.nextInt());
         position.setAltitude(parser.nextInt());
 
         position.set(Position.KEY_HDOP, parser.nextDouble());
@@ -361,7 +361,7 @@ public class Gps103ProtocolDecoder extends BaseProtocolDecoder {
 
         if (index + 1 >= photoPackets) {
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, null);
 

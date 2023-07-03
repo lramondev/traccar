@@ -101,7 +101,7 @@ public class FreematicsProtocolDecoder extends BaseProtocolDecoder {
                     positions.add(position);
                 }
                 position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
                 dateBuilder = new DateBuilder(new Date());
             } else if (position != null) {
                 switch (key) {
@@ -121,21 +121,21 @@ public class FreematicsProtocolDecoder extends BaseProtocolDecoder {
                                 Integer.parseInt(value.substring(6)) * 10);
                         break;
                     case 0xA:
-                        position.setValid(true);
+                        //position.setValid(true);
                         position.setLatitude(Double.parseDouble(value));
                         break;
                     case 0xB:
-                        position.setValid(true);
+                        //position.setValid(true);
                         position.setLongitude(Double.parseDouble(value));
                         break;
                     case 0xC:
                         position.setAltitude(Double.parseDouble(value));
                         break;
                     case 0xD:
-                        position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(value)));
+                        position.setVelocidade(UnitsConverter.knotsFromKph(Double.parseDouble(value)));
                         break;
                     case 0xE:
-                        position.setCourse(Integer.parseInt(value));
+                        position.setCurso(Integer.parseInt(value));
                         break;
                     case 0xF:
                         position.set(Position.KEY_SATELLITES, Integer.parseInt(value));
@@ -178,9 +178,9 @@ public class FreematicsProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (position != null) {
-            if (!position.getValid()) {
-                getLastLocation(position, null);
-            }
+            //if (!position.getValid()) {
+                //getLastLocation(position, null);
+            //}
             position.setTime(dateBuilder.getDate());
             positions.add(position);
         }

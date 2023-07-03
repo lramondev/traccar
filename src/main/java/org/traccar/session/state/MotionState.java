@@ -24,18 +24,18 @@ public class MotionState {
 
     public static MotionState fromDevice(Device device) {
         MotionState state = new MotionState();
-        state.motionStreak = device.getMotionStreak();
+        /*state.motionStreak = device.getMotionStreak();
         state.motionState = device.getMotionState();
         state.motionTime = device.getMotionTime();
-        state.motionDistance = device.getMotionDistance();
+        state.motionDistance = device.getMotionDistance();*/
         return state;
     }
 
     public void toDevice(Device device) {
-        device.setMotionStreak(motionStreak);
+        /*device.setMotionStreak(motionStreak);
         device.setMotionState(motionState);
         device.setMotionTime(motionTime);
-        device.setMotionDistance(motionDistance);
+        device.setMotionDistance(motionDistance);*/
     }
 
     private boolean changed;

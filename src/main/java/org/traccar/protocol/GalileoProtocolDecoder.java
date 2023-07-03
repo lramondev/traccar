@@ -165,8 +165,8 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
                 position.setTime(new Date(buf.readUnsignedIntLE() * 1000));
                 break;
             case 0x33:
-                position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE() * 0.1));
-                position.setCourse(buf.readUnsignedShortLE() * 0.1);
+                position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE() * 0.1));
+                position.setCurso(buf.readUnsignedShortLE() * 0.1);
                 break;
             case 0x34:
                 position.setAltitude(buf.readShortLE());
@@ -275,7 +275,7 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
         calendar.add(Calendar.SECOND, bits.readUnsigned(25));
         position.setTime(calendar.getTime());
 
-        position.setValid(bits.readUnsigned(1) == 0);
+        //position.setValid(bits.readUnsigned(1) == 0);
         position.setLongitude(360 * bits.readUnsigned(22) / 4194304.0 - 180);
         position.setLatitude(180 * bits.readUnsigned(21) / 2097152.0 - 90);
         if (bits.readUnsigned(1) > 0) {
@@ -297,7 +297,7 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         buf.readUnsignedByte(); // session status
         buf.skipBytes(4); // reserved
@@ -331,7 +331,7 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
             while (data.isReadable()) {
                 int tag = data.readUnsignedByte();
                 if (tag == 0x30) {
-                    position.setValid((data.readUnsignedByte() & 0xf0) == 0x00);
+                    //position.setValid((data.readUnsignedByte() & 0xf0) == 0x00);
                     position.setLatitude(data.readIntLE() / 1000000.0);
                     position.setLongitude(data.readIntLE() / 1000000.0);
                 } else {
@@ -359,7 +359,7 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
 
             int tag = buf.readUnsignedByte();
             if (tags.contains(tag)) {
-                if (hasLocation && position.getFixTime() != null) {
+                if (hasLocation && position.getDatahora_corrigida() != null) {
                     positions.add(position);
                 }
                 tags.clear();
@@ -373,7 +373,7 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
                         channel, remoteAddress, buf.readSlice(15).toString(StandardCharsets.US_ASCII));
             } else if (tag == 0x30) {
                 hasLocation = true;
-                position.setValid((buf.readUnsignedByte() & 0xf0) == 0x00);
+                //position.setValid((buf.readUnsignedByte() & 0xf0) == 0x00);
                 position.setLatitude(buf.readIntLE() / 1000000.0);
                 position.setLongitude(buf.readIntLE() / 1000000.0);
             } else {
@@ -389,10 +389,10 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
             }
         }
 
-        if (hasLocation && position.getFixTime() != null) {
+        if (hasLocation && position.getDatahora_corrigida() != null) {
             positions.add(position);
         } else if (position.hasAttribute(Position.KEY_RESULT)) {
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
             getLastLocation(position, null);
             positions.add(position);
         }
@@ -400,7 +400,7 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
         sendResponse(channel, 0x02, buf.readUnsignedShortLE());
 
         for (Position p : positions) {
-            p.setDeviceId(deviceSession.getDeviceId());
+            p.setRastreador_id(deviceSession.getDeviceId());
         }
 
         return positions.isEmpty() ? null : positions;
@@ -428,7 +428,7 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
             DeviceSession deviceSession = getDeviceSession(channel, remoteAddress);
 
             position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, null);
 
@@ -456,7 +456,7 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
         while (buf.readableBytes() > 2) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             decodeMinimalDataSet(position, buf);
 
@@ -476,7 +476,7 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
         sendResponse(channel, 0x02, buf.readUnsignedShortLE());
 
         for (Position p : positions) {
-            p.setDeviceId(deviceSession.getDeviceId());
+            p.setRastreador_id(deviceSession.getDeviceId());
         }
 
         return positions.isEmpty() ? null : positions;

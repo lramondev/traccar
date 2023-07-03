@@ -123,7 +123,7 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         DateBuilder dateBuilder = new DateBuilder()
                 .setHour(BcdUtil.readInteger(buf, 2))
@@ -139,7 +139,7 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
         double longitude = readCoordinate(buf, true);
 
         int flags = buf.readUnsignedByte() & 0x0f;
-        position.setValid((flags & 0x02) != 0);
+        //position.setValid((flags & 0x02) != 0);
         if ((flags & 0x04) == 0) {
             latitude = -latitude;
         }
@@ -150,8 +150,8 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
         position.setLatitude(latitude);
         position.setLongitude(longitude);
 
-        position.setSpeed(BcdUtil.readInteger(buf, 3));
-        position.setCourse((buf.readUnsignedByte() & 0x0f) * 100.0 + BcdUtil.readInteger(buf, 2));
+        position.setVelocidade(BcdUtil.readInteger(buf, 3));
+        position.setCurso((buf.readUnsignedByte() & 0x0f) * 100.0 + BcdUtil.readInteger(buf, 2));
 
         processStatus(position, buf.readUnsignedInt());
 
@@ -325,7 +325,7 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         if (parser.hasNext()) {
             position.set(Position.KEY_RESULT, parser.next());
@@ -343,11 +343,11 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (parser.hasNext()) {
-            position.setValid(parser.next().equals("A"));
+            //position.setValid(parser.next().equals("A"));
         }
         if (parser.hasNext()) {
             parser.nextInt(); // coding scheme
-            position.setValid(true);
+            //position.setValid(true);
         }
 
         if (parser.hasNext(3)) {
@@ -370,8 +370,8 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
             position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_MIN_MIN_HEM));
         }
 
-        position.setSpeed(parser.nextDouble(0));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
 
         if (parser.hasNext(3)) {
             dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
@@ -391,7 +391,7 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
 
             position.setAltitude(parser.nextInt(0));
 
-            position.setNetwork(new Network(CellTower.fromLacCid(
+            position.setRede(new Network(CellTower.fromLacCid(
                     getConfig(), parser.nextHexInt(0), parser.nextHexInt(0))));
         }
 
@@ -421,7 +421,7 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
         sendResponse(channel, remoteAddress, id, "NBR");
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         DateBuilder dateBuilder = new DateBuilder()
                 .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
@@ -436,7 +436,7 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
                     Integer.parseInt(cells[i * 3 + 1]), Integer.parseInt(cells[i * 3 + 2])));
         }
 
-        position.setNetwork(network);
+        position.setRede(network);
 
         dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
@@ -460,7 +460,7 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         DateBuilder dateBuilder = new DateBuilder()
                 .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
@@ -493,7 +493,7 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         DateBuilder dateBuilder = new DateBuilder()
                 .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
@@ -508,7 +508,7 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
             network.addCellTower(CellTower.from(
                     mcc, mnc, Integer.parseInt(values[i * 4]), Integer.parseInt(values[i * 4 + 1])));
         }
-        position.setNetwork(network);
+        position.setRede(network);
 
         position.set(Position.KEY_BATTERY, parser.nextHexInt());
 
@@ -534,7 +534,7 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         if (parser.hasNext(3)) {
 
@@ -550,15 +550,15 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
                         Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2])));
             }
 
-            position.setNetwork(network);
+            position.setRede(network);
 
         } else {
 
-            position.setValid(true);
+            //position.setValid(true);
             position.setLatitude(parser.nextCoordinate());
             position.setLongitude(parser.nextCoordinate());
-            position.setSpeed(parser.nextDouble());
-            position.setCourse(parser.nextDouble());
+            position.setVelocidade(parser.nextDouble());
+            position.setCurso(parser.nextDouble());
 
             position.setTime(new DateBuilder()
                     .setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0)).getDate());
@@ -581,7 +581,7 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         getLastLocation(position, null);
 

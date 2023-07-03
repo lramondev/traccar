@@ -72,9 +72,9 @@ public class MaestroProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setValid(parser.nextInt(0) == 1);
+        //position.setValid(parser.nextInt(0) == 1);
 
         position.set(Position.KEY_BATTERY, parser.nextDouble(0));
         position.set(Position.KEY_RSSI, parser.nextInt(0));
@@ -86,8 +86,8 @@ public class MaestroProtocolDecoder extends BaseProtocolDecoder {
         position.setLatitude(parser.nextDouble(0));
         position.setLongitude(parser.nextDouble(0));
         position.setAltitude(parser.nextDouble(0));
-        position.setSpeed(UnitsConverter.knotsFromMph(parser.nextDouble(0)));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(UnitsConverter.knotsFromMph(parser.nextDouble(0)));
+        position.setCurso(parser.nextDouble(0));
 
         position.set(Position.KEY_SATELLITES, parser.nextInt(0));
         position.set(Position.KEY_HDOP, parser.nextDouble(0));

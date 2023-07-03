@@ -80,7 +80,7 @@ public class NiotProtocolDecoder extends BaseProtocolDecoder {
             if (deviceSession == null) {
                 return null;
             }
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             DateBuilder dateBuilder = new DateBuilder()
                     .setYear(BcdUtil.readInteger(buf, 2))
@@ -94,10 +94,10 @@ public class NiotProtocolDecoder extends BaseProtocolDecoder {
             position.setLatitude(BufferUtil.readSignedMagnitudeInt(buf) / 1800000.0);
             position.setLongitude(BufferUtil.readSignedMagnitudeInt(buf) / 1800000.0);
             BcdUtil.readInteger(buf, 4); // reserved
-            position.setCourse(BcdUtil.readInteger(buf, 4));
+            position.setCurso(BcdUtil.readInteger(buf, 4));
 
             int statusX = buf.readUnsignedByte();
-            position.setValid(BitUtil.check(statusX, 7));
+            //position.setValid(BitUtil.check(statusX, 7));
             switch (BitUtil.between(statusX, 3, 5)) {
                 case 0b10:
                     position.set(Position.KEY_ALARM, Position.ALARM_POWER_CUT);
@@ -123,7 +123,7 @@ public class NiotProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_BATTERY, buf.readUnsignedByte() * 0.1);
             position.set(Position.KEY_POWER, buf.readUnsignedShort() * 0.1);
             buf.readUnsignedByte(); // speed limit
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
             buf.readUnsignedByte(); // sensor speed
             buf.readUnsignedByte(); // reserved
             buf.readUnsignedByte(); // reserved

@@ -74,16 +74,16 @@ public class EskyProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setTime(parser.nextDateTime());
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
-        position.setSpeed(UnitsConverter.knotsFromMps(parser.nextDouble()));
-        position.setCourse(parser.nextDouble());
+        position.setVelocidade(UnitsConverter.knotsFromMps(parser.nextDouble()));
+        position.setCurso(parser.nextDouble());
 
         if (parser.hasNext(3)) {
             int input = parser.nextHexInt();

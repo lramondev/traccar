@@ -86,7 +86,7 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
             position.set(Position.KEY_INDEX, index);
 
             // need to send ack?
@@ -94,7 +94,7 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
             buf.readUnsignedShortLE(); // report trigger
             buf.readUnsignedShortLE(); // state flag
 
-            position.setValid(true);
+            //position.setValid(true);
             position.setLatitude(buf.readUnsignedIntLE() * 0.0000001);
             position.setLongitude(buf.readUnsignedIntLE() * 0.0000001);
 
@@ -103,8 +103,8 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_SATELLITES_VISIBLE, buf.readUnsignedShortLE());
             position.set("gpsAntennaStatus", buf.readUnsignedShortLE());
 
-            position.setSpeed(buf.readUnsignedShortLE() * 0.194384);
-            position.setCourse(buf.readUnsignedShortLE());
+            position.setVelocidade(buf.readUnsignedShortLE() * 0.194384);
+            position.setCurso(buf.readUnsignedShortLE());
 
             position.set(Position.KEY_ODOMETER, buf.readUnsignedIntLE());
 
@@ -159,10 +159,10 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
         position.set(Position.KEY_INDEX, index);
 
-        position.setDeviceTime(new Date(time * 1000));
+        position.setDatahora_rastreador(new Date(time * 1000));
 
         while (buf.isReadable()) {
             int type = buf.readUnsignedByte();
@@ -175,11 +175,11 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
                     position.set(Position.KEY_IGNITION, BitUtil.check(status, 5));
                     position.set(Position.KEY_STATUS, status);
 
-                    position.setValid(true);
+                    //position.setValid(true);
                     position.setLatitude(buf.readIntLE() * 0.00001);
                     position.setLongitude(buf.readIntLE() * 0.00001);
-                    position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE()));
-                    position.setCourse(buf.readUnsignedShortLE());
+                    position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE()));
+                    position.setCurso(buf.readUnsignedShortLE());
 
                     position.set(Position.KEY_RSSI, buf.readUnsignedByte());
                     position.set(Position.KEY_GPS, buf.readUnsignedByte());
@@ -190,7 +190,7 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
                     buf.readUnsignedShortLE(); // bearing to landmark
                     buf.readUnsignedIntLE(); // distance to landmark
 
-                    position.setFixTime(new Date(buf.readUnsignedIntLE() * 1000));
+                    position.setDatahora_corrigida(new Date(buf.readUnsignedIntLE() * 1000));
 
                     buf.readUnsignedByte(); // reserved
                     break;
@@ -224,7 +224,7 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
             }
         }
 
-        return position.getValid() ? position : null;
+        return position;
 
     }
 
@@ -246,7 +246,7 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
         position.set(Position.KEY_INDEX, index);
 
         if (channel != null) {
@@ -263,18 +263,18 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
         }
         position.setLatitude(Double.parseDouble(matcher.group(1)));
         position.setLongitude(Double.parseDouble(matcher.group(2)));
-        position.setValid(true);
+        //position.setValid(true);
 
         pattern = Pattern.compile("([NSWE]{1,2}) with speed (\\d+) km/h");
         matcher = pattern.matcher(sentence);
         if (matcher.find()) {
             for (int i = 0; i < DIRECTIONS.length; i++) {
                 if (matcher.group(1).equals(DIRECTIONS[i])) {
-                    position.setCourse(i * 45.0);
+                    position.setCurso(i * 45.0);
                     break;
                 }
             }
-            position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(matcher.group(2))));
+            position.setVelocidade(UnitsConverter.knotsFromKph(Double.parseDouble(matcher.group(2))));
         }
 
         pattern = Pattern.compile("(\\d{1,2}:\\d{2}(:\\d{2})? \\w{3} \\d{1,2})");

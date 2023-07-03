@@ -82,15 +82,15 @@ public class MainEventHandler extends ChannelInboundHandlerAdapter {
         if (msg instanceof Position) {
 
             Position position = (Position) msg;
-            Device device = cacheManager.getObject(Device.class, position.getDeviceId());
+            Device device = cacheManager.getObject(Device.class, position.getRastreador_id());
 
             try {
                 if (PositionUtil.isLatest(cacheManager, position)) {
                     Device updatedDevice = new Device();
-                    updatedDevice.setId(position.getDeviceId());
-                    updatedDevice.setPositionId(position.getId());
+                    updatedDevice.setId(position.getRastreador_id());
+                    updatedDevice.setRastreador_posicao_id(position.getId());
                     storage.updateObject(updatedDevice, new Request(
-                            new Columns.Include("positionId"),
+                            new Columns.Include("rastreador_posicao_id"),
                             new Condition.Equals("id", updatedDevice.getId())));
 
                     cacheManager.updatePosition(position);
@@ -102,30 +102,30 @@ public class MainEventHandler extends ChannelInboundHandlerAdapter {
 
             StringBuilder builder = new StringBuilder();
             builder.append("[").append(NetworkUtil.session(ctx.channel())).append("] ");
-            builder.append("id: ").append(device.getUniqueId());
+            builder.append("id: ").append(device.getImei());
             for (String attribute : logAttributes) {
                 switch (attribute) {
                     case "time":
-                        builder.append(", time: ").append(DateUtil.formatDate(position.getFixTime(), false));
+                        builder.append(", time: ").append(DateUtil.formatDate(position.getDatahora_corrigida(), false));
                         break;
                     case "position":
                         builder.append(", lat: ").append(String.format("%.5f", position.getLatitude()));
                         builder.append(", lon: ").append(String.format("%.5f", position.getLongitude()));
                         break;
                     case "speed":
-                        if (position.getSpeed() > 0) {
-                            builder.append(", speed: ").append(String.format("%.1f", position.getSpeed()));
+                        if (position.getRastreador_id() > 0) {
+                            builder.append(", speed: ").append(String.format("%.1f", position.getVelocidade()));
                         }
                         break;
                     case "course":
-                        builder.append(", course: ").append(String.format("%.1f", position.getCourse()));
+                        builder.append(", course: ").append(String.format("%.1f", position.getCurso()));
                         break;
                     case "accuracy":
-                        if (position.getAccuracy() > 0) {
-                            builder.append(", accuracy: ").append(String.format("%.1f", position.getAccuracy()));
+                        if (position.getPrecisao() > 0) {
+                            builder.append(", accuracy: ").append(String.format("%.1f", position.getPrecisao()));
                         }
                         break;
-                    case "outdated":
+                    /*case "outdated":
                         if (position.getOutdated()) {
                             builder.append(", outdated");
                         }
@@ -134,7 +134,7 @@ public class MainEventHandler extends ChannelInboundHandlerAdapter {
                         if (!position.getValid()) {
                             builder.append(", invalid");
                         }
-                        break;
+                        break;*/
                     default:
                         Object value = position.getAttributes().get(attribute);
                         if (value != null) {
@@ -145,7 +145,7 @@ public class MainEventHandler extends ChannelInboundHandlerAdapter {
             }
             LOGGER.info(builder.toString());
 
-            statisticsManager.registerMessageStored(position.getDeviceId(), position.getProtocol());
+            statisticsManager.registerMessageStored(position.getRastreador_id(), position.getProtocolo());
 
             ctx.writeAndFlush(new AcknowledgementHandler.EventHandled(position));
         }

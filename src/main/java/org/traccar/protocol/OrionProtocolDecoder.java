@@ -82,7 +82,7 @@ public class OrionProtocolDecoder extends BaseProtocolDecoder {
             for (int i = 0; i < (header & 0x0f); i++) {
 
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 position.set(Position.KEY_EVENT, buf.readUnsignedByte());
                 buf.readUnsignedByte(); // length
@@ -91,8 +91,8 @@ public class OrionProtocolDecoder extends BaseProtocolDecoder {
                 position.setLatitude(convertCoordinate(buf.readIntLE()));
                 position.setLongitude(convertCoordinate(buf.readIntLE()));
                 position.setAltitude(buf.readShortLE() / 10.0);
-                position.setCourse(buf.readUnsignedShortLE());
-                position.setSpeed(buf.readUnsignedShortLE() * 0.0539957);
+                position.setCurso(buf.readUnsignedShortLE());
+                position.setVelocidade(buf.readUnsignedShortLE() * 0.0539957);
 
                 DateBuilder dateBuilder = new DateBuilder()
                         .setDate(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
@@ -100,7 +100,7 @@ public class OrionProtocolDecoder extends BaseProtocolDecoder {
                 position.setTime(dateBuilder.getDate());
 
                 int satellites = buf.readUnsignedByte();
-                position.setValid(satellites >= 3);
+                //position.setValid(satellites >= 3);
                 position.set(Position.KEY_SATELLITES, satellites);
 
                 positions.add(position);

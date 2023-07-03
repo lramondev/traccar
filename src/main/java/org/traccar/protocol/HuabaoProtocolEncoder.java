@@ -37,10 +37,10 @@ public class HuabaoProtocolEncoder extends BaseProtocolEncoder {
     protected Object encodeCommand(Command command) {
 
         boolean alternative = AttributeUtil.lookup(
-                getCacheManager(), Keys.PROTOCOL_ALTERNATIVE.withPrefix(getProtocolName()), command.getDeviceId());
+                getCacheManager(), Keys.PROTOCOL_ALTERNATIVE.withPrefix(getProtocolName()), command.getRastreador_id());
 
         ByteBuf id = Unpooled.wrappedBuffer(
-                DataConverter.parseHex(getUniqueId(command.getDeviceId())));
+                DataConverter.parseHex(getUniqueId(command.getRastreador_id())));
         try {
             ByteBuf data = Unpooled.buffer();
             byte[] time = DataConverter.parseHex(new SimpleDateFormat("yyMMddHHmmss").format(new Date()));

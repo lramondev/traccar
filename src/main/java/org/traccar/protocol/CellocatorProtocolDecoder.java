@@ -110,7 +110,7 @@ public class CellocatorProtocolDecoder extends BaseProtocolDecoder {
     private Position decodeStatus(ByteBuf buf, DeviceSession deviceSession, boolean alternative) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_VERSION_HW, buf.readUnsignedByte());
         position.set(Position.KEY_VERSION_FW, buf.readUnsignedByte());
@@ -154,7 +154,7 @@ public class CellocatorProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
 
-        position.setValid(true);
+        //position.setValid(true);
 
         if (alternative) {
             position.setLongitude(buf.readIntLE() / 10000000.0);
@@ -167,11 +167,11 @@ public class CellocatorProtocolDecoder extends BaseProtocolDecoder {
         position.setAltitude(buf.readIntLE() * 0.01);
 
         if (alternative) {
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedIntLE()));
-            position.setCourse(buf.readUnsignedShortLE() / 1000.0);
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedIntLE()));
+            position.setCurso(buf.readUnsignedShortLE() / 1000.0);
         } else {
-            position.setSpeed(UnitsConverter.knotsFromMps(buf.readUnsignedIntLE() * 0.01));
-            position.setCourse(buf.readUnsignedShortLE() / Math.PI * 180.0 / 1000.0);
+            position.setVelocidade(UnitsConverter.knotsFromMps(buf.readUnsignedIntLE() * 0.01));
+            position.setCurso(buf.readUnsignedShortLE() / Math.PI * 180.0 / 1000.0);
         }
 
         DateBuilder dateBuilder = new DateBuilder()
@@ -185,7 +185,7 @@ public class CellocatorProtocolDecoder extends BaseProtocolDecoder {
     private Position decodeModular(ByteBuf buf, DeviceSession deviceSession) {
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         buf.readUnsignedByte(); // packet control
         buf.readUnsignedShortLE(); // length
@@ -216,8 +216,8 @@ public class CellocatorProtocolDecoder extends BaseProtocolDecoder {
                     position.setLongitude(buf.readIntLE() / Math.PI * 180 / 100000000);
                     position.setLatitude(buf.readIntLE() / Math.PI * 180 / 100000000);
                     position.setAltitude(buf.readIntLE() * 0.01);
-                    position.setSpeed(UnitsConverter.knotsFromMps(buf.readUnsignedByte() * 0.01));
-                    position.setCourse(buf.readUnsignedShortLE() / Math.PI * 180.0 / 1000.0);
+                    position.setVelocidade(UnitsConverter.knotsFromMps(buf.readUnsignedByte() * 0.01));
+                    position.setCurso(buf.readUnsignedShortLE() / Math.PI * 180.0 / 1000.0);
                     break;
                 case 7:
                     buf.readUnsignedByte(); // valid

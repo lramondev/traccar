@@ -72,7 +72,7 @@ public class OigoProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_EVENT, buf.readUnsignedByte());
 
@@ -101,17 +101,17 @@ public class OigoProtocolDecoder extends BaseProtocolDecoder {
 
         if (BitUtil.check(mask, 4)) {
             int status = buf.readUnsignedByte();
-            position.setValid(BitUtil.between(status, 4, 8) != 0);
+            //position.setValid(BitUtil.between(status, 4, 8) != 0);
             position.set(Position.KEY_SATELLITES, BitUtil.to(status, 4));
             position.set(Position.KEY_HDOP, buf.readUnsignedByte() * 0.1);
         }
 
         if (BitUtil.check(mask, 5)) {
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
         }
 
         if (BitUtil.check(mask, 6)) {
-            position.setCourse(buf.readUnsignedShort());
+            position.setCurso(buf.readUnsignedShort());
         }
 
         if (BitUtil.check(mask, 7)) {
@@ -181,7 +181,7 @@ public class OigoProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         buf.skipBytes(8); // imsi
 
@@ -191,13 +191,13 @@ public class OigoProtocolDecoder extends BaseProtocolDecoder {
                 .setDate(2010 + BitUtil.from(date, 12), BitUtil.between(date, 8, 12), BitUtil.to(date, 8))
                 .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), 0);
 
-        position.setValid(true);
+        //position.setValid(true);
         position.setLatitude(convertCoordinate(buf.readInt()));
         position.setLongitude(convertCoordinate(buf.readInt()));
 
         position.setAltitude(UnitsConverter.metersFromFeet(buf.readShort()));
-        position.setCourse(buf.readUnsignedShort());
-        position.setSpeed(UnitsConverter.knotsFromMph(buf.readUnsignedByte()));
+        position.setCurso(buf.readUnsignedShort());
+        position.setVelocidade(UnitsConverter.knotsFromMph(buf.readUnsignedByte()));
 
         position.set(Position.KEY_POWER, buf.readUnsignedByte() * 0.1);
         position.set(Position.PREFIX_IO + 1, buf.readUnsignedByte());

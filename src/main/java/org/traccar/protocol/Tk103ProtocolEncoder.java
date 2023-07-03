@@ -44,7 +44,7 @@ public class Tk103ProtocolEncoder extends StringProtocolEncoder {
     protected Object encodeCommand(Command command) {
 
         boolean alternative = AttributeUtil.lookup(
-                getCacheManager(), Keys.PROTOCOL_ALTERNATIVE.withPrefix(getProtocolName()), command.getDeviceId());
+                getCacheManager(), Keys.PROTOCOL_ALTERNATIVE.withPrefix(getProtocolName()), command.getRastreador_id());
 
         initDevicePassword(command, "123456");
 

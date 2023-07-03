@@ -136,15 +136,15 @@ public class ConnectionManager implements BroadcastInterface {
                 Endpoint oldEndpoint = new Endpoint(oldSession.getChannel(), oldSession.getRemoteAddress());
                 Map<String, DeviceSession> oldEndpointSessions = sessionsByEndpoint.get(oldEndpoint);
                 if (oldEndpointSessions != null && oldEndpointSessions.size() > 1) {
-                    oldEndpointSessions.remove(device.getUniqueId());
+                    oldEndpointSessions.remove(device.getImei());
                 } else {
                     sessionsByEndpoint.remove(oldEndpoint);
                 }
             }
 
             DeviceSession deviceSession = new DeviceSession(
-                    device.getId(), device.getUniqueId(), protocol, channel, remoteAddress);
-            endpointSessions.put(device.getUniqueId(), deviceSession);
+                    device.getId(), device.getImei(), protocol, channel, remoteAddress);
+            endpointSessions.put(device.getImei(), deviceSession);
             sessionsByEndpoint.put(endpoint, endpointSessions);
             sessionsByDeviceId.put(device.getId(), deviceSession);
 
@@ -162,9 +162,9 @@ public class ConnectionManager implements BroadcastInterface {
 
     private Device addUnknownDevice(String uniqueId) {
         Device device = new Device();
-        device.setName(uniqueId);
-        device.setUniqueId(uniqueId);
-        device.setCategory(config.getString(Keys.DATABASE_REGISTER_UNKNOWN_DEFAULT_CATEGORY));
+        device.setDescricao(uniqueId);
+        device.setImei(uniqueId);
+        //device.setCategory(config.getString(Keys.DATABASE_REGISTER_UNKNOWN_DEFAULT_CATEGORY));
 
         long defaultGroupId = config.getLong(Keys.DATABASE_REGISTER_UNKNOWN_DEFAULT_GROUP_ID);
         if (defaultGroupId != 0) {
@@ -248,7 +248,7 @@ public class ConnectionManager implements BroadcastInterface {
         }
 
         if (time != null) {
-            device.setLastUpdate(time);
+            //device.setLastUpdate(time);
         }
 
         Timeout timeout = timeouts.remove(deviceId);
@@ -266,7 +266,7 @@ public class ConnectionManager implements BroadcastInterface {
 
         try {
             storage.updateObject(device, new Request(
-                    new Columns.Include("status", "lastUpdate"),
+                    new Columns.Include("status"),
                     new Condition.Equals("id", deviceId)));
         } catch (StorageException e) {
             LOGGER.warn("Update device status error", e);
@@ -305,7 +305,7 @@ public class ConnectionManager implements BroadcastInterface {
         if (local) {
             broadcastService.updatePosition(true, position);
         }
-        for (long userId : deviceUsers.getOrDefault(position.getDeviceId(), Collections.emptySet())) {
+        for (long userId : deviceUsers.getOrDefault(position.getRastreador_id(), Collections.emptySet())) {
             if (listeners.containsKey(userId)) {
                 for (UpdateListener listener : listeners.get(userId)) {
                     listener.onUpdatePosition(position);

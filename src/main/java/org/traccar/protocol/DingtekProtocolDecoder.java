@@ -59,12 +59,12 @@ public class DingtekProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
             position.setTime(new Date());
 
             position.set("height", buf.readUnsignedShort());
 
-            position.setValid(buf.readUnsignedByte() > 0);
+            //position.setValid(buf.readUnsignedByte() > 0);
             position.setLongitude(buf.readFloat());
             position.setLatitude(buf.readFloat());
 

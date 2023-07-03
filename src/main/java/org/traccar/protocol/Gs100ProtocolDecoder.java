@@ -76,7 +76,7 @@ public class Gs100ProtocolDecoder extends BaseProtocolDecoder {
                 int endIndex = buf.readUnsignedByte() + buf.readerIndex();
 
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 int status = buf.readUnsignedMedium();
                 position.set(Position.KEY_STATUS, status);
@@ -92,7 +92,7 @@ public class Gs100ProtocolDecoder extends BaseProtocolDecoder {
                             .setYear(BcdUtil.readInteger(buf, 2));
                     position.setTime(dateBuilder.getDate());
 
-                    position.setValid(true);
+                    //position.setValid(true);
 
                     String coordinates = ByteBufUtil.hexDump(buf.readSlice(9));
                     position.setLongitude(Integer.parseInt(coordinates.substring(0, 3))
@@ -108,8 +108,8 @@ public class Gs100ProtocolDecoder extends BaseProtocolDecoder {
                     }
 
                     String other = ByteBufUtil.hexDump(buf.readSlice(4));
-                    position.setSpeed(UnitsConverter.knotsFromKph(Integer.parseInt(other.substring(0, 5)) * 0.01));
-                    position.setCourse(Integer.parseInt(other.substring(5, 8)));
+                    position.setVelocidade(UnitsConverter.knotsFromKph(Integer.parseInt(other.substring(0, 5)) * 0.01));
+                    position.setCurso(Integer.parseInt(other.substring(5, 8)));
 
                 } else {
 

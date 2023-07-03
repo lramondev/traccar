@@ -8,6 +8,7 @@
 
   <changeSet author="author" id="changelog-4.1-mssql">
 
+    <!--
     <preConditions onFail="MARK_RAN">
       <dbms type="mssql" />
     </preConditions>
@@ -41,7 +42,8 @@
       DELETE FROM tc_user_user WHERE manageduserid IN (SELECT deleted.id FROM deleted)
       END
     </sql>
-
+    -->
+    
   </changeSet>
 
 </databaseChangeLog>

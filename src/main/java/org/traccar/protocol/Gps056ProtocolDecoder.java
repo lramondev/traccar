@@ -100,18 +100,18 @@ public class Gps056ProtocolDecoder extends BaseProtocolDecoder {
         } else if (type.startsWith("GPSL")) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             DateBuilder dateBuilder = new DateBuilder()
                     .setDateReverse(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
                     .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte());
 
-            position.setValid(true);
+            //position.setValid(true);
             position.setTime(dateBuilder.getDate());
             position.setLatitude(decodeCoordinate(buf));
             position.setLongitude(decodeCoordinate(buf));
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
-            position.setCourse(buf.readUnsignedShort());
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+            position.setCurso(buf.readUnsignedShort());
 
             decodeStatus(buf, position);
 
@@ -122,7 +122,7 @@ public class Gps056ProtocolDecoder extends BaseProtocolDecoder {
         } else if (type.startsWith("SYNC")) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, null);
 

@@ -17,14 +17,14 @@ package org.traccar.model;
 
 public class Message extends ExtendedModel {
 
-    private long deviceId;
+    private long rastreador_id;
 
-    public long getDeviceId() {
-        return deviceId;
+    public long getRastreador_id() {
+        return rastreador_id;
     }
 
-    public void setDeviceId(long deviceId) {
-        this.deviceId = deviceId;
+    public void setRastreador_id(long rastreador_id) {
+        this.rastreador_id = rastreador_id;
     }
 
     private String type;

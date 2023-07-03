@@ -132,7 +132,7 @@ public class Xt2400ProtocolDecoder extends BaseProtocolDecoder {
                     if (deviceSession == null) {
                         return null;
                     }
-                    position.setDeviceId(deviceSession.getDeviceId());
+                    position.setRastreador_id(deviceSession.getDeviceId());
                     break;
                 case 0x04:
                     position.set(Position.KEY_EVENT, buf.readUnsignedByte());
@@ -153,10 +153,10 @@ public class Xt2400ProtocolDecoder extends BaseProtocolDecoder {
                     position.setAltitude(buf.readShort() * 0.1);
                     break;
                 case 0x0a:
-                    position.setCourse(buf.readShort() * 0.1);
+                    position.setCurso(buf.readShort() * 0.1);
                     break;
                 case 0x0b:
-                    position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+                    position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
                     break;
                 case 0x10:
                     position.set(Position.KEY_ODOMETER_TRIP, buf.readUnsignedInt());
@@ -200,9 +200,9 @@ public class Xt2400ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (position.getLatitude() != 0 && position.getLongitude() != 0) {
-            position.setValid(true);
+            //position.setValid(true);
         } else {
-            getLastLocation(position, position.getDeviceTime());
+            getLastLocation(position, position.getDatahora_rastreador());
         }
 
         return position;

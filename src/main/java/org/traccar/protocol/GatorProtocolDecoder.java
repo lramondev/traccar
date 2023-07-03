@@ -99,7 +99,7 @@ public class GatorProtocolDecoder extends BaseProtocolDecoder {
             if (deviceSession == null) {
                 return null;
             }
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             DateBuilder dateBuilder = new DateBuilder()
                     .setYear(BcdUtil.readInteger(buf, 2))
@@ -112,11 +112,11 @@ public class GatorProtocolDecoder extends BaseProtocolDecoder {
 
             position.setLatitude(BcdUtil.readCoordinate(buf));
             position.setLongitude(BcdUtil.readCoordinate(buf));
-            position.setSpeed(UnitsConverter.knotsFromKph(BcdUtil.readInteger(buf, 4)));
-            position.setCourse(BcdUtil.readInteger(buf, 4));
+            position.setVelocidade(UnitsConverter.knotsFromKph(BcdUtil.readInteger(buf, 4)));
+            position.setCurso(BcdUtil.readInteger(buf, 4));
 
             int flags = buf.readUnsignedByte();
-            position.setValid((flags & 0x80) != 0);
+            //position.setValid((flags & 0x80) != 0);
             position.set(Position.KEY_SATELLITES, flags & 0x0f);
 
             position.set(Position.KEY_STATUS, buf.readUnsignedByte());

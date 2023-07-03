@@ -86,14 +86,14 @@ public class Command extends BaseCommand {
 
     @QueryIgnore
     @Override
-    public long getDeviceId() {
-        return super.getDeviceId();
+    public long getRastreador_id() {
+        return super.getRastreador_id();
     }
 
     @QueryIgnore
     @Override
-    public void setDeviceId(long deviceId) {
-        super.setDeviceId(deviceId);
+    public void setRastreador_id(long deviceId) {
+        super.setRastreador_id(deviceId);
     }
 
     private String description;

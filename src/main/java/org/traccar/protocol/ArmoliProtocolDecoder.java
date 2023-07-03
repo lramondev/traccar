@@ -76,7 +76,7 @@ public class ArmoliProtocolDecoder extends BaseProtocolDecoder {
             if (type == 'W') {
                 deviceSession = getDeviceSession(channel, remoteAddress);
                 if (deviceSession != null) {
-                    position.setDeviceId(deviceSession.getDeviceId());
+                    position.setRastreador_id(deviceSession.getDeviceId());
                     getLastLocation(position, null);
                     position.set(
                             Position.KEY_RESULT,
@@ -99,17 +99,17 @@ public class ArmoliProtocolDecoder extends BaseProtocolDecoder {
             return null;
         }
 
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
-        position.setValid(parser.nextInt() > 0);
+        //position.setValid(parser.nextInt() > 0);
 
         position.set(Position.KEY_SATELLITES, parser.nextHexInt());
 
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextHexInt()));
-        position.setCourse(parser.nextInt());
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextHexInt()));
+        position.setCurso(parser.nextInt());
 
         position.set(Position.PREFIX_ADC + 1, parser.nextHexInt() / 27.0 * 1000);
         position.set(Position.PREFIX_ADC + 1, parser.nextHexInt() / 27.0 * 1000);

@@ -53,7 +53,7 @@ public class WliProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             CellTower cellTower = new CellTower();
 
@@ -76,17 +76,17 @@ public class WliProtocolDecoder extends BaseProtocolDecoder {
                     int endIndex = buf.readUnsignedShort() + buf.readerIndex();
 
                     if (fieldNumber == 52) {
-                        position.setValid(true);
+                        //position.setValid(true);
                         buf.readUnsignedByte(); // reason
                         buf.readUnsignedByte(); // century
                         DateBuilder dateBuilder = new DateBuilder()
                                 .setDate(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
                                 .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte());
-                        position.setFixTime(dateBuilder.getDate());
+                        position.setDatahora_corrigida(dateBuilder.getDate());
                         position.setLatitude(buf.readInt() / 600000.0);
                         position.setLongitude(buf.readInt() / 600000.0);
-                        position.setSpeed(buf.readUnsignedShort());
-                        position.setCourse(buf.readUnsignedShort() * 0.1);
+                        position.setVelocidade(buf.readUnsignedShort());
+                        position.setCurso(buf.readUnsignedShort() * 0.1);
                         position.set(Position.KEY_ODOMETER, UnitsConverter.metersFromFeet(buf.readUnsignedInt()));
                         position.setAltitude(buf.readInt() * 0.1);
                     }
@@ -143,7 +143,7 @@ public class WliProtocolDecoder extends BaseProtocolDecoder {
                                 position.set(Position.KEY_BATTERY, Integer.parseInt(values[3]) * 0.01);
                                 break;
                             case 255:
-                                position.setDeviceTime(new Date(Long.parseLong(value) * 1000));
+                                position.setDatahora_rastreador(new Date(Long.parseLong(value) * 1000));
                                 break;
                             default:
                                 break;
@@ -157,16 +157,16 @@ public class WliProtocolDecoder extends BaseProtocolDecoder {
             }
 
             if (type == 0xE4) {
-                getLastLocation(position, position.getDeviceTime());
+                getLastLocation(position, position.getDatahora_rastreador());
             }
 
             if (cellTower.getCellId() != null) {
-                position.setNetwork(new Network(cellTower));
+                position.setRede(new Network(cellTower));
             }
 
-            if (!position.getValid()) {
-                getLastLocation(position, position.getDeviceTime());
-            }
+            //if (!position.getValid()) {
+                //getLastLocation(position, position.getDatahora_rastreador());
+            //}
 
             return position;
 

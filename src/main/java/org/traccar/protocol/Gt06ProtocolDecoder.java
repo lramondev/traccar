@@ -292,12 +292,12 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
         double longitude = buf.readUnsignedInt() / 60.0 / 30000.0;
 
         if (hasSpeed) {
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
         }
 
         int flags = buf.readUnsignedShort();
-        position.setCourse(BitUtil.to(flags, 10));
-        position.setValid(BitUtil.check(flags, 12));
+        position.setCurso(BitUtil.to(flags, 10));
+        //position.setValid(BitUtil.check(flags, 12));
 
         if (!BitUtil.check(flags, 10)) {
             latitude = -latitude;
@@ -358,7 +358,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
             cid = buf.readUnsignedMedium();
         }
 
-        position.setNetwork(new Network(CellTower.from(BitUtil.to(mcc, 15), mnc, lac, cid)));
+        position.setRede(new Network(CellTower.from(BitUtil.to(mcc, 15), mnc, lac, cid)));
 
         if (length > 9) {
             buf.skipBytes(length - 9);
@@ -462,7 +462,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
             if (deviceSession == null) {
                 return null;
             }
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
             if (!deviceSession.contains(DeviceSession.KEY_TIMEZONE)) {
                 deviceSession.set(DeviceSession.KEY_TIMEZONE, getTimeZone(deviceSession.getDeviceId()));
             }
@@ -556,7 +556,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
 
             position.set(Position.KEY_ODOMETER, buf.readUnsignedInt());
 
-            position.setNetwork(new Network(CellTower.from(
+            position.setRede(new Network(CellTower.from(
                     buf.readUnsignedShort(), buf.readUnsignedByte(),
                     buf.readUnsignedShort(), buf.readUnsignedInt())));
 
@@ -654,7 +654,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
 
             }
 
-            position.setNetwork(network);
+            position.setRede(network);
 
             return position;
 
@@ -722,7 +722,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
                 }
             }
 
-            position.setNetwork(network);
+            position.setRede(network);
 
         } else if (type == MSG_STRING) {
 
@@ -898,7 +898,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
                         position.set(Position.KEY_ODOMETER, buf.readUnsignedInt());
                         break;
                     case 0x003B:
-                        position.setAccuracy(buf.readUnsignedShort() * 0.01);
+                        position.setPrecisao(buf.readUnsignedShort() * 0.01);
                         break;
                     default:
                         buf.skipBytes(subLength);
@@ -986,7 +986,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         buf.readUnsignedShort(); // length
         int type = buf.readUnsignedByte();
@@ -1004,11 +1004,11 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
             Parser parser = new Parser(PATTERN_LOCATION, data);
 
             if (parser.matches()) {
-                position.setValid(true);
+                //position.setValid(true);
                 position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
                 position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
-                position.setCourse(parser.nextDouble());
-                position.setSpeed(parser.nextDouble());
+                position.setCurso(parser.nextDouble());
+                position.setVelocidade(parser.nextDouble());
                 position.setTime(parser.nextDateTime(Parser.DateTimeFormat.YMD_HMS));
             } else {
                 getLastLocation(position, null);
@@ -1057,7 +1057,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
                     DateBuilder dateBuilder = new DateBuilder((TimeZone) deviceSession.get(DeviceSession.KEY_TIMEZONE))
                             .setDate(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
                             .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte());
-                    position.setDeviceTime(dateBuilder.getDate());
+                    position.setDatahora_rastreador(dateBuilder.getDate());
                 }
 
                 int flags = buf.readUnsignedByte();
@@ -1124,7 +1124,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
         } else if (type == MSG_AZ735_GPS || type == MSG_AZ735_ALARM) {
 
             if (!decodeGps(position, buf, true, deviceSession.get(DeviceSession.KEY_TIMEZONE))) {
-                getLastLocation(position, position.getDeviceTime());
+                getLastLocation(position, position.getDatahora_rastreador());
             }
 
             if (decodeLbs(position, buf, type, true)) {
@@ -1237,7 +1237,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
                                 buf.readUnsignedMedium(),
                                 buf.readUnsignedByte());
                         if (cellTower.getCellId() > 0) {
-                            position.setNetwork(new Network(cellTower));
+                            position.setRede(new Network(cellTower));
                         }
                         break;
                     case 0x18:
@@ -1284,11 +1284,11 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
 
                         double latitude = buf.readUnsignedInt() / 60.0 / 30000.0;
                         double longitude = buf.readUnsignedInt() / 60.0 / 30000.0;
-                        position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+                        position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
 
                         int flags = buf.readUnsignedShort();
-                        position.setCourse(BitUtil.to(flags, 10));
-                        position.setValid(BitUtil.check(flags, 12));
+                        position.setCurso(BitUtil.to(flags, 10));
+                        //position.setValid(BitUtil.check(flags, 12));
 
                         if (!BitUtil.check(flags, 10)) {
                             latitude = -latitude;
@@ -1311,7 +1311,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
                 }
             }
 
-            if (position.getFixTime() == null) {
+            if (position.getDatahora_corrigida() == null) {
                 getLastLocation(position, null);
             }
 
@@ -1350,7 +1350,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
                     buf.readBytes(photo, buf.readableBytes() - 3 * 2);
                     if (!photo.isWritable()) {
                         position = new Position(getProtocolName());
-                        position.setDeviceId(deviceSession.getDeviceId());
+                        position.setRastreador_id(deviceSession.getDeviceId());
                         getLastLocation(position, new Date(timestamp));
                         position.set(Position.KEY_IMAGE, writeMediaFile(deviceSession.getUniqueId(), photo, "jpg"));
                         photos.remove(mediaId).release();
@@ -1366,7 +1366,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
         } else if (type == MSG_SERIAL) {
 
             position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
             getLastLocation(position, null);
 
             buf.readUnsignedByte(); // external device type code

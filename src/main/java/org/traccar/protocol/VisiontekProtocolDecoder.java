@@ -88,7 +88,7 @@ public class VisiontekProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
@@ -101,10 +101,10 @@ public class VisiontekProtocolDecoder extends BaseProtocolDecoder {
             position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         }
 
-        position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(
+        position.setVelocidade(UnitsConverter.knotsFromKph(Double.parseDouble(
                 parser.next().replace(".", "")) / 10));
 
-        position.setCourse(parser.nextDouble(0));
+        position.setCurso(parser.nextDouble(0));
 
         if (parser.hasNext(9)) {
             position.setAltitude(parser.nextDouble(0));
@@ -128,7 +128,7 @@ public class VisiontekProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.PREFIX_ADC + 2, parser.next());
         }
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
 
         position.set(Position.KEY_DRIVER_UNIQUE_ID, parser.next());
 

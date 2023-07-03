@@ -74,12 +74,12 @@ public class SupermateProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set("commandId", parser.next());
         position.set(Position.KEY_COMMAND, parser.next());
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
 
         DateBuilder dateBuilder = new DateBuilder()
                 .setDate(parser.nextHexInt(0), parser.nextHexInt(0), parser.nextHexInt(0))
@@ -98,8 +98,8 @@ public class SupermateProtocolDecoder extends BaseProtocolDecoder {
             position.setLongitude(parser.nextHexInt(0) / 600000.0);
         }
 
-        position.setSpeed(parser.nextHexInt(0) / 100.0);
-        position.setCourse(parser.nextHexInt(0) / 100.0);
+        position.setVelocidade(parser.nextHexInt(0) / 100.0);
+        position.setCurso(parser.nextHexInt(0) / 100.0);
 
         position.set(Position.KEY_STATUS, parser.next());
         position.set("signal", parser.next());

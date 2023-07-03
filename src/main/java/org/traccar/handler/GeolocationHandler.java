@@ -52,14 +52,13 @@ public class GeolocationHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(final ChannelHandlerContext ctx, Object message) {
         if (message instanceof Position) {
             final Position position = (Position) message;
-            if ((position.getOutdated() || processInvalidPositions && !position.getValid())
-                    && position.getNetwork() != null) {
+            if (processInvalidPositions) {
                 if (reuse) {
-                    Position lastPosition = cacheManager.getPosition(position.getDeviceId());
-                    if (lastPosition != null && position.getNetwork().equals(lastPosition.getNetwork())) {
+                    Position lastPosition = cacheManager.getPosition(position.getRastreador_id());
+                    if (lastPosition != null && position.getRede().equals(lastPosition.getRede())) {
                         updatePosition(
                                 position, lastPosition.getLatitude(), lastPosition.getLongitude(),
-                                lastPosition.getAccuracy());
+                                lastPosition.getPrecisao());
                         ctx.fireChannelRead(position);
                         return;
                     }
@@ -69,7 +68,7 @@ public class GeolocationHandler extends ChannelInboundHandlerAdapter {
                     statisticsManager.registerGeolocationRequest();
                 }
 
-                geolocationProvider.getLocation(position.getNetwork(),
+                geolocationProvider.getLocation(position.getRede(),
                         new GeolocationProvider.LocationProviderCallback() {
                     @Override
                     public void onSuccess(double latitude, double longitude, double accuracy) {
@@ -93,14 +92,14 @@ public class GeolocationHandler extends ChannelInboundHandlerAdapter {
 
     private void updatePosition(Position position, double latitude, double longitude, double accuracy) {
         position.set(Position.KEY_APPROXIMATE, true);
-        position.setValid(true);
-        position.setFixTime(position.getDeviceTime());
+        //position.setValid(true);
+        position.setDatahora_corrigida(position.getDatahora_rastreador());
         position.setLatitude(latitude);
         position.setLongitude(longitude);
-        position.setAccuracy(accuracy);
+        position.setPrecisao(accuracy);
         position.setAltitude(0);
-        position.setSpeed(0);
-        position.setCourse(0);
+        position.setVelocidade(0);
+        position.setCurso(0);
     }
 
 }

@@ -64,7 +64,7 @@ public class MeiligaoProtocolEncoder extends BaseProtocolEncoder {
         int outputCount;
         int outputType;
 
-        String model = getCacheManager().getObject(Device.class, deviceId).getModel();
+        String model = getCacheManager().getObject(Device.class, deviceId).getModelo();
 
         if (model != null && Set.of("TK510", "GT08", "TK208", "TK228", "MT05").contains(model)) {
             outputCount = 5;
@@ -94,29 +94,29 @@ public class MeiligaoProtocolEncoder extends BaseProtocolEncoder {
 
         switch (command.getType()) {
             case Command.TYPE_POSITION_SINGLE:
-                return encodeContent(command.getDeviceId(), MeiligaoProtocolDecoder.MSG_TRACK_ON_DEMAND, content);
+                return encodeContent(command.getRastreador_id(), MeiligaoProtocolDecoder.MSG_TRACK_ON_DEMAND, content);
             case Command.TYPE_POSITION_PERIODIC:
                 content.writeShort(command.getInteger(Command.KEY_FREQUENCY) / 10);
-                return encodeContent(command.getDeviceId(), MeiligaoProtocolDecoder.MSG_TRACK_BY_INTERVAL, content);
+                return encodeContent(command.getRastreador_id(), MeiligaoProtocolDecoder.MSG_TRACK_BY_INTERVAL, content);
             case Command.TYPE_OUTPUT_CONTROL:
                 int index = command.getInteger(Command.KEY_INDEX) - 1;
                 int value = command.getInteger(Command.KEY_DATA);
-                return encodeOutputCommand(command.getDeviceId(), index, value);
+                return encodeOutputCommand(command.getRastreador_id(), index, value);
             case Command.TYPE_ENGINE_STOP:
-                return encodeOutputCommand(command.getDeviceId(), 1, 1);
+                return encodeOutputCommand(command.getRastreador_id(), 1, 1);
             case Command.TYPE_ENGINE_RESUME:
-                return encodeOutputCommand(command.getDeviceId(), 1, 0);
+                return encodeOutputCommand(command.getRastreador_id(), 1, 0);
             case Command.TYPE_ALARM_GEOFENCE:
                 content.writeShort(command.getInteger(Command.KEY_RADIUS));
-                return encodeContent(command.getDeviceId(), MeiligaoProtocolDecoder.MSG_MOVEMENT_ALARM, content);
+                return encodeContent(command.getRastreador_id(), MeiligaoProtocolDecoder.MSG_MOVEMENT_ALARM, content);
             case Command.TYPE_SET_TIMEZONE:
                 int offset = TimeZone.getTimeZone(command.getString(Command.KEY_TIMEZONE)).getRawOffset() / 60000;
                 content.writeBytes(String.valueOf(offset).getBytes(StandardCharsets.US_ASCII));
-                return encodeContent(command.getDeviceId(), MeiligaoProtocolDecoder.MSG_TIME_ZONE, content);
+                return encodeContent(command.getRastreador_id(), MeiligaoProtocolDecoder.MSG_TIME_ZONE, content);
             case Command.TYPE_REQUEST_PHOTO:
-                return encodeContent(command.getDeviceId(), MeiligaoProtocolDecoder.MSG_TAKE_PHOTO, content);
+                return encodeContent(command.getRastreador_id(), MeiligaoProtocolDecoder.MSG_TAKE_PHOTO, content);
             case Command.TYPE_REBOOT_DEVICE:
-                return encodeContent(command.getDeviceId(), MeiligaoProtocolDecoder.MSG_REBOOT_GPS, content);
+                return encodeContent(command.getRastreador_id(), MeiligaoProtocolDecoder.MSG_REBOOT_GPS, content);
             default:
                 return null;
         }

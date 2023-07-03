@@ -145,7 +145,7 @@ public class AquilaProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_EVENT, parser.nextInt(0));
 
@@ -154,11 +154,11 @@ public class AquilaProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime());
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
 
         if (parser.hasNext(3)) {
             position.set(Position.KEY_RSSI, parser.nextInt(0));
-            position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
+            position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
             position.set(Position.KEY_ODOMETER, parser.nextInt(0));
         }
 
@@ -174,12 +174,12 @@ public class AquilaProtocolDecoder extends BaseProtocolDecoder {
             int course = (parser.nextInt(0) << 3) + (parser.nextInt(0) << 2)
                     + (parser.nextInt(0) << 1) + parser.nextInt(0);
             if (course > 0 && course <= 8) {
-                position.setCourse((course - 1) * 45);
+                position.setCurso((course - 1) * 45);
             }
 
         } else if (parser.hasNext(7)) {
 
-            position.setCourse(parser.nextInt(0));
+            position.setCurso(parser.nextInt(0));
 
             position.set(Position.KEY_CHARGE, parser.next().equals("1"));
             position.set(Position.KEY_IGNITION, parser.nextInt(0) == 1);
@@ -194,7 +194,7 @@ public class AquilaProtocolDecoder extends BaseProtocolDecoder {
 
         } else if (parser.hasNext(10)) {
 
-            position.setCourse(parser.nextInt(0));
+            position.setCurso(parser.nextInt(0));
 
             position.set(Position.KEY_SATELLITES, parser.nextInt(0));
             position.set(Position.KEY_HDOP, parser.nextDouble(0));

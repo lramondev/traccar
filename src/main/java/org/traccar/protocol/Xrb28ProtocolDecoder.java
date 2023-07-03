@@ -91,7 +91,7 @@ public class Xrb28ProtocolDecoder extends BaseProtocolDecoder {
         if (!type.startsWith("D")) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             getLastLocation(position, null);
 
@@ -162,12 +162,12 @@ public class Xrb28ProtocolDecoder extends BaseProtocolDecoder {
             }
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             DateBuilder dateBuilder = new DateBuilder()
                     .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
-            position.setValid(parser.next().equals("A"));
+            //position.setValid(parser.next().equals("A"));
             position.setLatitude(parser.nextCoordinate());
             position.setLongitude(parser.nextCoordinate());
 

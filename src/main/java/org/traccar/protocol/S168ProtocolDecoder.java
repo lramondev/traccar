@@ -49,7 +49,7 @@ public class S168ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         Network network = new Network();
 
@@ -67,15 +67,15 @@ public class S168ProtocolDecoder extends BaseProtocolDecoder {
 
             switch (type) {
                 case "GDATA":
-                    position.setValid(values[index++].equals("A"));
+                    //position.setValid(values[index++].equals("A"));
                     position.set(Position.KEY_SATELLITES, Integer.parseInt(values[index++]));
                     DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
                     dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
                     position.setTime(dateFormat.parse(values[index++]));
                     position.setLatitude(Double.parseDouble(values[index++]));
                     position.setLongitude(Double.parseDouble(values[index++]));
-                    position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
-                    position.setCourse(Integer.parseInt(values[index++]));
+                    position.setVelocidade(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
+                    position.setCurso(Integer.parseInt(values[index++]));
                     position.setAltitude(Integer.parseInt(values[index++]));
                     break;
                 case "CELL":
@@ -105,13 +105,13 @@ public class S168ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (network.getCellTowers() != null || network.getWifiAccessPoints() != null) {
-            position.setNetwork(network);
+            position.setRede(network);
         }
         if (!position.hasAttribute(Position.KEY_SATELLITES)) {
             getLastLocation(position, null);
         }
 
-        if (position.getNetwork() != null || !position.getAttributes().isEmpty()) {
+        if (position.getRede() != null || !position.getAttributes().isEmpty()) {
             return position;
         } else {
             return null;

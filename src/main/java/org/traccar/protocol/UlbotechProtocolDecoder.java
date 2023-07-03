@@ -189,7 +189,7 @@ public class UlbotechProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         DateBuilder dateBuilder = new DateBuilder()
                 .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0))
@@ -220,7 +220,7 @@ public class UlbotechProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         TimeZone timeZone = deviceSession.get(DeviceSession.KEY_TIMEZONE);
         long seconds = buf.readUnsignedInt() & 0x7fffffffL;
@@ -241,20 +241,20 @@ public class UlbotechProtocolDecoder extends BaseProtocolDecoder {
                     hasLocation = true;
                     position.setLatitude(buf.readInt() / 1000000.0);
                     position.setLongitude(buf.readInt() / 1000000.0);
-                    position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
-                    position.setCourse(buf.readUnsignedShort());
+                    position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
+                    position.setCurso(buf.readUnsignedShort());
                     int hdop = buf.readUnsignedShort();
-                    position.setValid(hdop < 9999);
+                    //position.setValid(hdop < 9999);
                     position.set(Position.KEY_HDOP, hdop * 0.01);
                     break;
 
                 case DATA_LBS:
                     if (length == 11) {
-                        position.setNetwork(new Network(CellTower.from(
+                        position.setRede(new Network(CellTower.from(
                                 buf.readUnsignedShort(), buf.readUnsignedShort(),
                                 buf.readUnsignedShort(), buf.readUnsignedInt(), -buf.readUnsignedByte())));
                     } else {
-                        position.setNetwork(new Network(CellTower.from(
+                        position.setRede(new Network(CellTower.from(
                                 buf.readUnsignedShort(), buf.readUnsignedShort(),
                                 buf.readUnsignedShort(), buf.readUnsignedShort(), -buf.readUnsignedByte())));
                     }

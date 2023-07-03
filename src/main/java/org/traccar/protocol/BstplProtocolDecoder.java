@@ -93,19 +93,19 @@ public class BstplProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_ALARM, decodeAlarm(type));
 
-        position.setValid(parser.next().equals("A"));
+        //position.setValid(parser.next().equals("A"));
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
-        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextInt()));
+        position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
 
         position.set(Position.KEY_ODOMETER, parser.nextInt() * 1000L);
 
-        position.setCourse(parser.nextInt());
+        position.setCurso(parser.nextInt());
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
 

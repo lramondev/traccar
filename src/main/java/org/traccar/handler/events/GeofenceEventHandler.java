@@ -48,17 +48,21 @@ public class GeofenceEventHandler extends BaseEventHandler {
         }
 
         List<Long> oldGeofences = new ArrayList<>();
-        Position lastPosition = cacheManager.getPosition(position.getDeviceId());
+        Position lastPosition = cacheManager.getPosition(position.getRastreador_id());
+        /* 
         if (lastPosition != null && lastPosition.getGeofenceIds() != null) {
             oldGeofences.addAll(lastPosition.getGeofenceIds());
         }
+        */
 
         List<Long> newGeofences = new ArrayList<>();
+        /*
         if (position.getGeofenceIds() != null) {
             newGeofences.addAll(position.getGeofenceIds());
             newGeofences.removeAll(oldGeofences);
             oldGeofences.removeAll(position.getGeofenceIds());
         }
+        */
 
         Map<Event, Position> events = new HashMap<>();
         for (long geofenceId : oldGeofences) {
@@ -66,7 +70,7 @@ public class GeofenceEventHandler extends BaseEventHandler {
             if (geofence != null) {
                 long calendarId = geofence.getCalendarId();
                 Calendar calendar = calendarId != 0 ? cacheManager.getObject(Calendar.class, calendarId) : null;
-                if (calendar == null || calendar.checkMoment(position.getFixTime())) {
+                if (calendar == null || calendar.checkMoment(position.getDatahora_corrigida())) {
                     Event event = new Event(Event.TYPE_GEOFENCE_EXIT, position);
                     event.setGeofenceId(geofenceId);
                     events.put(event, position);
@@ -76,7 +80,7 @@ public class GeofenceEventHandler extends BaseEventHandler {
         for (long geofenceId : newGeofences) {
             long calendarId = cacheManager.getObject(Geofence.class, geofenceId).getCalendarId();
             Calendar calendar = calendarId != 0 ? cacheManager.getObject(Calendar.class, calendarId) : null;
-            if (calendar == null || calendar.checkMoment(position.getFixTime())) {
+            if (calendar == null || calendar.checkMoment(position.getDatahora_corrigida())) {
                 Event event = new Event(Event.TYPE_GEOFENCE_ENTER, position);
                 event.setGeofenceId(geofenceId);
                 events.put(event, position);

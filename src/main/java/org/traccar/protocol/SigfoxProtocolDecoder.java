@@ -123,7 +123,7 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         if (jsonContains(json, "time")) {
             position.setTime(new Date(getJsonInt(json, "time") * 1000L));
@@ -134,7 +134,7 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
         }
 
         if (jsonContains(json, "lastSeen")) {
-            position.setDeviceTime(new Date(getJsonInt(json, "lastSeen") * 1000L));
+            position.setDatahora_rastreador(new Date(getJsonInt(json, "lastSeen") * 1000L));
         }
 
         if (jsonContains(json, "location")
@@ -148,7 +148,7 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
                 location = json;
             }
 
-            position.setValid(true);
+            //position.setValid(true);
             position.setLatitude(getJsonDouble(location, jsonContains(location, "lat") ? "lat" : "latitude"));
             position.setLongitude(getJsonDouble(location, jsonContains(location, "lng") ? "lng" : "longitude"));
 
@@ -159,7 +159,7 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
                 int event = buf.readUnsignedByte();
                 if (event == 0x0f || event == 0x1f) {
 
-                    position.setValid(event >> 4 > 0);
+                    //position.setValid(event >> 4 > 0);
                     position.setLatitude(BufferUtil.readSignedMagnitudeInt(buf) * 0.000001);
                     position.setLongitude(BufferUtil.readSignedMagnitudeInt(buf) * 0.000001);
 
@@ -168,11 +168,11 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
                 } else if (event >> 4 <= 3 && buf.writerIndex() == 12) {
 
                     if (BitUtil.to(event, 4) == 0) {
-                        position.setValid(true);
+                        //position.setValid(true);
                         position.setLatitude(buf.readIntLE() * 0.0000001);
                         position.setLongitude(buf.readIntLE() * 0.0000001);
-                        position.setCourse(buf.readUnsignedByte() * 2);
-                        position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+                        position.setCurso(buf.readUnsignedByte() * 2);
+                        position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
 
                         position.set(Position.KEY_BATTERY, buf.readUnsignedByte() * 0.025);
                     } else {
@@ -198,12 +198,12 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
                     int type = buf.readUnsignedByte();
                     switch (type) {
                         case 0x01:
-                            position.setValid(true);
+                            //position.setValid(true);
                             position.setLatitude(buf.readMedium());
                             position.setLongitude(buf.readMedium());
                             break;
                         case 0x02:
-                            position.setValid(true);
+                            //position.setValid(true);
                             position.setLatitude(buf.readFloat());
                             position.setLongitude(buf.readFloat());
                             break;
@@ -218,7 +218,7 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
                             break;
                         case 0x06:
                             String mac = ByteBufUtil.hexDump(buf.readSlice(6)).replaceAll("(..)", "$1:");
-                            position.setNetwork(new Network(WifiAccessPoint.from(
+                            position.setRede(new Network(WifiAccessPoint.from(
                                     mac.substring(0, mac.length() - 1), buf.readUnsignedByte())));
                             break;
                         case 0x07:
@@ -228,7 +228,7 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
                             buf.skipBytes(6); // accelerometer
                             break;
                         case 0x09:
-                            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+                            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
                             break;
                         default:
                             buf.readUnsignedByte(); // fence number
@@ -242,7 +242,7 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
         }
 
         if (position.getLatitude() == 0 && position.getLongitude() == 0) {
-            getLastLocation(position, position.getDeviceTime());
+            getLastLocation(position, position.getDatahora_rastreador());
         }
 
         if (jsonContains(json, "moving")) {

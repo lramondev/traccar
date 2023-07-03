@@ -138,18 +138,18 @@ public class DeviceResource extends BaseObjectResource<Device> {
             position.setId(storage.addObject(position, new Request(new Columns.Exclude("id"))));
 
             Device device = new Device();
-            device.setId(position.getDeviceId());
-            device.setPositionId(position.getId());
+            device.setId(position.getRastreador_id());
+            device.setRastreador_posicao_id(position.getId());
             storage.updateObject(device, new Request(
                     new Columns.Include("positionId"),
                     new Condition.Equals("id", device.getId())));
 
             try {
-                cacheManager.addDevice(position.getDeviceId());
+                cacheManager.addDevice(position.getRastreador_id());
                 cacheManager.updatePosition(position);
                 connectionManager.updatePosition(true, position);
             } finally {
-                cacheManager.removeDevice(position.getDeviceId());
+                cacheManager.removeDevice(position.getRastreador_id());
             }
         } else {
             throw new IllegalArgumentException();
@@ -175,7 +175,7 @@ public class DeviceResource extends BaseObjectResource<Device> {
             String name = "device";
             String extension = type.substring("image/".length());
             try (var input = new FileInputStream(file);
-                    var output = mediaManager.createFileStream(device.getUniqueId(), name, extension)) {
+                    var output = mediaManager.createFileStream(device.getImei(), name, extension)) {
                 input.transferTo(output);
             }
             return Response.ok(name + "." + extension).build();

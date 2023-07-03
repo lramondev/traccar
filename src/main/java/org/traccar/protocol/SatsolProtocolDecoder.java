@@ -64,15 +64,15 @@ public class SatsolProtocolDecoder extends BaseProtocolDecoder {
             int length = buf.readUnsignedShortLE();
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             position.setTime(new Date(buf.readUnsignedIntLE() * 1000));
             position.setLatitude(buf.readUnsignedIntLE() * 0.000001);
             position.setLongitude(buf.readUnsignedIntLE() * 0.000001);
-            position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE() * 0.01));
+            position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE() * 0.01));
             position.setAltitude(buf.readShortLE());
-            position.setCourse(buf.readUnsignedShortLE());
-            position.setValid(buf.readUnsignedByte() > 0);
+            position.setCurso(buf.readUnsignedShortLE());
+            //position.setValid(buf.readUnsignedByte() > 0);
 
             position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
             position.set(Position.KEY_EVENT, buf.readUnsignedByte());

@@ -80,7 +80,7 @@ public class SummaryReportProvider {
 
         SummaryReportItem result = new SummaryReportItem();
         result.setDeviceId(device.getId());
-        result.setDeviceName(device.getName());
+        result.setDeviceName(device.getDescricao());
 
         Position first = null;
         Position last = null;
@@ -93,8 +93,8 @@ public class SummaryReportProvider {
                 if (first == null) {
                     first = position;
                 }
-                if (position.getSpeed() > result.getMaxSpeed()) {
-                    result.setMaxSpeed(position.getSpeed());
+                if (position.getVelocidade() > result.getMaxSpeed()) {
+                    result.setMaxSpeed(position.getVelocidade());
                 }
                 last = position;
             }
@@ -110,7 +110,7 @@ public class SummaryReportProvider {
                 durationMilliseconds = last.getLong(Position.KEY_HOURS) - first.getLong(Position.KEY_HOURS);
                 result.setEngineHours(durationMilliseconds);
             } else {
-                durationMilliseconds = last.getFixTime().getTime() - first.getFixTime().getTime();
+                durationMilliseconds = last.getDatahora_corrigida().getTime() - first.getDatahora_corrigida().getTime();
             }
 
             if (durationMilliseconds > 0) {
@@ -126,8 +126,8 @@ public class SummaryReportProvider {
                 result.setEndOdometer(last.getDouble(Position.KEY_TOTAL_DISTANCE));
             }
 
-            result.setStartTime(first.getFixTime());
-            result.setEndTime(last.getFixTime());
+            result.setStartTime(first.getDatahora_corrigida());
+            result.setEndTime(last.getDatahora_corrigida());
             return List.of(result);
         }
 

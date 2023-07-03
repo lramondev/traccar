@@ -149,7 +149,7 @@ public class TytanProtocolDecoder extends BaseProtocolDecoder {
         while (buf.readableBytes() > 2) {
 
             Position position = new Position(getProtocolName());
-            position.setDeviceId(deviceSession.getDeviceId());
+            position.setRastreador_id(deviceSession.getDeviceId());
 
             int end = buf.readerIndex() + buf.readUnsignedByte();
 
@@ -157,7 +157,7 @@ public class TytanProtocolDecoder extends BaseProtocolDecoder {
 
             int flags = buf.readUnsignedByte();
             position.set(Position.KEY_SATELLITES, BitUtil.from(flags, 2));
-            position.setValid(BitUtil.to(flags, 2) > 0);
+            //position.setValid(BitUtil.to(flags, 2) > 0);
 
             // Latitude
             double lat = buf.readUnsignedMedium();
@@ -173,12 +173,12 @@ public class TytanProtocolDecoder extends BaseProtocolDecoder {
             flags = buf.readUnsignedByte();
             position.set(Position.KEY_IGNITION, BitUtil.check(flags, 0));
             position.set(Position.KEY_RSSI, BitUtil.between(flags, 2, 5));
-            position.setCourse((BitUtil.from(flags, 5) * 45 + 180) % 360);
+            position.setCurso((BitUtil.from(flags, 5) * 45 + 180) % 360);
 
             // Speed
             int speed = buf.readUnsignedByte();
             if (speed < 250) {
-                position.setSpeed(UnitsConverter.knotsFromKph(speed));
+                position.setVelocidade(UnitsConverter.knotsFromKph(speed));
             }
 
             decodeExtraData(position, buf, end);

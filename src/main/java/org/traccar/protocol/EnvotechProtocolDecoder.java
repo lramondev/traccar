@@ -90,9 +90,9 @@ public class EnvotechProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setDeviceTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
+        position.setDatahora_rastreador(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
         position.set(Position.KEY_RSSI, parser.nextInt());
         position.set(Position.KEY_POWER, parser.nextInt() * 0.01);
@@ -103,12 +103,12 @@ public class EnvotechProtocolDecoder extends BaseProtocolDecoder {
         position.set("weight", parser.nextHexInt());
         position.set(Position.KEY_STATUS, parser.nextHexLong());
 
-        position.setFixTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
-        position.setValid(parser.nextInt() > 0);
+        position.setDatahora_corrigida(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
+        //position.setValid(parser.nextInt() > 0);
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_DEG_HEM));
-        position.setSpeed(parser.nextInt());
-        position.setCourse(parser.nextInt());
+        position.setVelocidade(parser.nextInt());
+        position.setCurso(parser.nextInt());
 
         return position;
     }

@@ -7,7 +7,7 @@
   logicalFilePath="changelog-5.7">
 
   <changeSet author="author" id="changelog-5.7">
-
+    <!--
     <addColumn tableName="tc_notifications">
       <column name="commandid" type="INT" />
     </addColumn>
@@ -19,7 +19,7 @@
             referencedTableName="tc_commands"
             referencedColumnNames="id"
             onDelete="CASCADE" />
-
+    -->
   </changeSet>
 
 </databaseChangeLog>

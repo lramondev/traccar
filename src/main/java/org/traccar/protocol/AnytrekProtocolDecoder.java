@@ -69,7 +69,7 @@ public class AnytrekProtocolDecoder extends BaseProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_VERSION_FW, buf.readUnsignedShortLE());
         position.set(Position.KEY_BATTERY, buf.readUnsignedShortLE() * 0.01);
@@ -84,11 +84,11 @@ public class AnytrekProtocolDecoder extends BaseProtocolDecoder {
 
         double latitude = buf.readUnsignedIntLE() / 1800000.0;
         double longitude = buf.readUnsignedIntLE() / 1800000.0;
-        position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
+        position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
 
         int flags = buf.readUnsignedShortLE();
-        position.setCourse(BitUtil.to(flags, 10));
-        position.setValid(BitUtil.check(flags, 12));
+        position.setCurso(BitUtil.to(flags, 10));
+        //position.setValid(BitUtil.check(flags, 12));
 
         if (!BitUtil.check(flags, 10)) {
             latitude = -latitude;

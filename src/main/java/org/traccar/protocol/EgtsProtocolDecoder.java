@@ -161,7 +161,7 @@ public class EgtsProtocolDecoder extends BaseProtocolDecoder {
             Position position = new Position(getProtocolName());
             DeviceSession deviceSession = getDeviceSession(channel, remoteAddress);
             if (deviceSession != null) {
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
             }
 
             ByteBuf response = Unpooled.buffer();
@@ -215,7 +215,7 @@ public class EgtsProtocolDecoder extends BaseProtocolDecoder {
                     position.setLongitude(buf.readUnsignedIntLE() * 180.0 / 0xFFFFFFFFL);
 
                     int flags = buf.readUnsignedByte();
-                    position.setValid(BitUtil.check(flags, 0));
+                    //position.setValid(BitUtil.check(flags, 0));
                     if (BitUtil.check(flags, 5)) {
                         position.setLatitude(-position.getLatitude());
                     }
@@ -224,8 +224,8 @@ public class EgtsProtocolDecoder extends BaseProtocolDecoder {
                     }
 
                     int speed = buf.readUnsignedShortLE();
-                    position.setSpeed(UnitsConverter.knotsFromKph(BitUtil.to(speed, 14) * 0.1));
-                    position.setCourse(buf.readUnsignedByte() + (BitUtil.check(speed, 15) ? 0x100 : 0));
+                    position.setVelocidade(UnitsConverter.knotsFromKph(BitUtil.to(speed, 14) * 0.1));
+                    position.setCurso(buf.readUnsignedByte() + (BitUtil.check(speed, 15) ? 0x100 : 0));
 
                     position.set(Position.KEY_ODOMETER, buf.readUnsignedMediumLE() * 100);
                     position.set(Position.KEY_INPUT, buf.readUnsignedByte());
@@ -289,11 +289,11 @@ public class EgtsProtocolDecoder extends BaseProtocolDecoder {
                 buf.readerIndex(end);
             }
 
-            if (serviceType == SERVICE_TELEDATA && position.getValid()) {
+            if (serviceType == SERVICE_TELEDATA) {
                 if (useObjectIdAsDeviceId && objectId != 0L) {
                     deviceSession = getDeviceSession(channel, remoteAddress, String.valueOf(objectId));
                     if (deviceSession != null) {
-                        position.setDeviceId(deviceSession.getDeviceId());
+                        position.setRastreador_id(deviceSession.getDeviceId());
                     }
                 }
                 if (deviceSession != null) {

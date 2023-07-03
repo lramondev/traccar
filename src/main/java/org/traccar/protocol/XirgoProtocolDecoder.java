@@ -217,7 +217,7 @@ public class XirgoProtocolDecoder extends BaseProtocolDecoder {
                 case "IM":
                     DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, values[i]);
                     if (deviceSession != null) {
-                        position.setDeviceId(deviceSession.getDeviceId());
+                        position.setRastreador_id(deviceSession.getDeviceId());
                     }
                     break;
                 case "EV":
@@ -245,13 +245,13 @@ public class XirgoProtocolDecoder extends BaseProtocolDecoder {
                     position.setAltitude(Integer.parseInt(values[i]));
                     break;
                 case "GSPT":
-                    position.setSpeed(UnitsConverter.knotsFromKph(Double.parseDouble(values[i])));
+                    position.setVelocidade(UnitsConverter.knotsFromKph(Double.parseDouble(values[i])));
                     break;
                 case "HD":
                     if (values[i].contains(".")) {
-                        position.setCourse(Double.parseDouble(values[i]));
+                        position.setCurso(Double.parseDouble(values[i]));
                     } else {
-                        position.setCourse(Integer.parseInt(values[i]) * 0.1);
+                        position.setCurso(Integer.parseInt(values[i]) * 0.1);
                     }
                     break;
                 case "SV":
@@ -267,7 +267,7 @@ public class XirgoProtocolDecoder extends BaseProtocolDecoder {
                     position.set(Position.KEY_ODOMETER, Integer.parseInt(values[i]));
                     break;
                 case "GS":
-                    position.setValid(Integer.parseInt(values[i]) == 3);
+                    //position.setValid(Integer.parseInt(values[i]) == 3);
                     break;
                 case "SI":
                     position.set(Position.KEY_ICCID, values[i]);
@@ -288,7 +288,7 @@ public class XirgoProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(dateBuilder.getDate());
 
-        return position.getDeviceId() > 0 ? position : null;
+        return position.getRastreador_id() > 0 ? position : null;
     }
 
     private Object decodeFixed(
@@ -324,7 +324,7 @@ public class XirgoProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         decodeEvent(position, parser.nextInt());
 
@@ -333,8 +333,8 @@ public class XirgoProtocolDecoder extends BaseProtocolDecoder {
         position.setLatitude(parser.nextDouble(0));
         position.setLongitude(parser.nextDouble(0));
         position.setAltitude(parser.nextDouble(0));
-        position.setSpeed(UnitsConverter.knotsFromMph(parser.nextDouble(0)));
-        position.setCourse(parser.nextDouble(0));
+        position.setVelocidade(UnitsConverter.knotsFromMph(parser.nextDouble(0)));
+        position.setCurso(parser.nextDouble(0));
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
         position.set(Position.KEY_HDOP, parser.nextDouble());
@@ -351,7 +351,7 @@ public class XirgoProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_ODOMETER, UnitsConverter.metersFromMiles(parser.nextDouble(0)));
         }
 
-        position.setValid(parser.nextInt(0) == 1);
+        //position.setValid(parser.nextInt(0) == 1);
 
         if (newFormat && parser.hasNext(13)) {
             position.set(Position.PREFIX_IN + 1, parser.nextInt());

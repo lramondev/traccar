@@ -26,7 +26,7 @@ public class QueuedCommand extends BaseCommand {
 
     public static QueuedCommand fromCommand(Command command) {
         QueuedCommand queuedCommand = new QueuedCommand();
-        queuedCommand.setDeviceId(command.getDeviceId());
+        queuedCommand.setRastreador_id(command.getRastreador_id());
         queuedCommand.setType(command.getType());
         queuedCommand.setTextChannel(command.getTextChannel());
         queuedCommand.setAttributes(new HashMap<>(command.getAttributes()));
@@ -35,7 +35,7 @@ public class QueuedCommand extends BaseCommand {
 
     public Command toCommand() {
         Command command = new Command();
-        command.setDeviceId(getDeviceId());
+        command.setRastreador_id(getRastreador_id());
         command.setType(getType());
         command.setDescription("");
         command.setTextChannel(getTextChannel());

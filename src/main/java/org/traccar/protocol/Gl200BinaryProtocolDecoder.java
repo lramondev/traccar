@@ -110,7 +110,7 @@ public class Gl200BinaryProtocolDecoder extends BaseProtocolDecoder {
                 }
 
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 switch (BitUtil.from(buf.getUnsignedByte(buf.readerIndex()), 8 - 2)) {
                     case 1:
@@ -139,10 +139,10 @@ public class Gl200BinaryProtocolDecoder extends BaseProtocolDecoder {
                         continue;
                 }
 
-                position.setValid(true);
+                //position.setValid(true);
                 position.setTime(new Date(time * 1000));
-                position.setSpeed(UnitsConverter.knotsFromKph(speed * 0.1));
-                position.setCourse(heading);
+                position.setVelocidade(UnitsConverter.knotsFromKph(speed * 0.1));
+                position.setCurso(heading);
                 position.setLongitude(longitude * 0.000001);
                 position.setLatitude(latitude * 0.000001);
 
@@ -157,25 +157,25 @@ public class Gl200BinaryProtocolDecoder extends BaseProtocolDecoder {
             for (int i = 0; i < count; i++) {
 
                 Position position = new Position(getProtocolName());
-                position.setDeviceId(deviceSession.getDeviceId());
+                position.setRastreador_id(deviceSession.getDeviceId());
 
                 position.set(Position.KEY_BATTERY_LEVEL, battery);
                 position.set(Position.KEY_POWER, power);
                 position.set(Position.KEY_SATELLITES, satellites);
 
                 int hdop = buf.readUnsignedByte();
-                position.setValid(hdop > 0);
+                //position.setValid(hdop > 0);
                 position.set(Position.KEY_HDOP, hdop);
 
-                position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedMedium() * 0.1));
-                position.setCourse(buf.readUnsignedShort());
+                position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedMedium() * 0.1));
+                position.setCurso(buf.readUnsignedShort());
                 position.setAltitude(buf.readShort());
                 position.setLongitude(buf.readInt() * 0.000001);
                 position.setLatitude(buf.readInt() * 0.000001);
 
                 position.setTime(decodeTime(buf));
 
-                position.setNetwork(new Network(CellTower.from(
+                position.setRede(new Network(CellTower.from(
                         buf.readUnsignedShort(), buf.readUnsignedShort(),
                         buf.readUnsignedShort(), buf.readUnsignedShort())));
 
@@ -220,7 +220,7 @@ public class Gl200BinaryProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         position.set(Position.KEY_BATTERY_LEVEL, buf.readUnsignedByte());
         position.set(Position.KEY_POWER, buf.readUnsignedShort());
@@ -281,18 +281,18 @@ public class Gl200BinaryProtocolDecoder extends BaseProtocolDecoder {
         buf.readUnsignedByte(); // count
 
         int hdop = buf.readUnsignedByte();
-        position.setValid(hdop > 0);
+        //position.setValid(hdop > 0);
         position.set(Position.KEY_HDOP, hdop);
 
-        position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedMedium() * 0.1));
-        position.setCourse(buf.readUnsignedShort());
+        position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedMedium() * 0.1));
+        position.setCurso(buf.readUnsignedShort());
         position.setAltitude(buf.readShort());
         position.setLongitude(buf.readInt() * 0.000001);
         position.setLatitude(buf.readInt() * 0.000001);
 
         position.setTime(decodeTime(buf));
 
-        position.setNetwork(new Network(CellTower.from(
+        position.setRede(new Network(CellTower.from(
                 buf.readUnsignedShort(), buf.readUnsignedShort(),
                 buf.readUnsignedShort(), buf.readUnsignedShort())));
 
@@ -322,7 +322,7 @@ public class Gl200BinaryProtocolDecoder extends BaseProtocolDecoder {
         if (deviceSession == null) {
             return null;
         }
-        position.setDeviceId(deviceSession.getDeviceId());
+        position.setRastreador_id(deviceSession.getDeviceId());
 
         buf.readUnsignedByte(); // device type
         buf.readUnsignedShort(); // protocol version
@@ -370,7 +370,7 @@ public class Gl200BinaryProtocolDecoder extends BaseProtocolDecoder {
         if (type == MSG_INF_GIR) {
             buf.readUnsignedByte(); // gir trigger
             buf.readUnsignedByte(); // cell number
-            position.setNetwork(new Network(CellTower.from(
+            position.setRede(new Network(CellTower.from(
                     buf.readUnsignedShort(), buf.readUnsignedShort(),
                     buf.readUnsignedShort(), buf.readUnsignedShort())));
             buf.readUnsignedByte(); // ta
