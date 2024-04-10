@@ -52,7 +52,7 @@ public class StarcomProtocolDecoder extends BaseProtocolDecoder {
                     }
                     break;
                 case "gps_valid":
-                    //position.setValid(Integer.parseInt(value) != 0);
+                    position.setValido(Integer.parseInt(value) != 0);
                     break;
                 case "datetime_actual":
                     position.setTime(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(value));

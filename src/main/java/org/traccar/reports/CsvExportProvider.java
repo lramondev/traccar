@@ -54,8 +54,8 @@ public class CsvExportProvider {
         properties.put("protocol", Position::getProtocolo);
         properties.put("serverTime", position -> DateUtil.formatDate(position.getDatahora_servidor()));
         properties.put("deviceTime", position -> DateUtil.formatDate(position.getDatahora_rastreador()));
-        properties.put("fixTime", position -> DateUtil.formatDate(position.getDatahora_corrigida()));
-        //properties.put("valid", Position::getValid);
+        properties.put("fixTime", position -> DateUtil.formatDate(position.getDatahora_calculada()));
+        properties.put("valid", Position::getValido);
         properties.put("latitude", Position::getLatitude);
         properties.put("longitude", Position::getLongitude);
         properties.put("altitude", Position::getAltitude);

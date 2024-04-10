@@ -241,7 +241,7 @@ public class RuptelaProtocolDecoder extends BaseProtocolDecoder {
 
                 buf.readUnsignedByte(); // priority (reserved)
 
-                //position.setValid(true);
+                position.setValido(true);
                 position.setLongitude(buf.readInt() / 10000000.0);
                 position.setLatitude(buf.readInt() / 10000000.0);
                 position.setAltitude(buf.readUnsignedShort() / 10.0);
@@ -320,7 +320,7 @@ public class RuptelaProtocolDecoder extends BaseProtocolDecoder {
 
                 position.setTime(new Date(buf.readUnsignedInt() * 1000));
 
-                //position.setValid(true);
+                position.setValido(true);
                 position.setLongitude(buf.readInt() / 10000000.0);
                 position.setLatitude(buf.readInt() / 10000000.0);
 

@@ -73,7 +73,7 @@ public class AstraProtocolDecoder extends BaseProtocolDecoder {
 
             buf.readUnsignedByte(); // index
 
-            //position.setValid(true);
+            position.setValido(true);
             position.setLatitude(buf.readInt() * 0.000001);
             position.setLongitude(buf.readInt() * 0.000001);
 

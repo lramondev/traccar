@@ -96,7 +96,7 @@ public class AutoFonProtocolDecoder extends BaseProtocolDecoder {
         position.setRede(new Network(cellTower));
 
         int valid = buf.readUnsignedByte();
-        //position.setValid((valid & 0xc0) != 0);
+        position.setValido((valid & 0xc0) != 0);
         position.set(Position.KEY_SATELLITES, valid & 0x3f);
 
         DateBuilder dateBuilder = new DateBuilder()
@@ -189,7 +189,7 @@ public class AutoFonProtocolDecoder extends BaseProtocolDecoder {
             buf.skipBytes(6); // mcc, mnc, lac, cid
 
             int valid = buf.readUnsignedByte();
-            //position.setValid(BitUtil.from(valid, 6) != 0);
+            position.setValido(BitUtil.from(valid, 6) != 0);
             position.set(Position.KEY_SATELLITES, BitUtil.from(valid, 6));
 
             int time = buf.readUnsignedMedium();

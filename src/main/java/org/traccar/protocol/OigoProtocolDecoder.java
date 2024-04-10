@@ -101,7 +101,7 @@ public class OigoProtocolDecoder extends BaseProtocolDecoder {
 
         if (BitUtil.check(mask, 4)) {
             int status = buf.readUnsignedByte();
-            //position.setValid(BitUtil.between(status, 4, 8) != 0);
+            position.setValido(BitUtil.between(status, 4, 8) != 0);
             position.set(Position.KEY_SATELLITES, BitUtil.to(status, 4));
             position.set(Position.KEY_HDOP, buf.readUnsignedByte() * 0.1);
         }
@@ -191,7 +191,7 @@ public class OigoProtocolDecoder extends BaseProtocolDecoder {
                 .setDate(2010 + BitUtil.from(date, 12), BitUtil.between(date, 8, 12), BitUtil.to(date, 8))
                 .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), 0);
 
-        //position.setValid(true);
+        position.setValido(true);
         position.setLatitude(convertCoordinate(buf.readInt()));
         position.setLongitude(convertCoordinate(buf.readInt()));
 

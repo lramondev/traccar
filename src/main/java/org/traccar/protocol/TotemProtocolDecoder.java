@@ -298,7 +298,7 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
         }
         dateBuilder.setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
         position.setVelocidade(parser.nextDouble(0));
@@ -393,7 +393,7 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
         position.setRede(new Network(
                 CellTower.fromLacCid(getConfig(), parser.nextHexInt(0), parser.nextHexInt(0))));
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
         position.set(Position.KEY_SATELLITES, parser.nextInt());
         position.setCurso(parser.nextDouble(0));
         position.setVelocidade(parser.nextDouble(0));
@@ -466,9 +466,9 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
 
         if (parser.hasNext()) {
             position.set(Position.PREFIX_TEMP + 2, parser.next());
-            //position.setValid(BitUtil.check(status, 32 - 20));
+            position.setValido(BitUtil.check(status, 32 - 20));
         } else {
-            //position.setValid(BitUtil.check(status, 32 - 18));
+            position.setValido(BitUtil.check(status, 32 - 18));
         }
 
         int lac = parser.nextHexInt();
@@ -511,7 +511,7 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
         position.setRastreador_id(deviceSession.getDeviceId());
 
-        //position.setValid(true);
+        position.setValido(true);
         position.setTime(parser.nextDateTime());
         position.setLongitude(parser.nextDouble());
         position.setLatitude(parser.nextDouble());
@@ -536,7 +536,7 @@ public class TotemProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
         position.setRastreador_id(deviceSession.getDeviceId());
 
-        //position.setValid(true);
+        position.setValido(true);
         position.setTime(parser.nextDateTime());
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());

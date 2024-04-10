@@ -48,15 +48,15 @@ public class Device extends GroupedModel implements Disableable {
     public static final String STATUS_ONLINE = "online";
     public static final String STATUS_OFFLINE = "offline";
 
-    private String status;
+    private String situacao;
 
     @QueryIgnore
-    public String getStatus() {
-        return status != null ? status : STATUS_OFFLINE;
+    public String getSituacao() {
+        return situacao != null ? situacao : STATUS_OFFLINE;
     }
 
-    public void setStatus(String status) {
-        this.status = status != null ? status.trim() : null;
+    public void setSituacao(String status) {
+        this.situacao = status != null ? status.trim() : null;
     }
 
     /*

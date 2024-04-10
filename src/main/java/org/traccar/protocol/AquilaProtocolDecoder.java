@@ -154,7 +154,7 @@ public class AquilaProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime());
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
 
         if (parser.hasNext(3)) {
             position.set(Position.KEY_RSSI, parser.nextInt(0));

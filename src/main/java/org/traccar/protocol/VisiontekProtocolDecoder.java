@@ -128,7 +128,7 @@ public class VisiontekProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.PREFIX_ADC + 2, parser.next());
         }
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
 
         position.set(Position.KEY_DRIVER_UNIQUE_ID, parser.next());
 

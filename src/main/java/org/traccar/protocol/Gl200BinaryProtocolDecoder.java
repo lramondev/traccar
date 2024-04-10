@@ -139,7 +139,7 @@ public class Gl200BinaryProtocolDecoder extends BaseProtocolDecoder {
                         continue;
                 }
 
-                //position.setValid(true);
+                position.setValido(true);
                 position.setTime(new Date(time * 1000));
                 position.setVelocidade(UnitsConverter.knotsFromKph(speed * 0.1));
                 position.setCurso(heading);
@@ -164,7 +164,7 @@ public class Gl200BinaryProtocolDecoder extends BaseProtocolDecoder {
                 position.set(Position.KEY_SATELLITES, satellites);
 
                 int hdop = buf.readUnsignedByte();
-                //position.setValid(hdop > 0);
+                position.setValido(hdop > 0);
                 position.set(Position.KEY_HDOP, hdop);
 
                 position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedMedium() * 0.1));
@@ -281,7 +281,7 @@ public class Gl200BinaryProtocolDecoder extends BaseProtocolDecoder {
         buf.readUnsignedByte(); // count
 
         int hdop = buf.readUnsignedByte();
-        //position.setValid(hdop > 0);
+        position.setValido(hdop > 0);
         position.set(Position.KEY_HDOP, hdop);
 
         position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedMedium() * 0.1));

@@ -59,7 +59,7 @@ public class MotorProtocolDecoder extends BaseProtocolDecoder {
         buf.readUnsignedMediumLE(); // command
 
         int flags = buf.readUnsignedByte();
-        //position.setValid(BitUtil.check(flags, 7));
+        position.setValido(BitUtil.check(flags, 7));
         if (BitUtil.check(flags, 0)) {
             position.set(Position.KEY_ALARM, Position.ALARM_GENERAL);
         }

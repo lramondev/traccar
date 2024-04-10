@@ -125,7 +125,7 @@ public class ProgressProtocolDecoder extends BaseProtocolDecoder {
                 position.setAltitude(buf.readUnsignedShortLE() * 0.01);
 
                 int satellites = buf.readUnsignedByte();
-                //position.setValid(satellites >= 3);
+                position.setValido(satellites >= 3);
                 position.set(Position.KEY_SATELLITES, satellites);
 
                 position.set(Position.KEY_RSSI, buf.readUnsignedByte());

@@ -94,7 +94,7 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
             buf.readUnsignedShortLE(); // report trigger
             buf.readUnsignedShortLE(); // state flag
 
-            //position.setValid(true);
+            position.setValido(true);
             position.setLatitude(buf.readUnsignedIntLE() * 0.0000001);
             position.setLongitude(buf.readUnsignedIntLE() * 0.0000001);
 
@@ -175,7 +175,7 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
                     position.set(Position.KEY_IGNITION, BitUtil.check(status, 5));
                     position.set(Position.KEY_STATUS, status);
 
-                    //position.setValid(true);
+                    position.setValido(true);
                     position.setLatitude(buf.readIntLE() * 0.00001);
                     position.setLongitude(buf.readIntLE() * 0.00001);
                     position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE()));
@@ -190,7 +190,7 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
                     buf.readUnsignedShortLE(); // bearing to landmark
                     buf.readUnsignedIntLE(); // distance to landmark
 
-                    position.setDatahora_corrigida(new Date(buf.readUnsignedIntLE() * 1000));
+                    position.setDatahora_calculada(new Date(buf.readUnsignedIntLE() * 1000));
 
                     buf.readUnsignedByte(); // reserved
                     break;
@@ -224,7 +224,7 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
             }
         }
 
-        return position;
+        return position.getValido() ? position : null;
 
     }
 
@@ -263,7 +263,7 @@ public class TramigoProtocolDecoder extends BaseProtocolDecoder {
         }
         position.setLatitude(Double.parseDouble(matcher.group(1)));
         position.setLongitude(Double.parseDouble(matcher.group(2)));
-        //position.setValid(true);
+        position.setValido(true);
 
         pattern = Pattern.compile("([NSWE]{1,2}) with speed (\\d+) km/h");
         matcher = pattern.matcher(sentence);

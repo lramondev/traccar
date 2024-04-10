@@ -48,9 +48,9 @@ public class BehaviorEventHandler extends BaseEventHandler {
     protected Map<Event, Position> analyzePosition(Position position) {
 
         Position lastPosition = cacheManager.getPosition(position.getRastreador_id());
-        if (lastPosition != null && position.getDatahora_corrigida().equals(lastPosition.getDatahora_corrigida())) {
+        if (lastPosition != null && position.getDatahora_calculada().equals(lastPosition.getDatahora_calculada())) {
             double acceleration = UnitsConverter.mpsFromKnots(position.getVelocidade() - lastPosition.getVelocidade()) * 1000
-                    / (position.getDatahora_corrigida().getTime() - lastPosition.getDatahora_corrigida().getTime());
+                    / (position.getDatahora_calculada().getTime() - lastPosition.getDatahora_calculada().getTime());
             if (accelerationThreshold != 0 && acceleration >= accelerationThreshold) {
                 Event event = new Event(Event.TYPE_ALARM, position);
                 event.set(Position.KEY_ALARM, Position.ALARM_ACCELERATION);

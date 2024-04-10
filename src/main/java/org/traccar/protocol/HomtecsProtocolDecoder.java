@@ -79,7 +79,7 @@ public class HomtecsProtocolDecoder extends BaseProtocolDecoder {
         position.setVelocidade(parser.nextDouble(0));
         position.setCurso(parser.nextDouble(0));
 
-        //position.setValid(parser.nextInt(0) > 0);
+        position.setValido(parser.nextInt(0) > 0);
 
         position.set(Position.KEY_HDOP, parser.nextDouble(0));
 

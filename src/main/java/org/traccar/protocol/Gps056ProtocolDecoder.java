@@ -106,7 +106,7 @@ public class Gps056ProtocolDecoder extends BaseProtocolDecoder {
                     .setDateReverse(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
                     .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte());
 
-            //position.setValid(true);
+            position.setValido(true);
             position.setTime(dateBuilder.getDate());
             position.setLatitude(decodeCoordinate(buf));
             position.setLongitude(decodeCoordinate(buf));

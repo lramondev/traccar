@@ -68,7 +68,7 @@ public class HunterProProtocolDecoder extends BaseProtocolDecoder {
         DateBuilder dateBuilder = new DateBuilder();
         dateBuilder.setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
         position.setVelocidade(parser.nextDouble(0));

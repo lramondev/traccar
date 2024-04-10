@@ -36,7 +36,7 @@ public final class DeviceUtil {
     }
 
     public static void resetStatus(Storage storage) throws StorageException {
-        storage.updateObject(new Device(), new Request(new Columns.Include("status")));
+        storage.updateObject(new Device(), new Request(new Columns.Include("situacao")));
     }
 
 

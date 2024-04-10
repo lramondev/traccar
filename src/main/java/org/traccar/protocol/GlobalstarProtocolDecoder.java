@@ -135,7 +135,7 @@ public class GlobalstarProtocolDecoder extends BaseHttpProtocolDecoder {
                 Position position = new Position(getProtocolName());
                 position.setRastreador_id(deviceSession.getDeviceId());
 
-                //position.setValid(true);
+                position.setValido(true);
                 position.setTime(new Date(Long.parseLong(xPath.evaluate("unixTime", node)) * 1000));
 
                 ByteBuf buf = Unpooled.wrappedBuffer(

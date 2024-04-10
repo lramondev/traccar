@@ -70,7 +70,7 @@ public class GranitProtocolDecoder extends BaseProtocolDecoder {
 
     private void decodeStructure(ByteBuf buf, Position position) {
         short flags = buf.readUnsignedByte();
-        //position.setValid(BitUtil.check(flags, 7));
+        position.setValido(BitUtil.check(flags, 7));
         if (BitUtil.check(flags, 1)) {
             position.set(Position.KEY_ALARM, Position.ALARM_GENERAL);
         }
@@ -89,14 +89,14 @@ public class GranitProtocolDecoder extends BaseProtocolDecoder {
         double latitude = latDegrees + latMinutes / 60000.0;
         double longitude = lonDegrees + lonMinutes / 60000.0;
 
-        //if (position.getValid()) {
+        if (position.getValido()) {
             if (!BitUtil.check(flags, 4)) {
                 latitude = -latitude;
             }
             if (!BitUtil.check(flags, 5)) {
                 longitude = -longitude;
             }
-        //}
+        }
 
         position.setLongitude(longitude);
         position.setLatitude(latitude);
@@ -153,7 +153,7 @@ public class GranitProtocolDecoder extends BaseProtocolDecoder {
 
             position.setTime(new Date());
             getLastLocation(position, new Date());
-            //position.setValid(false);
+            position.setValido(false);
             position.set(Position.KEY_RESULT, bufString);
             return position;
         }

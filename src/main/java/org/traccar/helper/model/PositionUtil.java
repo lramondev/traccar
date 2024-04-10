@@ -38,7 +38,7 @@ public final class PositionUtil {
 
     public static boolean isLatest(CacheManager cacheManager, Position position) {
         Position lastPosition = cacheManager.getPosition(position.getRastreador_id());
-        return lastPosition == null || position.getDatahora_corrigida().compareTo(lastPosition.getDatahora_corrigida()) >= 0;
+        return lastPosition == null || position.getDatahora_calculada().compareTo(lastPosition.getDatahora_calculada()) >= 0;
     }
 
     public static double calculateDistance(Position first, Position last, boolean useOdometer) {

@@ -100,7 +100,7 @@ public class OrionProtocolDecoder extends BaseProtocolDecoder {
                 position.setTime(dateBuilder.getDate());
 
                 int satellites = buf.readUnsignedByte();
-                //position.setValid(satellites >= 3);
+                position.setValido(satellites >= 3);
                 position.set(Position.KEY_SATELLITES, satellites);
 
                 positions.add(position);

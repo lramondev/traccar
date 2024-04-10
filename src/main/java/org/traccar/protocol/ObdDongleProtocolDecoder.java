@@ -101,7 +101,7 @@ public class ObdDongleProtocolDecoder extends BaseProtocolDecoder {
 
             int flags = buf.readUnsignedByte();
 
-            //position.setValid(!BitUtil.check(flags, 6));
+            position.setValido(!BitUtil.check(flags, 6));
 
             position.set(Position.KEY_SATELLITES, BitUtil.to(flags, 4));
 

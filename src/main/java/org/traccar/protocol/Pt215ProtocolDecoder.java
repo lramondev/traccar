@@ -96,7 +96,7 @@ public class Pt215ProtocolDecoder extends BaseProtocolDecoder {
 
             int flags = buf.readUnsignedShort();
             position.setCurso(BitUtil.to(flags, 10));
-            //position.setValid(BitUtil.check(flags, 12));
+            position.setValido(BitUtil.check(flags, 12));
 
             if (!BitUtil.check(flags, 10)) {
                 latitude = -latitude;

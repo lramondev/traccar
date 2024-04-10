@@ -64,7 +64,7 @@ public class DingtekProtocolDecoder extends BaseProtocolDecoder {
 
             position.set("height", buf.readUnsignedShort());
 
-            //position.setValid(buf.readUnsignedByte() > 0);
+            position.setValido(buf.readUnsignedByte() > 0);
             position.setLongitude(buf.readFloat());
             position.setLatitude(buf.readFloat());
 

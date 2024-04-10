@@ -90,10 +90,10 @@ public class CalAmpProtocolDecoder extends BaseProtocolDecoder {
 
         if (type == MSG_MINI_EVENT_REPORT) {
             position.set(Position.KEY_SATELLITES, buf.getUnsignedByte(buf.readerIndex()) & 0xf);
-            //position.setValid((buf.readUnsignedByte() & 0x20) == 0);
+            position.setValido((buf.readUnsignedByte() & 0x20) == 0);
         } else {
             position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
-            //position.setValid((buf.readUnsignedByte() & 0x08) == 0);
+            position.setValido((buf.readUnsignedByte() & 0x08) == 0);
         }
 
         if (type != MSG_MINI_EVENT_REPORT) {

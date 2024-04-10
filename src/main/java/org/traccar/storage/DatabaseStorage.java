@@ -287,7 +287,7 @@ public class DatabaseStorage extends Storage {
 
                 var condition = (Condition.LatestPositions) genericCondition;
                 result.append("id IN (");
-                result.append("SELECT positionId FROM ");
+                result.append("SELECT rastreador_posicao_id FROM ");
                 result.append(getStorageName(Device.class));
                 if (condition.getDeviceId() > 0) {
                     result.append(" WHERE id = :deviceId");

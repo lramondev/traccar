@@ -90,7 +90,7 @@ public class OwnTracksProtocolDecoder extends BaseHttpProtocolDecoder {
             position.setDatahora_rastreador(new Date(root.getJsonNumber("sent").longValue() * 1000));
         }
 
-        //position.setValid(true);
+        position.setValido(true);
 
         position.setLatitude(root.getJsonNumber("lat").doubleValue());
         position.setLongitude(root.getJsonNumber("lon").doubleValue());

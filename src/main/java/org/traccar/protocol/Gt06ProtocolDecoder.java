@@ -297,7 +297,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
 
         int flags = buf.readUnsignedShort();
         position.setCurso(BitUtil.to(flags, 10));
-        //position.setValid(BitUtil.check(flags, 12));
+        position.setValido(BitUtil.check(flags, 12));
 
         if (!BitUtil.check(flags, 10)) {
             latitude = -latitude;
@@ -1004,7 +1004,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
             Parser parser = new Parser(PATTERN_LOCATION, data);
 
             if (parser.matches()) {
-                //position.setValid(true);
+                position.setValido(true);
                 position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
                 position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
                 position.setCurso(parser.nextDouble());
@@ -1288,7 +1288,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
 
                         int flags = buf.readUnsignedShort();
                         position.setCurso(BitUtil.to(flags, 10));
-                        //position.setValid(BitUtil.check(flags, 12));
+                        position.setValido(BitUtil.check(flags, 12));
 
                         if (!BitUtil.check(flags, 10)) {
                             latitude = -latitude;
@@ -1311,7 +1311,7 @@ public class Gt06ProtocolDecoder extends BaseProtocolDecoder {
                 }
             }
 
-            if (position.getDatahora_corrigida() == null) {
+            if (position.getDatahora_calculada() == null) {
                 getLastLocation(position, null);
             }
 

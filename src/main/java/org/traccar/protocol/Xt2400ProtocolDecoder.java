@@ -200,7 +200,7 @@ public class Xt2400ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (position.getLatitude() != 0 && position.getLongitude() != 0) {
-            //position.setValid(true);
+            position.setValido(true);
         } else {
             getLastLocation(position, position.getDatahora_rastreador());
         }

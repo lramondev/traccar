@@ -87,7 +87,7 @@ public class M2cProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_EVENT, parser.nextInt());
 
-        //position.setValid(true);
+        position.setValido(true);
         position.setTime(parser.nextDateTime());
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());

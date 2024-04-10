@@ -81,7 +81,7 @@ public class SwiftechProtocolDecoder extends BaseProtocolDecoder {
         dateBuilder.setDateReverse(parser.nextInt(), parser.nextInt(), parser.nextInt());
         position.setTime(dateBuilder.getDate());
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
 
         position.set(Position.KEY_STATUS, parser.nextInt());
 

@@ -84,7 +84,7 @@ public class BlackKiteProtocolDecoder extends BaseProtocolDecoder {
             // Check if new message started
             int tag = buf.readUnsignedByte();
             if (tags.contains(tag)) {
-                if (hasLocation && position.getDatahora_corrigida() != null) {
+                if (hasLocation && position.getDatahora_calculada() != null) {
                     positions.add(position);
                 }
                 tags.clear();
@@ -105,7 +105,7 @@ public class BlackKiteProtocolDecoder extends BaseProtocolDecoder {
 
                 case TAG_COORDINATES:
                     hasLocation = true;
-                    //position.setValid((buf.readUnsignedByte() & 0xf0) == 0x00);
+                    position.setValido((buf.readUnsignedByte() & 0xf0) == 0x00);
                     position.setLatitude(buf.readIntLE() / 1000000.0);
                     position.setLongitude(buf.readIntLE() / 1000000.0);
                     break;
@@ -170,7 +170,7 @@ public class BlackKiteProtocolDecoder extends BaseProtocolDecoder {
             }
         }
 
-        if (hasLocation && position.getDatahora_corrigida() != null) {
+        if (hasLocation && position.getDatahora_calculada() != null) {
             positions.add(position);
         }
 

@@ -79,7 +79,7 @@ public class PathAwayProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
-        //position.setValid(true);
+        position.setValido(true);
         position.setLatitude(parser.nextDouble(0));
         position.setLongitude(parser.nextDouble(0));
         position.setAltitude(parser.nextDouble(0));

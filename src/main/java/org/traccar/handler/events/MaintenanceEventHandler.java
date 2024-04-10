@@ -42,7 +42,7 @@ public class MaintenanceEventHandler extends BaseEventHandler {
     @Override
     protected Map<Event, Position> analyzePosition(Position position) {
         Position lastPosition = cacheManager.getPosition(position.getRastreador_id());
-        if (lastPosition == null || position.getDatahora_corrigida().compareTo(lastPosition.getDatahora_corrigida()) < 0) {
+        if (lastPosition == null || position.getDatahora_calculada().compareTo(lastPosition.getDatahora_calculada()) < 0) {
             return null;
         }
 

@@ -102,7 +102,8 @@ public class FilterHandler extends ChannelInboundHandlerAdapter {
     }
 
     private boolean filterInvalid(Position position) {
-        return filterInvalid && (position.getLatitude() > 90 || position.getLongitude() > 180
+        return filterInvalid && (!position.getValido()
+                || position.getLatitude() > 90 || position.getLongitude() > 180
                 || position.getLatitude() < -90 || position.getLongitude() < -180);
     }
 
@@ -111,7 +112,7 @@ public class FilterHandler extends ChannelInboundHandlerAdapter {
     }
 
     private boolean filterDuplicate(Position position, Position last) {
-        if (filterDuplicate && last != null && position.getDatahora_corrigida().equals(last.getDatahora_corrigida())) {
+        if (filterDuplicate && last != null && position.getDatahora_calculada().equals(last.getDatahora_calculada())) {
             for (String key : position.getAttributes().keySet()) {
                 if (!last.hasAttribute(key)) {
                     return false;
@@ -129,11 +130,11 @@ public class FilterHandler extends ChannelInboundHandlerAdapter {
     */
 
     private boolean filterFuture(Position position) {
-        return filterFuture != 0 && position.getDatahora_corrigida().getTime() > System.currentTimeMillis() + filterFuture;
+        return filterFuture != 0 && position.getDatahora_calculada().getTime() > System.currentTimeMillis() + filterFuture;
     }
 
     private boolean filterPast(Position position) {
-        return filterPast != 0 && position.getDatahora_corrigida().getTime() < System.currentTimeMillis() - filterPast;
+        return filterPast != 0 && position.getDatahora_calculada().getTime() < System.currentTimeMillis() - filterPast;
     }
 
     private boolean filterAccuracy(Position position) {
@@ -158,7 +159,7 @@ public class FilterHandler extends ChannelInboundHandlerAdapter {
     private boolean filterMaxSpeed(Position position, Position last) {
         if (filterMaxSpeed != 0 && last != null) {
             double distance = position.getDouble(Position.KEY_DISTANCE);
-            double time = position.getDatahora_corrigida().getTime() - last.getDatahora_corrigida().getTime();
+            double time = position.getDatahora_calculada().getTime() - last.getDatahora_calculada().getTime();
             return UnitsConverter.knotsFromMps(distance / (time / 1000)) > filterMaxSpeed;
         }
         return false;
@@ -166,7 +167,7 @@ public class FilterHandler extends ChannelInboundHandlerAdapter {
 
     private boolean filterMinPeriod(Position position, Position last) {
         if (filterMinPeriod != 0 && last != null) {
-            long time = position.getDatahora_corrigida().getTime() - last.getDatahora_corrigida().getTime();
+            long time = position.getDatahora_calculada().getTime() - last.getDatahora_calculada().getTime();
             return time > 0 && time < filterMinPeriod;
         }
         return false;
@@ -234,7 +235,7 @@ public class FilterHandler extends ChannelInboundHandlerAdapter {
             Position preceding = null;
             if (filterRelative) {
                 try {
-                    Date newFixTime = position.getDatahora_corrigida();
+                    Date newFixTime = position.getDatahora_calculada();
                     preceding = getPrecedingPosition(deviceId, newFixTime);
                 } catch (StorageException e) {
                     LOGGER.warn("Error retrieving preceding position; fallbacking to last received position.", e);

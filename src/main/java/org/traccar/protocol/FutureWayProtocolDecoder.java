@@ -93,7 +93,7 @@ public class FutureWayProtocolDecoder extends BaseProtocolDecoder {
                         return null;
                     }
 
-                    //position.setValid(parser.next().equals("A"));
+                    position.setValido(parser.next().equals("A"));
                     position.setTime(parser.nextDateTime());
 
                     if (parser.hasNext(6)) {
@@ -142,7 +142,7 @@ public class FutureWayProtocolDecoder extends BaseProtocolDecoder {
                 position.setRede(network);
             }
 
-            if (position.getDatahora_corrigida() == null) {
+            if (position.getDatahora_calculada() == null) {
                 getLastLocation(position, null);
             }
 

@@ -103,7 +103,7 @@ public class DmtProtocolDecoder extends BaseProtocolDecoder {
 
             position.set(Position.KEY_EVENT, buf.readUnsignedByte());
 
-            //position.setValid(BitUtil.check(buf.readByte(), 0));
+            position.setValido(BitUtil.check(buf.readByte(), 0));
 
             position.set(Position.KEY_INPUT, buf.readUnsignedIntLE());
             position.set(Position.KEY_OUTPUT, buf.readUnsignedShortLE());
@@ -161,7 +161,7 @@ public class DmtProtocolDecoder extends BaseProtocolDecoder {
 
                 if (fieldId == 0) {
 
-                    position.setDatahora_corrigida(new Date(1356998400000L + buf.readUnsignedIntLE() * 1000));
+                    position.setDatahora_calculada(new Date(1356998400000L + buf.readUnsignedIntLE() * 1000));
                     position.setLatitude(buf.readIntLE() * 0.0000001);
                     position.setLongitude(buf.readIntLE() * 0.0000001);
                     position.setAltitude(buf.readShortLE());
@@ -174,7 +174,7 @@ public class DmtProtocolDecoder extends BaseProtocolDecoder {
                     position.set(Position.KEY_PDOP, buf.readUnsignedByte() * 0.1);
 
                     position.setPrecisao(buf.readUnsignedByte());
-                    //position.setValid(buf.readUnsignedByte() != 0);
+                    position.setValido(buf.readUnsignedByte() != 0);
 
                 } else if (fieldId == 2) {
 
@@ -236,7 +236,7 @@ public class DmtProtocolDecoder extends BaseProtocolDecoder {
 
             }
 
-            if (position.getDatahora_corrigida() == null) {
+            if (position.getDatahora_calculada() == null) {
                 getLastLocation(position, position.getDatahora_rastreador());
             }
 

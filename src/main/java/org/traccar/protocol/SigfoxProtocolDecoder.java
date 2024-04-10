@@ -148,7 +148,7 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
                 location = json;
             }
 
-            //position.setValid(true);
+            position.setValido(true);
             position.setLatitude(getJsonDouble(location, jsonContains(location, "lat") ? "lat" : "latitude"));
             position.setLongitude(getJsonDouble(location, jsonContains(location, "lng") ? "lng" : "longitude"));
 
@@ -159,7 +159,7 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
                 int event = buf.readUnsignedByte();
                 if (event == 0x0f || event == 0x1f) {
 
-                    //position.setValid(event >> 4 > 0);
+                    position.setValido(event >> 4 > 0);
                     position.setLatitude(BufferUtil.readSignedMagnitudeInt(buf) * 0.000001);
                     position.setLongitude(BufferUtil.readSignedMagnitudeInt(buf) * 0.000001);
 
@@ -168,7 +168,7 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
                 } else if (event >> 4 <= 3 && buf.writerIndex() == 12) {
 
                     if (BitUtil.to(event, 4) == 0) {
-                        //position.setValid(true);
+                        position.setValido(true);
                         position.setLatitude(buf.readIntLE() * 0.0000001);
                         position.setLongitude(buf.readIntLE() * 0.0000001);
                         position.setCurso(buf.readUnsignedByte() * 2);
@@ -198,12 +198,12 @@ public class SigfoxProtocolDecoder extends BaseHttpProtocolDecoder {
                     int type = buf.readUnsignedByte();
                     switch (type) {
                         case 0x01:
-                            //position.setValid(true);
+                            position.setValido(true);
                             position.setLatitude(buf.readMedium());
                             position.setLongitude(buf.readMedium());
                             break;
                         case 0x02:
-                            //position.setValid(true);
+                            position.setValido(true);
                             position.setLatitude(buf.readFloat());
                             position.setLongitude(buf.readFloat());
                             break;

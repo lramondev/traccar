@@ -92,7 +92,7 @@ public class Gs100ProtocolDecoder extends BaseProtocolDecoder {
                             .setYear(BcdUtil.readInteger(buf, 2));
                     position.setTime(dateBuilder.getDate());
 
-                    //position.setValid(true);
+                    position.setValido(true);
 
                     String coordinates = ByteBufUtil.hexDump(buf.readSlice(9));
                     position.setLongitude(Integer.parseInt(coordinates.substring(0, 3))

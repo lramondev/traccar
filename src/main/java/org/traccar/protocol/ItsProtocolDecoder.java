@@ -203,12 +203,12 @@ public class ItsProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (parser.hasNext()) {
-            //position.setValid(parser.nextInt() == 1);
+            position.setValido(parser.nextInt() == 1);
         }
         position.setTime(parser.nextDateTime(
                 Parser.DateTimeFormat.DMY_HMS, getTimeZone(deviceSession.getDeviceId()).getID()));
         if (parser.hasNext()) {
-            //position.setValid(parser.next().matches("[1A]"));
+            position.setValido(parser.next().matches("[1A]"));
         }
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));

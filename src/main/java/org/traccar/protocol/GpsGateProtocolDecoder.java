@@ -125,7 +125,7 @@ public class GpsGateProtocolDecoder extends BaseProtocolDecoder {
             DateBuilder dateBuilder = new DateBuilder()
                     .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
-            //position.setValid(parser.next().equals("A"));
+            position.setValido(parser.next().equals("A"));
             position.setLatitude(parser.nextCoordinate());
             position.setLongitude(parser.nextCoordinate());
             position.setVelocidade(parser.nextDouble(0));
@@ -159,7 +159,7 @@ public class GpsGateProtocolDecoder extends BaseProtocolDecoder {
 
             position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
-            //position.setValid(parser.next().equals("1"));
+            position.setValido(parser.next().equals("1"));
 
             return position;
 

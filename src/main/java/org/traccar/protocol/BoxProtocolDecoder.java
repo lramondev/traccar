@@ -99,7 +99,7 @@ public class BoxProtocolDecoder extends BaseProtocolDecoder {
             int status = parser.nextInt();
             position.set(Position.KEY_IGNITION, BitUtil.check(status, 0));
             position.set(Position.KEY_MOTION, BitUtil.check(status, 1));
-            //position.setValid(!BitUtil.check(status, 2));
+            position.setValido(!BitUtil.check(status, 2));
             position.set(Position.KEY_STATUS, status);
 
             if (parser.hasNext()) {

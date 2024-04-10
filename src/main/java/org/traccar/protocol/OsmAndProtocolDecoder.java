@@ -56,7 +56,7 @@ public class OsmAndProtocolDecoder extends BaseHttpProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        //position.setValid(true);
+        position.setValido(true);
 
         Network network = new Network();
         Double latitude = null;
@@ -75,7 +75,7 @@ public class OsmAndProtocolDecoder extends BaseHttpProtocolDecoder {
                         position.setRastreador_id(deviceSession.getDeviceId());
                         break;
                     case "valid":
-                        //position.setValid(Boolean.parseBoolean(value) || "1".equals(value));
+                        position.setValido(Boolean.parseBoolean(value) || "1".equals(value));
                         break;
                     case "timestamp":
                         try {
@@ -167,7 +167,7 @@ public class OsmAndProtocolDecoder extends BaseHttpProtocolDecoder {
             }
         }
 
-        if (position.getDatahora_corrigida() == null) {
+        if (position.getDatahora_calculada() == null) {
             position.setTime(new Date());
         }
 

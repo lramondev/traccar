@@ -78,7 +78,7 @@ public class EskyProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
 
-        //position.setValid(true);
+        position.setValido(true);
         position.setTime(parser.nextDateTime());
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());

@@ -96,7 +96,7 @@ public class ThinkRaceProtocolDecoder extends BaseProtocolDecoder {
 
             int flags = buf.readUnsignedByte();
 
-            //position.setValid(true);
+            position.setValido(true);
             position.setLatitude(convertCoordinate(buf.readUnsignedInt(), !BitUtil.check(flags, 0)));
             position.setLongitude(convertCoordinate(buf.readUnsignedInt(), !BitUtil.check(flags, 1)));
 

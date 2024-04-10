@@ -77,7 +77,7 @@ public class HaicomProtocolDecoder extends BaseProtocolDecoder {
 
         int flags = parser.nextInt(0);
 
-        //position.setValid(BitUtil.check(flags, 0));
+        position.setValido(BitUtil.check(flags, 0));
 
         double latitude = parser.nextDouble(0) + parser.nextDouble(0) / 60000;
         if (BitUtil.check(flags, 2)) {

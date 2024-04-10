@@ -196,7 +196,7 @@ public class TrvProtocolDecoder extends BaseProtocolDecoder {
             DateBuilder dateBuilder = new DateBuilder()
                     .setDate(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
-            //position.setValid(parser.next().equals("A"));
+            position.setValido(parser.next().equals("A"));
             position.setLatitude(parser.nextCoordinate());
             position.setLongitude(parser.nextCoordinate());
             position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));

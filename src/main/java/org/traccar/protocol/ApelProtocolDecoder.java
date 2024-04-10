@@ -160,12 +160,12 @@ public class ApelProtocolDecoder extends BaseProtocolDecoder {
 
                 if (subtype == MSG_STATE_FULL_INFO_T104) {
                     int speed = buf.readUnsignedByte();
-                    //position.setValid(speed != 255);
+                    position.setValido(speed != 255);
                     position.setVelocidade(UnitsConverter.knotsFromKph(speed));
                     position.set(Position.KEY_HDOP, buf.readByte());
                 } else {
                     int speed = buf.readShortLE();
-                    //position.setValid(speed != -1);
+                    position.setValido(speed != -1);
                     position.setVelocidade(UnitsConverter.knotsFromKph(speed * 0.01));
                 }
 

@@ -36,7 +36,7 @@ public final class OverspeedProcessor {
             if (newState) {
                 if (state.getOverspeedTime() != null) {
                     long oldTime = state.getOverspeedTime().getTime();
-                    long newTime = position.getDatahora_corrigida().getTime();
+                    long newTime = position.getDatahora_calculada().getTime();
                     if (newTime - oldTime > minimalDuration) {
 
                         Event event = new Event(Event.TYPE_DEVICE_OVERSPEED, position);
@@ -57,7 +57,7 @@ public final class OverspeedProcessor {
             }
         } else if (position != null && position.getVelocidade() > speedLimit) {
             state.setOverspeedState(true);
-            state.setOverspeedTime(position.getDatahora_corrigida());
+            state.setOverspeedTime(position.getDatahora_calculada());
             state.setOverspeedGeofenceId(geofenceId);
         }
     }

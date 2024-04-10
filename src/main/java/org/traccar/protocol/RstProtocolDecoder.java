@@ -105,13 +105,13 @@ public class RstProtocolDecoder extends BaseProtocolDecoder {
             position.setRastreador_id(deviceSession.getDeviceId());
 
             position.setDatahora_rastreador(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
-            position.setDatahora_corrigida(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
+            position.setDatahora_calculada(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
             position.setLatitude(parser.nextDouble());
             position.setLongitude(parser.nextDouble());
             position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
             position.setCurso(parser.nextInt());
             position.setAltitude(parser.nextInt());
-            //position.setValid(parser.nextInt() > 0);
+            position.setValido(parser.nextInt() > 0);
 
             position.set(Position.KEY_SATELLITES, parser.nextInt());
             position.set(Position.KEY_HDOP, parser.nextInt());

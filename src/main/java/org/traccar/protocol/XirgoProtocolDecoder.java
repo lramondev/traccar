@@ -267,7 +267,7 @@ public class XirgoProtocolDecoder extends BaseProtocolDecoder {
                     position.set(Position.KEY_ODOMETER, Integer.parseInt(values[i]));
                     break;
                 case "GS":
-                    //position.setValid(Integer.parseInt(values[i]) == 3);
+                    position.setValido(Integer.parseInt(values[i]) == 3);
                     break;
                 case "SI":
                     position.set(Position.KEY_ICCID, values[i]);
@@ -351,7 +351,7 @@ public class XirgoProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_ODOMETER, UnitsConverter.metersFromMiles(parser.nextDouble(0)));
         }
 
-        //position.setValid(parser.nextInt(0) == 1);
+        position.setValido(parser.nextInt(0) == 1);
 
         if (newFormat && parser.hasNext(13)) {
             position.set(Position.PREFIX_IN + 1, parser.nextInt());

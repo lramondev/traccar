@@ -75,7 +75,7 @@ public class GotopProtocolDecoder extends BaseProtocolDecoder {
             }
         }
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
 
         position.setTime(parser.nextDateTime());
 

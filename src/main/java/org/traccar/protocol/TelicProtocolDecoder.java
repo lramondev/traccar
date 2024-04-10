@@ -118,7 +118,7 @@ public class TelicProtocolDecoder extends BaseProtocolDecoder {
             position.setLatitude(parser.nextDouble() / 10000);
         }
 
-        //position.setValid(parser.nextInt() != 1);
+        position.setValido(parser.nextInt() != 1);
         position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));
         position.setCurso(parser.nextDouble());
 

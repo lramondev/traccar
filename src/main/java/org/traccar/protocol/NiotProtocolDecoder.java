@@ -97,7 +97,7 @@ public class NiotProtocolDecoder extends BaseProtocolDecoder {
             position.setCurso(BcdUtil.readInteger(buf, 4));
 
             int statusX = buf.readUnsignedByte();
-            //position.setValid(BitUtil.check(statusX, 7));
+            position.setValido(BitUtil.check(statusX, 7));
             switch (BitUtil.between(statusX, 3, 5)) {
                 case 0b10:
                     position.set(Position.KEY_ALARM, Position.ALARM_POWER_CUT);

@@ -119,7 +119,7 @@ public class VtfmsProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_RSSI, parser.nextInt());
         position.set(Position.KEY_SATELLITES, parser.nextInt());
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS_DMY));
 
         double latitude = parser.nextDouble();

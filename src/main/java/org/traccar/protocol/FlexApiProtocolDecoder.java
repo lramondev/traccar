@@ -56,7 +56,7 @@ public class FlexApiProtocolDecoder extends BaseProtocolDecoder {
 
         if (topic.contains("/gnss/")) {
 
-            //position.setValid(true);
+            position.setValido(true);
 
             if (payload.containsKey("time")) {
                 position.setTime(new Date(payload.getInt("time") * 1000L));
@@ -68,7 +68,7 @@ public class FlexApiProtocolDecoder extends BaseProtocolDecoder {
                 position.setLongitude(payload.getJsonNumber("gnss.longitude").doubleValue());
             }
 
-            //position.setValid(payload.getInt("gnss.fix") > 0);
+            position.setValido(payload.getInt("gnss.fix") > 0);
             position.setAltitude(payload.getJsonNumber("gnss.altitude").doubleValue());
             position.setVelocidade(payload.getJsonNumber("gnss.speed").doubleValue());
             position.setCurso(payload.getJsonNumber("gnss.heading").doubleValue());

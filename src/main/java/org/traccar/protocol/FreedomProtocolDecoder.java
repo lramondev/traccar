@@ -62,7 +62,7 @@ public class FreedomProtocolDecoder extends BaseProtocolDecoder {
         }
         position.setRastreador_id(deviceSession.getDeviceId());
 
-        //position.setValid(true);
+        position.setValido(true);
 
         position.setTime(parser.nextDateTime());
 

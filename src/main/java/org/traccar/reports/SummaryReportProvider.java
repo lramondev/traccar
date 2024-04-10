@@ -110,7 +110,7 @@ public class SummaryReportProvider {
                 durationMilliseconds = last.getLong(Position.KEY_HOURS) - first.getLong(Position.KEY_HOURS);
                 result.setEngineHours(durationMilliseconds);
             } else {
-                durationMilliseconds = last.getDatahora_corrigida().getTime() - first.getDatahora_corrigida().getTime();
+                durationMilliseconds = last.getDatahora_calculada().getTime() - first.getDatahora_calculada().getTime();
             }
 
             if (durationMilliseconds > 0) {
@@ -126,8 +126,8 @@ public class SummaryReportProvider {
                 result.setEndOdometer(last.getDouble(Position.KEY_TOTAL_DISTANCE));
             }
 
-            result.setStartTime(first.getDatahora_corrigida());
-            result.setEndTime(last.getDatahora_corrigida());
+            result.setStartTime(first.getDatahora_calculada());
+            result.setEndTime(last.getDatahora_calculada());
             return List.of(result);
         }
 

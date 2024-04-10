@@ -187,20 +187,20 @@ public class Position extends Message {
         this.datahora_rastreador = deviceTime;
     }
 
-    private Date datahora_corrigida;
+    private Date datahora_calculada;
 
-    public Date getDatahora_corrigida() {
-        return datahora_corrigida;
+    public Date getDatahora_calculada() {
+        return datahora_calculada;
     }
 
-    public void setDatahora_corrigida(Date fixTime) {
-        this.datahora_corrigida = fixTime;
+    public void setDatahora_calculada(Date fixTime) {
+        this.datahora_calculada = fixTime;
     }
 
     @QueryIgnore
     public void setTime(Date time) {
         setDatahora_rastreador(time);
-        setDatahora_corrigida(time);
+        setDatahora_calculada(time);
     }
 
     /* 
@@ -215,17 +215,17 @@ public class Position extends Message {
     public void setOutdated(boolean outdated) {
         this.outdated = outdated;
     }
-
-    private boolean valid;
-
-    public boolean getValid() {
-        return valid;
-    }
-
-    public void setValid(boolean valid) {
-        this.valid = valid;
-    }
     */
+
+    private boolean valido;
+
+    public boolean getValido() {
+        return valido;
+    }
+
+    public void setValido(boolean valid) {
+        this.valido = valid;
+    }
 
     private double latitude;
 

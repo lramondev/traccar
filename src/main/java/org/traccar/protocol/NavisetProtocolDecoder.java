@@ -81,7 +81,7 @@ public class NavisetProtocolDecoder extends BaseProtocolDecoder {
 
                 position.set(Position.KEY_INDEX, buf.readUnsignedShortLE());
                 position.set(Position.KEY_STATUS, buf.readUnsignedByte());
-                //position.setValid(true);
+                position.setValido(true);
                 position.setTime(new Date(buf.readUnsignedIntLE() * 1000));
                 position.setLatitude(buf.readUnsignedIntLE() * 0.000001);
                 position.setLongitude(buf.readUnsignedIntLE() * 0.000001);
@@ -91,7 +91,7 @@ public class NavisetProtocolDecoder extends BaseProtocolDecoder {
                     int dataMask = buf.readUnsignedByte();
                     if (BitUtil.check(dataMask, 0)) {
                         int satellites = buf.readUnsignedByte();
-                        //position.setValid(BitUtil.check(satellites, 7));
+                        position.setValido(BitUtil.check(satellites, 7));
                         position.set(Position.KEY_SATELLITES, BitUtil.to(satellites, 7));
                     }
                     if (BitUtil.check(dataMask, 1)) {

@@ -154,7 +154,7 @@ public class CellocatorProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
 
-        //position.setValid(true);
+        position.setValido(true);
 
         if (alternative) {
             position.setLongitude(buf.readIntLE() / 10000000.0);

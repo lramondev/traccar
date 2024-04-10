@@ -82,8 +82,8 @@ public class RoboTrackProtocolDecoder extends BaseProtocolDecoder {
 
             if (type == MSG_GPS) {
 
-                //position.setValid(true);
-                position.setDatahora_corrigida(position.getDatahora_rastreador());
+                position.setValido(true);
+                position.setDatahora_calculada(position.getDatahora_rastreador());
                 position.setLatitude(buf.readIntLE() * 0.000001);
                 position.setLongitude(buf.readIntLE() * 0.000001);
                 position.setVelocidade(UnitsConverter.knotsFromKph(buf.readByte()));

@@ -202,7 +202,7 @@ public class HuaShengProtocolDecoder extends BaseProtocolDecoder {
 
         int status = buf.readUnsignedShort();
 
-        //position.setValid(BitUtil.check(status, 15));
+        position.setValido(BitUtil.check(status, 15));
 
         position.set(Position.KEY_STATUS, status);
         position.set(Position.KEY_IGNITION, BitUtil.check(status, 14));

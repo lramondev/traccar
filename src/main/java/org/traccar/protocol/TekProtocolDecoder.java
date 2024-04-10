@@ -122,7 +122,7 @@ public class TekProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_HDOP, parser.nextDouble());
 
             position.setAltitude(parser.nextDouble());
-            //position.setValid(parser.nextInt() > 0);
+            position.setValido(parser.nextInt() > 0);
             position.setCurso(parser.nextDouble());
             position.setVelocidade(parser.nextDouble());
 

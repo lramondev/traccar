@@ -147,7 +147,7 @@ public class TopinProtocolDecoder extends BaseProtocolDecoder {
                     .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte());
             position.setTime(dateBuilder.getDate());
 
-            //position.setValid(type == MSG_GPS_2);
+            position.setValido(type == MSG_GPS_2);
             position.setLatitude(readCoordinate(buf));
             position.setLongitude(readCoordinate(buf));
 

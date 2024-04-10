@@ -112,7 +112,7 @@ public class Stl060ProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_OUTPUT, parser.nextInt(0) + parser.nextInt(0) << 1);
         }
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
 
         return position;
     }

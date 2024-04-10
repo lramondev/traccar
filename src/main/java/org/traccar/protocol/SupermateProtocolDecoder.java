@@ -79,7 +79,7 @@ public class SupermateProtocolDecoder extends BaseProtocolDecoder {
         position.set("commandId", parser.next());
         position.set(Position.KEY_COMMAND, parser.next());
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
 
         DateBuilder dateBuilder = new DateBuilder()
                 .setDate(parser.nextHexInt(0), parser.nextHexInt(0), parser.nextHexInt(0))

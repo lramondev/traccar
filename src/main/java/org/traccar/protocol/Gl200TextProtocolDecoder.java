@@ -437,7 +437,7 @@ public class Gl200TextProtocolDecoder extends BaseProtocolDecoder {
                 Position position = new Position(getProtocolName());
                 position.setRastreador_id(deviceSession.getDeviceId());
                 getLastLocation(position, parser.nextDateTime());
-                //position.setValid(false);
+                position.setValido(false);
                 position.set(Position.KEY_RESULT, "Command " + type + " accepted");
                 return position;
             }
@@ -559,7 +559,7 @@ public class Gl200TextProtocolDecoder extends BaseProtocolDecoder {
 
     private void decodeLocation(Position position, Parser parser) {
         Double hdop = parser.nextDouble();
-        //position.setValid(hdop == null || hdop > 0);
+        position.setValido(hdop == null || hdop > 0);
         position.set(Position.KEY_HDOP, hdop);
 
         position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
@@ -567,7 +567,7 @@ public class Gl200TextProtocolDecoder extends BaseProtocolDecoder {
         position.setAltitude(parser.nextDouble(0));
 
         if (parser.hasNext(8)) {
-            //position.setValid(true);
+            position.setValido(true);
             position.setLongitude(parser.nextDouble());
             position.setLatitude(parser.nextDouble());
             position.setTime(parser.nextDateTime());
@@ -792,7 +792,7 @@ public class Gl200TextProtocolDecoder extends BaseProtocolDecoder {
             while (values[index].isEmpty()) {
                 index += 1;
             }
-            //position.setValid(Integer.parseInt(values[index++]) > 0);
+            position.setValido(Integer.parseInt(values[index++]) > 0);
             if (!values[index].isEmpty()) {
                 position.setVelocidade(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
                 position.setCurso(Integer.parseInt(values[index++]));
@@ -1224,7 +1224,7 @@ public class Gl200TextProtocolDecoder extends BaseProtocolDecoder {
 
         if (parser.hasNext()) {
             int hdop = parser.nextInt();
-            //position.setValid(hdop > 0);
+            position.setValido(hdop > 0);
             position.set(Position.KEY_HDOP, hdop);
         }
 

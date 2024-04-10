@@ -49,14 +49,15 @@ public class GeocoderHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(final ChannelHandlerContext ctx, Object message) {
         if (message instanceof Position && !ignorePositions) {
             final Position position = (Position) message;
-            if (processInvalidPositions) {
+            if (processInvalidPositions || position.getValido()) {
                 if (reuseDistance != 0) {
                     Position lastPosition = cacheManager.getPosition(position.getRastreador_id());
-                    if (lastPosition != null && position.getDouble(Position.KEY_DISTANCE) <= reuseDistance) {
-                        //position.setAddress(lastPosition.getAddress());
+                    /*if (lastPosition != null && lastPosition.getAddress() != null
+                            && position.getDouble(Position.KEY_DISTANCE) <= reuseDistance) {
+                        position.setAddress(lastPosition.getAddress());
                         ctx.fireChannelRead(position);
                         return;
-                    }
+                    }*/
                 }
 
                 geocoder.getAddress(position.getLatitude(), position.getLongitude(),

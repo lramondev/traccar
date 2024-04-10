@@ -81,7 +81,7 @@ public class DwayProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
         position.setRastreador_id(deviceSession.getDeviceId());
 
-        //position.setValid(true);
+        position.setValido(true);
         position.setTime(parser.nextDateTime());
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());

@@ -121,11 +121,11 @@ public class FreematicsProtocolDecoder extends BaseProtocolDecoder {
                                 Integer.parseInt(value.substring(6)) * 10);
                         break;
                     case 0xA:
-                        //position.setValid(true);
+                        position.setValido(true);
                         position.setLatitude(Double.parseDouble(value));
                         break;
                     case 0xB:
-                        //position.setValid(true);
+                        position.setValido(true);
                         position.setLongitude(Double.parseDouble(value));
                         break;
                     case 0xC:
@@ -178,9 +178,9 @@ public class FreematicsProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (position != null) {
-            //if (!position.getValid()) {
-                //getLastLocation(position, null);
-            //}
+            if (!position.getValido()) {
+                getLastLocation(position, null);
+            }
             position.setTime(dateBuilder.getDate());
             positions.add(position);
         }

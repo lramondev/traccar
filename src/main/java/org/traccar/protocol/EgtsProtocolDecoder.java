@@ -215,7 +215,7 @@ public class EgtsProtocolDecoder extends BaseProtocolDecoder {
                     position.setLongitude(buf.readUnsignedIntLE() * 180.0 / 0xFFFFFFFFL);
 
                     int flags = buf.readUnsignedByte();
-                    //position.setValid(BitUtil.check(flags, 0));
+                    position.setValido(BitUtil.check(flags, 0));
                     if (BitUtil.check(flags, 5)) {
                         position.setLatitude(-position.getLatitude());
                     }
@@ -289,7 +289,7 @@ public class EgtsProtocolDecoder extends BaseProtocolDecoder {
                 buf.readerIndex(end);
             }
 
-            if (serviceType == SERVICE_TELEDATA) {
+            if (serviceType == SERVICE_TELEDATA && position.getValido()) {
                 if (useObjectIdAsDeviceId && objectId != 0L) {
                     deviceSession = getDeviceSession(channel, remoteAddress, String.valueOf(objectId));
                     if (deviceSession != null) {

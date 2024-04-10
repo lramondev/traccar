@@ -138,7 +138,7 @@ public class PiligrimProtocolDecoder extends BaseHttpProtocolDecoder {
 
                     int satellites = buf.readUnsignedByte();
                     position.set(Position.KEY_SATELLITES, satellites);
-                    //position.setValid(satellites >= 3);
+                    position.setValido(satellites >= 3);
 
                     position.setVelocidade(buf.readUnsignedByte());
 
@@ -193,7 +193,7 @@ public class PiligrimProtocolDecoder extends BaseHttpProtocolDecoder {
             DateBuilder dateBuilder = new DateBuilder()
                     .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
-            //position.setValid(parser.next().equals("A"));
+            position.setValido(parser.next().equals("A"));
             position.setLatitude(parser.nextCoordinate());
             position.setLongitude(parser.nextCoordinate());
             position.setVelocidade(parser.nextDouble());

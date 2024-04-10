@@ -296,7 +296,7 @@ public class IotmProtocolDecoder extends BaseProtocolDecoder {
                         int sensorId = record.readUnsignedShortLE();
                         if (sensorType == 14) {
 
-                            //position.setValid(true);
+                            position.setValido(true);
                             position.setLatitude(record.readFloatLE());
                             position.setLongitude(record.readFloatLE());
                             position.setVelocidade(UnitsConverter.knotsFromKph(record.readUnsignedShortLE()));

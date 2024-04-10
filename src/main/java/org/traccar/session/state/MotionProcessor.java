@@ -33,7 +33,7 @@ public final class MotionProcessor {
         if (oldState == newState) {
             if (state.getMotionTime() != null) {
                 long oldTime = state.getMotionTime().getTime();
-                long newTime = position.getDatahora_corrigida().getTime();
+                long newTime = position.getDatahora_calculada().getTime();
 
                 double distance = position.getDouble(Position.KEY_TOTAL_DISTANCE) - state.getMotionDistance();
                 Boolean ignition = null;
@@ -72,7 +72,7 @@ public final class MotionProcessor {
                 state.setMotionTime(null);
                 state.setMotionDistance(0);
             } else {
-                state.setMotionTime(position.getDatahora_corrigida());
+                state.setMotionTime(position.getDatahora_calculada());
                 state.setMotionDistance(position.getDouble(Position.KEY_TOTAL_DISTANCE));
             }
         }

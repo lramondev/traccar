@@ -89,7 +89,7 @@ public class MictrackProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_SATELLITES, Integer.parseInt(values[index++]));
 
-        //position.setValid(true);
+        position.setValido(true);
         position.setTime(decodeTime(values[index++]));
         position.setLatitude(Double.parseDouble(values[index++]));
         position.setLongitude(Double.parseDouble(values[index++]));
@@ -286,7 +286,7 @@ public class MictrackProtocolDecoder extends BaseProtocolDecoder {
                 DateBuilder dateBuilder = new DateBuilder()
                         .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
-                //position.setValid(parser.next().equals("A"));
+                position.setValido(parser.next().equals("A"));
                 position.setLatitude(parser.nextCoordinate());
                 position.setLongitude(parser.nextCoordinate());
 

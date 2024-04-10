@@ -98,7 +98,7 @@ public class YwtProtocolDecoder extends BaseProtocolDecoder {
         position.setCurso(parser.nextDouble());
 
         int satellites = parser.nextInt();
-        //position.setValid(satellites != 0);
+        position.setValido(satellites != 0);
         position.set(Position.KEY_SATELLITES, satellites);
 
         String reportId = parser.next();

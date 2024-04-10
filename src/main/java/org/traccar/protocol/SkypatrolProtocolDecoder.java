@@ -122,7 +122,7 @@ public class SkypatrolProtocolDecoder extends BaseProtocolDecoder {
             }
 
             if (BitUtil.check(mask, 9)) {
-                //position.setValid(buf.readUnsignedByte() == 1); // gps status
+                position.setValido(buf.readUnsignedByte() == 1); // gps status
             }
 
             if (BitUtil.check(mask, 10)) {

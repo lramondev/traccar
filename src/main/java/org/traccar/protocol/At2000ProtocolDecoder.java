@@ -121,7 +121,7 @@ public class At2000ProtocolDecoder extends BaseProtocolDecoder {
                     buf.readUnsignedShortLE(); // index
                     buf.readUnsignedShortLE(); // reserved
 
-                    //position.setValid(true);
+                    position.setValido(true);
 
                     position.setTime(new Date(buf.readLongLE() * 1000));
 

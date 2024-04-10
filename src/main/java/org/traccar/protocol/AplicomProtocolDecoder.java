@@ -208,7 +208,7 @@ public class AplicomProtocolDecoder extends BaseProtocolDecoder {
     private void decodeD(Position position, ByteBuf buf, int selector, int event) {
 
         if ((selector & 0x0008) != 0) {
-            //position.setValid((buf.readUnsignedByte() & 0x40) != 0);
+            position.setValido((buf.readUnsignedByte() & 0x40) != 0);
         } else {
             getLastLocation(position, null);
         }
@@ -218,9 +218,9 @@ public class AplicomProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if ((selector & 0x0008) != 0) {
-            position.setDatahora_corrigida(new Date(buf.readUnsignedInt() * 1000));
+            position.setDatahora_calculada(new Date(buf.readUnsignedInt() * 1000));
             if (position.getDatahora_rastreador() == null) {
-                position.setDatahora_rastreador(position.getDatahora_corrigida());
+                position.setDatahora_rastreador(position.getDatahora_calculada());
             }
             position.setLatitude(buf.readInt() / 1000000.0);
             position.setLongitude(buf.readInt() / 1000000.0);

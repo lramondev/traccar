@@ -103,7 +103,7 @@ public class Ivt401ProtocolDecoder extends BaseProtocolDecoder {
         position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
         position.setCurso(parser.nextInt());
         position.setAltitude(parser.nextDouble());
-        //position.setValid(parser.nextInt() > 0);
+        position.setValido(parser.nextInt() > 0);
 
         position.set(Position.KEY_RSSI, parser.nextInt());
 

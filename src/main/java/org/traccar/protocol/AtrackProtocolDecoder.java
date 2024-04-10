@@ -768,7 +768,7 @@ public class AtrackProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
         position.setRastreador_id(deviceSession.getDeviceId());
 
-        //position.setValid(true);
+        position.setValido(true);
 
         String time = parser.next();
         if (time.length() >= 14) {
@@ -863,12 +863,12 @@ public class AtrackProtocolDecoder extends BaseProtocolDecoder {
                 buf.skipBytes(7 + 7);
 
             } else {
-                position.setDatahora_corrigida(new Date(buf.readUnsignedInt() * 1000));
+                position.setDatahora_calculada(new Date(buf.readUnsignedInt() * 1000));
                 position.setDatahora_rastreador(new Date(buf.readUnsignedInt() * 1000));
                 buf.readUnsignedInt(); // send time
             }
 
-            //position.setValid(true);
+            position.setValido(true);
             position.setLongitude(buf.readInt() * 0.000001);
             position.setLatitude(buf.readInt() * 0.000001);
             position.setCurso(buf.readUnsignedShort());

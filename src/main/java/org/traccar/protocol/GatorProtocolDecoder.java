@@ -116,7 +116,7 @@ public class GatorProtocolDecoder extends BaseProtocolDecoder {
             position.setCurso(BcdUtil.readInteger(buf, 4));
 
             int flags = buf.readUnsignedByte();
-            //position.setValid((flags & 0x80) != 0);
+            position.setValido((flags & 0x80) != 0);
             position.set(Position.KEY_SATELLITES, flags & 0x0f);
 
             position.set(Position.KEY_STATUS, buf.readUnsignedByte());

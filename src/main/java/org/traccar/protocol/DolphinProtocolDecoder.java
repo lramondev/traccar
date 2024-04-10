@@ -90,7 +90,7 @@ public class DolphinProtocolDecoder extends BaseProtocolDecoder {
 
                 DolphinMessages.DataPoint point = message.getPoints(i);
 
-                //position.setValid(true);
+                position.setValido(true);
                 position.setTime(new Date(point.getTimestamp() * 1000L));
                 position.setLatitude(point.getLatitude());
                 position.setLongitude(point.getLongitude());

@@ -97,7 +97,7 @@ public class BstplProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_ALARM, decodeAlarm(type));
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));

@@ -72,7 +72,7 @@ public class NetProtocolDecoder extends BaseProtocolDecoder {
 
         int flags = parser.nextHexInt();
 
-        //position.setValid(BitUtil.check(flags, 3));
+        position.setValido(BitUtil.check(flags, 3));
         int hemisphereLatitude = BitUtil.check(flags, 1) ? -1 : 1;
         int hemisphereLongitude = BitUtil.check(flags, 0) ? -1 : 1;
 

@@ -72,7 +72,7 @@ public class SatsolProtocolDecoder extends BaseProtocolDecoder {
             position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShortLE() * 0.01));
             position.setAltitude(buf.readShortLE());
             position.setCurso(buf.readUnsignedShortLE());
-            //position.setValid(buf.readUnsignedByte() > 0);
+            position.setValido(buf.readUnsignedByte() > 0);
 
             position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
             position.set(Position.KEY_EVENT, buf.readUnsignedByte());

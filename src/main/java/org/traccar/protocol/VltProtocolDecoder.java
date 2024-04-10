@@ -75,7 +75,7 @@ public class VltProtocolDecoder extends BaseHttpProtocolDecoder {
         position.set(Position.KEY_EVENT, parser.nextInt());
         position.set(Position.KEY_ARCHIVE, parser.next().equals("H") ? true : null);
 
-        //position.setValid(parser.nextInt() > 0);
+        position.setValido(parser.nextInt() > 0);
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));

@@ -84,7 +84,7 @@ public class RadarProtocolDecoder extends BaseProtocolDecoder {
                     position.setDatahora_rastreador(new Date(buf.readUnsignedInt() * 1000));
                 }
                 if (mask.get(1)) {
-                    position.setDatahora_corrigida(new Date(buf.readUnsignedInt() * 1000));
+                    position.setDatahora_calculada(new Date(buf.readUnsignedInt() * 1000));
                 }
                 if (mask.get(2)) {
                     position.setLatitude(buf.readInt() / 360000.0);
@@ -103,7 +103,7 @@ public class RadarProtocolDecoder extends BaseProtocolDecoder {
                 }
                 if (mask.get(7)) {
                     int flags = buf.readUnsignedByte();
-                    //position.setValid(BitUtil.check(flags, 0));
+                    position.setValido(BitUtil.check(flags, 0));
                     position.set(Position.KEY_SATELLITES, BitUtil.from(flags, 4));
                 }
                 if (mask.get(8)) {
@@ -180,7 +180,7 @@ public class RadarProtocolDecoder extends BaseProtocolDecoder {
                     buf.readUnsignedInt(); // accumulated hours
                 }
 
-                if (position.getDatahora_rastreador() != null && position.getDatahora_corrigida() != null) {
+                if (position.getDatahora_rastreador() != null && position.getDatahora_calculada() != null) {
                     positions.add(position);
                 }
 

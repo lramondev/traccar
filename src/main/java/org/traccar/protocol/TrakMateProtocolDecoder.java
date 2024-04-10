@@ -203,7 +203,7 @@ public class TrakMateProtocolDecoder extends BaseProtocolDecoder {
         position.set("pulseOdometer", parser.nextDouble());
         position.set(Position.KEY_STATUS, parser.nextInt());
 
-        //position.setValid(parser.nextInt() > 0);
+        position.setValido(parser.nextInt() > 0);
 
         position.set(Position.KEY_ARCHIVE, parser.nextInt() > 0);
 

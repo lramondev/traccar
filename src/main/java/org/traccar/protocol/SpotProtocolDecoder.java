@@ -83,7 +83,7 @@ public class SpotProtocolDecoder extends BaseHttpProtocolDecoder {
                 Position position = new Position(getProtocolName());
                 position.setRastreador_id(deviceSession.getDeviceId());
 
-                //position.setValid(true);
+                position.setValido(true);
                 position.setTime(DateUtil.parseDate(xPath.evaluate("timestamp", node)));
                 position.setLatitude(Double.parseDouble(xPath.evaluate("latitude", node)));
                 position.setLongitude(Double.parseDouble(xPath.evaluate("longitude", node)));

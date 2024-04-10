@@ -510,7 +510,7 @@ public class TeltonikaProtocolDecoder extends BaseProtocolDecoder {
             int satellites = buf.readUnsignedByte();
             position.set(Position.KEY_SATELLITES, satellites);
 
-            //position.setValid(satellites != 0);
+            position.setValido(satellites != 0);
 
             position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
 
@@ -630,7 +630,7 @@ public class TeltonikaProtocolDecoder extends BaseProtocolDecoder {
             Position position = new Position(getProtocolName());
 
             position.setRastreador_id(deviceSession.getDeviceId());
-            //position.setValid(true);
+            position.setValido(true);
 
             if (codec == CODEC_13) {
                 buf.readUnsignedByte(); // type

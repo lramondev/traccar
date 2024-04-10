@@ -103,7 +103,7 @@ public class C2stekProtocolDecoder extends BaseProtocolDecoder {
         position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime());
-        //position.setValid(parser.nextInt() > 0);
+        position.setValido(parser.nextInt() > 0);
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
         position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));

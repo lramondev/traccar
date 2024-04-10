@@ -144,8 +144,8 @@ public class Xexun2ProtocolDecoder extends BaseProtocolDecoder {
                 if (BitUtil.check(mask, 1)) {
                     int positionMask = buf.readUnsignedByte();
                     if (BitUtil.check(positionMask, 0)) {
-                        //position.setValid(true);
-                        position.setDatahora_corrigida(position.getDatahora_rastreador());
+                        position.setValido(true);
+                        position.setDatahora_calculada(position.getDatahora_rastreador());
                         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
                         position.setLongitude(convertCoordinate(buf.readFloat()));
                         position.setLatitude(convertCoordinate(buf.readFloat()));
@@ -178,8 +178,8 @@ public class Xexun2ProtocolDecoder extends BaseProtocolDecoder {
                         position.setCurso(buf.readUnsignedShort() * 0.1);
                     }
                     if (BitUtil.check(positionMask, 6)) {
-                        //position.setValid(true);
-                        position.setDatahora_corrigida(position.getDatahora_rastreador());
+                        position.setValido(true);
+                        position.setDatahora_calculada(position.getDatahora_rastreador());
                         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
                         position.setLongitude(convertCoordinate(buf.readDouble()));
                         position.setLatitude(convertCoordinate(buf.readDouble()));
@@ -190,10 +190,10 @@ public class Xexun2ProtocolDecoder extends BaseProtocolDecoder {
                             int dataType = buf.readUnsignedByte();
                             int dataEndIndex = buf.readerIndex() + buf.readUnsignedShort();
                             if (dataType == 'G') {
-                                position.setDatahora_corrigida(position.getDatahora_rastreador());
+                                position.setDatahora_calculada(position.getDatahora_rastreador());
                                 position.setLongitude(convertCoordinate(buf.readDouble()));
                                 position.setLatitude(convertCoordinate(buf.readDouble()));
-                                //position.setValid(buf.readUnsignedByte() > 0);
+                                position.setValido(buf.readUnsignedByte() > 0);
                                 position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
                                 buf.readUnsignedByte(); // satellite signal-to-noise ratio
                                 position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort() * 0.1));
@@ -216,9 +216,9 @@ public class Xexun2ProtocolDecoder extends BaseProtocolDecoder {
                     buf.skipBytes(12); // device parameters
                 }
 
-                //if (!position.getValid()) {
-                    //getLastLocation(position, position.getDatahora_rastreador());
-                //}
+                if (!position.getValido()) {
+                    getLastLocation(position, position.getDatahora_rastreador());
+                }
                 positions.add(position);
 
                 buf.readerIndex(endIndex);

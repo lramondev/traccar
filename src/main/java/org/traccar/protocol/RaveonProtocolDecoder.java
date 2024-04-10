@@ -77,7 +77,7 @@ public class RaveonProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS));
 
-        //position.setValid(parser.nextInt(0) != 0);
+        position.setValido(parser.nextInt(0) != 0);
 
         position.set(Position.KEY_SATELLITES, parser.nextInt(0));
 

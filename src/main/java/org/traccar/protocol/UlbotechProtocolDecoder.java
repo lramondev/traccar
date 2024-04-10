@@ -244,7 +244,7 @@ public class UlbotechProtocolDecoder extends BaseProtocolDecoder {
                     position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
                     position.setCurso(buf.readUnsignedShort());
                     int hdop = buf.readUnsignedShort();
-                    //position.setValid(hdop < 9999);
+                    position.setValido(hdop < 9999);
                     position.set(Position.KEY_HDOP, hdop * 0.01);
                     break;
 

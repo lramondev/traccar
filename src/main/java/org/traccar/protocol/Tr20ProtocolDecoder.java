@@ -84,7 +84,7 @@ public class Tr20ProtocolDecoder extends BaseProtocolDecoder {
         }
         position.setRastreador_id(deviceSession.getDeviceId());
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
 
         position.setTime(parser.nextDateTime());
 

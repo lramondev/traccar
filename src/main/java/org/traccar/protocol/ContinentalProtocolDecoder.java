@@ -71,7 +71,7 @@ public class ContinentalProtocolDecoder extends BaseProtocolDecoder {
             Position position = new Position(getProtocolName());
             position.setRastreador_id(deviceSession.getDeviceId());
 
-            position.setDatahora_corrigida(new Date(buf.readUnsignedInt() * 1000L));
+            position.setDatahora_calculada(new Date(buf.readUnsignedInt() * 1000L));
 
             boolean extended = buf.getUnsignedByte(buf.readerIndex()) != 0;
             position.setLatitude(readCoordinate(buf, extended));
@@ -80,7 +80,7 @@ public class ContinentalProtocolDecoder extends BaseProtocolDecoder {
             position.setCurso(buf.readUnsignedShort());
             position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
 
-            //position.setValid(buf.readUnsignedByte() > 0);
+            position.setValido(buf.readUnsignedByte() > 0);
 
             position.setDatahora_rastreador(new Date(buf.readUnsignedInt() * 1000L));
 

@@ -130,8 +130,8 @@ public class MobilogixProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_SATELLITES, parser.nextInt());
             position.set(Position.KEY_RSSI, 6 * parser.nextInt() - 111);
 
-            //position.setValid(parser.nextInt() > 0);
-            position.setDatahora_corrigida(position.getDatahora_rastreador());
+            position.setValido(parser.nextInt() > 0);
+            position.setDatahora_calculada(position.getDatahora_rastreador());
 
             position.setLatitude(parser.nextDouble());
             position.setLongitude(parser.nextDouble());

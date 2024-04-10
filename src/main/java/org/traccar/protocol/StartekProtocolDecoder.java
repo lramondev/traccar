@@ -167,7 +167,7 @@ public class StartekProtocolDecoder extends BaseProtocolDecoder {
         }
 
         position.setTime(parser.nextDateTime());
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
 

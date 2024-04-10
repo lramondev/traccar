@@ -79,7 +79,7 @@ public class GoSafeProtocolDecoder extends BaseProtocolDecoder {
 
         switch (fragment.substring(0, dataIndex)) {
             case "GPS":
-                //position.setValid(values[index++].equals("A"));
+                position.setValido(values[index++].equals("A"));
                 position.set(Position.KEY_SATELLITES, Integer.parseInt(values[index++]));
                 position.setLatitude(Double.parseDouble(values[index].substring(1)));
                 if (values[index++].charAt(0) == 'S') {
@@ -239,7 +239,7 @@ public class GoSafeProtocolDecoder extends BaseProtocolDecoder {
             DateBuilder dateBuilder = new DateBuilder()
                     .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
-            //position.setValid(parser.next().equals("A"));
+            position.setValido(parser.next().equals("A"));
             position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
             position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
             position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble(0)));

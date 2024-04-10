@@ -94,7 +94,7 @@ public class TranSyncProtocolDecoder extends BaseProtocolDecoder {
         int cid = buf.readUnsignedShort();
         int status0 = buf.readUnsignedByte();
 
-        //position.setValid(BitUtil.check(status0, 0));
+        position.setValido(BitUtil.check(status0, 0));
         position.setLatitude(BitUtil.check(status0, 1) ? latitude : -latitude);
         position.setLongitude(BitUtil.check(status0, 2) ? longitude : -longitude);
 

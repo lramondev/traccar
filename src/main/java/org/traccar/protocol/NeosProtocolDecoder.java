@@ -80,7 +80,7 @@ public class NeosProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
         position.setRastreador_id(deviceSession.getDeviceId());
 
-        //position.setValid(parser.nextInt() > 0);
+        position.setValido(parser.nextInt() > 0);
         position.setTime(parser.nextDateTime());
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));

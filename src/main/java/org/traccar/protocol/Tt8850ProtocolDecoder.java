@@ -78,7 +78,7 @@ public class Tt8850ProtocolDecoder extends BaseProtocolDecoder {
         }
         position.setRastreador_id(deviceSession.getDeviceId());
 
-        //position.setValid(true);
+        position.setValido(true);
         position.setPrecisao(parser.nextInt(0));
         position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
         position.setCurso(parser.nextDouble(0));

@@ -168,7 +168,7 @@ public class L100ProtocolDecoder extends BaseProtocolDecoder {
         DateBuilder dateBuilder = new DateBuilder()
                 .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt(), parser.nextInt(0));
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
         position.setVelocidade(parser.nextDouble(0));
@@ -225,7 +225,7 @@ public class L100ProtocolDecoder extends BaseProtocolDecoder {
         position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS_DMY));
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setVelocidade(parser.nextInt());
@@ -325,7 +325,7 @@ public class L100ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setVelocidade(parser.nextDouble());

@@ -69,7 +69,7 @@ public class ThurayaProtocolDecoder extends BaseProtocolDecoder {
 
     private void decodeLocation(ByteBuf buf, Position position) {
 
-        //position.setValid(true);
+        position.setValido(true);
 
         DateBuilder dateBuilder = new DateBuilder();
 

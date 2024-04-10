@@ -107,8 +107,8 @@ public class Pt60ProtocolDecoder extends BaseProtocolDecoder {
 
             if (type == MSG_G_TRACK) {
 
-                //position.setValid(true);
-                position.setDatahora_corrigida(position.getDatahora_rastreador());
+                position.setValido(true);
+                position.setDatahora_calculada(position.getDatahora_rastreador());
 
                 String[] coordinates = values[0].split(";");
                 position.setLatitude(Double.parseDouble(coordinates[0]));
@@ -168,8 +168,8 @@ public class Pt60ProtocolDecoder extends BaseProtocolDecoder {
 
             } else {
 
-                //position.setValid(true);
-                position.setDatahora_corrigida(position.getDatahora_rastreador());
+                position.setValido(true);
+                position.setDatahora_calculada(position.getDatahora_rastreador());
 
                 position.setLatitude(Double.parseDouble(values[0]));
                 position.setLongitude(Double.parseDouble(values[1]));

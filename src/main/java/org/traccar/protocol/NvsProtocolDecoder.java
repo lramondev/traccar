@@ -94,7 +94,7 @@ public class NvsProtocolDecoder extends BaseProtocolDecoder {
                 position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
 
                 position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedShort()));
-                //position.setValid(buf.readUnsignedByte() != 0);
+                position.setValido(buf.readUnsignedByte() != 0);
 
                 buf.readUnsignedByte(); // used systems
 

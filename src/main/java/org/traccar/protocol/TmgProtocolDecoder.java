@@ -130,7 +130,7 @@ public class TmgProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
-        //position.setValid(parser.nextInt() > 0);
+        position.setValido(parser.nextInt() > 0);
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
         position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));

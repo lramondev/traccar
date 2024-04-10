@@ -105,7 +105,7 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
         double longitude = convertCoordinate(BcdUtil.readInteger(buf, 9));
 
         byte flags = buf.readByte();
-        //position.setValid((flags & 0x1) == 0x1);
+        position.setValido((flags & 0x1) == 0x1);
         if ((flags & 0x2) == 0) {
             latitude = -latitude;
         }
@@ -288,7 +288,7 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
 
         position.setLongitude(parser.nextCoordinate());
         position.setLatitude(parser.nextCoordinate());
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
@@ -346,7 +346,7 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
 
-        //position.setValid(parser.next().equals("T"));
+        position.setValido(parser.next().equals("T"));
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
 
@@ -414,7 +414,7 @@ public class Jt600ProtocolDecoder extends BaseProtocolDecoder {
 
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
 
         position.setVelocidade(UnitsConverter.knotsFromMph(parser.nextDouble()));
         position.setCurso(parser.nextDouble());

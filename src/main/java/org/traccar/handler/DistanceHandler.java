@@ -69,7 +69,7 @@ public class DistanceHandler extends BaseDataHandler {
                 boolean satisfiesMin = coordinatesMinError == 0 || distance > coordinatesMinError;
                 boolean satisfiesMax = coordinatesMaxError == 0 || distance < coordinatesMaxError;
                 if (!satisfiesMin || !satisfiesMax) {
-                    //position.setValid(last.getValid());
+                    position.setValido(last.getValido());
                     position.setLatitude(last.getLatitude());
                     position.setLongitude(last.getLongitude());
                     distance = 0;

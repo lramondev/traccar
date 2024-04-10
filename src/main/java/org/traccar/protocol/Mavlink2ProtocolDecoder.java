@@ -60,7 +60,7 @@ public class Mavlink2ProtocolDecoder extends BaseProtocolDecoder {
 
             position.set("timeBoot", buf.readUnsignedIntLE()); // time since system boot
 
-            //position.setValid(true);
+            position.setValido(true);
             position.setTime(new Date());
             position.setLatitude(buf.readIntLE() / 10000000.0);
             position.setLongitude(buf.readIntLE() / 10000000.0);

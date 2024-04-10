@@ -106,10 +106,10 @@ public class FlexibleReportProtocolDecoder extends BaseProtocolDecoder {
                 buf.readUnsignedByte(); // product id
             }
             if (BitUtil.check(mask, 1)) {
-                position.setDatahora_corrigida(decodeTime(buf));
+                position.setDatahora_calculada(decodeTime(buf));
             }
             if (BitUtil.check(mask, 2)) {
-                //position.setValid(true);
+                position.setValido(true);
                 position.setLatitude(buf.readUnsignedInt() / 1000000.0 - 90);
                 position.setLongitude(buf.readUnsignedInt() / 1000000.0 - 180);
             }

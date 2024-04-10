@@ -130,7 +130,7 @@ public class EelinkProtocolDecoder extends BaseProtocolDecoder {
         position.setRede(new Network(CellTower.from(
                 buf.readUnsignedShort(), buf.readUnsignedShort(), buf.readUnsignedShort(), buf.readUnsignedMedium())));
 
-        //position.setValid((buf.readUnsignedByte() & 0x01) != 0);
+        position.setValido((buf.readUnsignedByte() & 0x01) != 0);
 
         if (type == MSG_GPS) {
 
@@ -269,7 +269,7 @@ public class EelinkProtocolDecoder extends BaseProtocolDecoder {
         if (type == MSG_NORMAL || type == MSG_WARNING || type == MSG_REPORT) {
 
             int status = buf.readUnsignedShort();
-            //position.setValid(BitUtil.check(status, 0));
+            position.setValido(BitUtil.check(status, 0));
             if (BitUtil.check(status, 1)) {
                 position.set(Position.KEY_IGNITION, BitUtil.check(status, 2));
             }
@@ -378,7 +378,7 @@ public class EelinkProtocolDecoder extends BaseProtocolDecoder {
         Parser parser = new Parser(PATTERN, sentence);
         if (parser.matches()) {
 
-            //position.setValid(true);
+            position.setValido(true);
             position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
             position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG));
             position.setCurso(parser.nextDouble());

@@ -171,7 +171,7 @@ public class ReportUtils {
 
         TripReportItem trip = new TripReportItem();
 
-        long tripDuration = endTrip.getDatahora_corrigida().getTime() - startTrip.getDatahora_corrigida().getTime();
+        long tripDuration = endTrip.getDatahora_calculada().getTime() - startTrip.getDatahora_calculada().getTime();
         long deviceId = startTrip.getRastreador_id();
         trip.setDeviceId(deviceId);
         trip.setDeviceName(device.getDescricao());
@@ -179,7 +179,7 @@ public class ReportUtils {
         trip.setStartPositionId(startTrip.getId());
         trip.setStartLat(startTrip.getLatitude());
         trip.setStartLon(startTrip.getLongitude());
-        trip.setStartTime(startTrip.getDatahora_corrigida());
+        trip.setStartTime(startTrip.getDatahora_calculada());
         /*
         String startAddress = startTrip.getAddress();
         if (startAddress == null && geocoder != null && config.getBoolean(Keys.GEOCODER_ON_REQUEST)) {
@@ -191,7 +191,7 @@ public class ReportUtils {
         trip.setEndPositionId(endTrip.getId());
         trip.setEndLat(endTrip.getLatitude());
         trip.setEndLon(endTrip.getLongitude());
-        trip.setEndTime(endTrip.getDatahora_corrigida());
+        trip.setEndTime(endTrip.getDatahora_calculada());
         /* 
         String endAddress = endTrip.getAddress();
         if (endAddress == null && geocoder != null && config.getBoolean(Keys.GEOCODER_ON_REQUEST)) {
@@ -236,7 +236,7 @@ public class ReportUtils {
         stop.setPositionId(startStop.getId());
         stop.setLatitude(startStop.getLatitude());
         stop.setLongitude(startStop.getLongitude());
-        stop.setStartTime(startStop.getDatahora_corrigida());
+        stop.setStartTime(startStop.getDatahora_calculada());
         /* 
         String address = startStop.getAddress();
         if (address == null && geocoder != null && config.getBoolean(Keys.GEOCODER_ON_REQUEST)) {
@@ -245,9 +245,9 @@ public class ReportUtils {
         stop.setAddress(address);
         */
 
-        stop.setEndTime(endStop.getDatahora_corrigida());
+        stop.setEndTime(endStop.getDatahora_calculada());
 
-        long stopDuration = endStop.getDatahora_corrigida().getTime() - startStop.getDatahora_corrigida().getTime();
+        long stopDuration = endStop.getDatahora_calculada().getTime() - startStop.getDatahora_calculada().getTime();
         stop.setDuration(stopDuration);
         stop.setSpentFuel(calculateFuel(startStop, endStop));
 
@@ -284,10 +284,10 @@ public class ReportUtils {
     private boolean isMoving(List<Position> positions, int index, TripsConfig tripsConfig) {
         if (tripsConfig.getMinimalNoDataDuration() > 0) {
             boolean beforeGap = index < positions.size() - 1
-                    && positions.get(index + 1).getDatahora_corrigida().getTime() - positions.get(index).getDatahora_corrigida().getTime()
+                    && positions.get(index + 1).getDatahora_calculada().getTime() - positions.get(index).getDatahora_calculada().getTime()
                     >= tripsConfig.getMinimalNoDataDuration();
             boolean afterGap = index > 0
-                    && positions.get(index).getDatahora_corrigida().getTime() - positions.get(index - 1).getDatahora_corrigida().getTime()
+                    && positions.get(index).getDatahora_calculada().getTime() - positions.get(index - 1).getDatahora_calculada().getTime()
                     >= tripsConfig.getMinimalNoDataDuration();
             if (beforeGap || afterGap) {
                 return false;

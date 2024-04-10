@@ -233,8 +233,8 @@ public class FifotrackProtocolDecoder extends BaseProtocolDecoder {
 
         if (parser.hasNext(5)) {
 
-            //position.setValid(parser.next().equals("A"));
-            position.setDatahora_corrigida(position.getDatahora_rastreador());
+            position.setValido(parser.next().equals("A"));
+            position.setDatahora_calculada(position.getDatahora_rastreador());
             position.set(Position.KEY_SATELLITES, parser.nextInt());
             position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));
             position.setLatitude(parser.nextDouble());
@@ -282,7 +282,7 @@ public class FifotrackProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime());
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
         position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));

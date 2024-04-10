@@ -70,7 +70,7 @@ public class PortmanProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
         position.setRastreador_id(deviceSession.getDeviceId());
 
-        //position.setValid(!parser.next().equals("L"));
+        position.setValido(!parser.next().equals("L"));
         position.setTime(parser.nextDateTime());
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
@@ -135,7 +135,7 @@ public class PortmanProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
         position.setRastreador_id(deviceSession.getDeviceId());
 
-        //position.setValid(!parser.next().equals("L"));
+        position.setValido(!parser.next().equals("L"));
         position.setTime(parser.nextDateTime());
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));

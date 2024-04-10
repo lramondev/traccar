@@ -42,7 +42,7 @@ public class EngineHoursHandler extends BaseDataHandler {
             if (last != null) {
                 long hours = last.getLong(Position.KEY_HOURS);
                 if (last.getBoolean(Position.KEY_IGNITION) && position.getBoolean(Position.KEY_IGNITION)) {
-                    hours += position.getDatahora_corrigida().getTime() - last.getDatahora_corrigida().getTime();
+                    hours += position.getDatahora_calculada().getTime() - last.getDatahora_calculada().getTime();
                 }
                 if (hours != 0) {
                     position.set(Position.KEY_HOURS, hours);

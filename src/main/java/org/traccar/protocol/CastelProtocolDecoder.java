@@ -128,7 +128,7 @@ public class CastelProtocolDecoder extends BaseProtocolDecoder {
         }
         position.setLatitude(lat);
         position.setLongitude(lon);
-        //position.setValid((flags & 0x0C) > 0);
+        position.setValido((flags & 0x0C) > 0);
         position.set(Position.KEY_SATELLITES, flags >> 4);
 
         return position;

@@ -41,9 +41,8 @@ public class GeofenceHandler extends BaseDataHandler {
 
     @Override
     protected Position handlePosition(Position position) {
-
-        List<Long> geofenceIds = GeofenceUtil.getCurrentGeofences(config, cacheManager, position);
-        /*if (!geofenceIds.isEmpty()) {
+        /*List<Long> geofenceIds = GeofenceUtil.getCurrentGeofences(config, cacheManager, position);
+        if (!geofenceIds.isEmpty()) {
             position.setGeofenceIds(geofenceIds);
         }*/
         return position;

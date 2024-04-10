@@ -72,7 +72,7 @@ public class Tr900ProtocolDecoder extends BaseProtocolDecoder {
         }
         position.setRastreador_id(deviceSession.getDeviceId());
 
-        //position.setValid(parser.nextInt(0) == 1);
+        position.setValido(parser.nextInt(0) == 1);
 
         position.setTime(parser.nextDateTime());
 

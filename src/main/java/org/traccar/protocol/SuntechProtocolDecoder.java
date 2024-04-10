@@ -157,7 +157,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
         position.setVelocidade(UnitsConverter.knotsFromKph(Double.parseDouble(values[index++])));
         position.setCurso(Double.parseDouble(values[index++]));
 
-        //position.setValid(values[index++].equals("1"));
+        position.setValido(values[index++].equals("1"));
 
         if (getProtocolType(deviceSession.getDeviceId()) == 1) {
             position.set(Position.KEY_ODOMETER, Integer.parseInt(values[index++]));
@@ -282,7 +282,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_SATELLITES, Integer.parseInt(values[index++]));
 
-        //position.setValid(values[index++].equals("1"));
+        position.setValido(values[index++].equals("1"));
 
         return position;
     }
@@ -333,7 +333,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_SATELLITES, Integer.parseInt(values[index++]));
 
-        //position.setValid(values[index++].equals("1"));
+        position.setValido(values[index++].equals("1"));
 
         position.set(Position.KEY_ODOMETER, Integer.parseInt(values[index++]));
         position.set(Position.KEY_POWER, Double.parseDouble(values[index++]));
@@ -550,7 +550,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
 
         if (type.equals("BLE")) {
 
-            //position.setValid(true);
+            position.setValido(true);
 
             int count = Integer.parseInt(values[index++]);
 
@@ -579,7 +579,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
             }
 
             if (BitUtil.check(mask, 16)) {
-                //position.setValid(values[index++].equals("1"));
+                position.setValido(values[index++].equals("1"));
             }
 
             if (BitUtil.check(mask, 17)) {
@@ -710,7 +710,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (BitUtil.check(mask, 16)) {
-            //position.setValid(buf.readUnsignedByte() > 0);
+            position.setValido(buf.readUnsignedByte() > 0);
         }
 
         if (BitUtil.check(mask, 17)) {
@@ -802,7 +802,7 @@ public class SuntechProtocolDecoder extends BaseProtocolDecoder {
                 Position position = new Position(getProtocolName());
                 position.setRastreador_id(deviceSession.getDeviceId());
 
-                //position.setValid(true);
+                position.setValido(true);
                 position.setTime(time);
                 position.setLatitude(crash.readIntLE() * 0.0000001);
                 position.setLongitude(crash.readIntLE() * 0.0000001);

@@ -83,7 +83,7 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
             DeviceSession deviceSession, ByteBuf buf, int sequenceNumber) {
         Position position = new Position(getProtocolName());
 
-        //position.setValid(true);
+        position.setValido(true);
         position.set(Position.KEY_INDEX, sequenceNumber);
         position.setRastreador_id(deviceSession.getDeviceId());
 
@@ -117,7 +117,7 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
             DeviceSession deviceSession, ByteBuf buf, int sequenceNumber) {
         Position position = new Position(getProtocolName());
 
-        //position.setValid(true);
+        position.setValido(true);
         position.set(Position.KEY_INDEX, sequenceNumber);
         position.setRastreador_id(deviceSession.getDeviceId());
 
@@ -165,7 +165,7 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
         position.setCurso(buf.readUnsignedByte() * 2);
 
         short flags = buf.readUnsignedByte();
-        //position.setValid((flags & 0x80) == 0x80 && (flags & 0x40) == 0x40);
+        position.setValido((flags & 0x80) == 0x80 && (flags & 0x40) == 0x40);
 
         buf.readUnsignedByte(); // reserved
 
@@ -188,7 +188,7 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
         position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
 
         short flags = buf.readUnsignedByte();
-        //position.setValid((flags & 0x80) == 0x80 && (flags & 0x40) == 0x40);
+        position.setValido((flags & 0x80) == 0x80 && (flags & 0x40) == 0x40);
 
         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
         position.set(Position.KEY_ODOMETER, buf.readUnsignedIntLE());
@@ -209,7 +209,7 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
         buf.readUnsignedByte(); // GNSS assistance age
 
         long flags = buf.readUnsignedIntLE();
-        //position.setValid((flags & 0x0400) == 0x0400);
+        position.setValido((flags & 0x0400) == 0x0400);
 
         position.setTime(convertTimestamp(buf.readUnsignedIntLE()));
 
@@ -245,7 +245,7 @@ public class NavigilProtocolDecoder extends BaseProtocolDecoder {
         buf.readUnsignedByte(); // tracking mode
 
         short flags = buf.readUnsignedByte();
-        //position.setValid((flags & 0x01) == 0x01);
+        position.setValido((flags & 0x01) == 0x01);
 
         buf.readUnsignedShortLE(); // duration
 

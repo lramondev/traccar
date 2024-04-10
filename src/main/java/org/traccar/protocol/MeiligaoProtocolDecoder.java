@@ -244,7 +244,7 @@ public class MeiligaoProtocolDecoder extends BaseProtocolDecoder {
         DateBuilder dateBuilder = new DateBuilder()
                 .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
 
@@ -297,7 +297,7 @@ public class MeiligaoProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS_DMY));
 
-        //position.setValid(true);
+        position.setValido(true);
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
 

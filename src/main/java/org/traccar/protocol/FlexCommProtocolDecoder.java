@@ -91,7 +91,7 @@ public class FlexCommProtocolDecoder extends BaseProtocolDecoder {
         position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime());
-        //position.setValid(parser.next().equals("1"));
+        position.setValido(parser.next().equals("1"));
         position.setLatitude(parseSignedValue(parser, 6));
         position.setLongitude(parseSignedValue(parser, 6));
         position.setAltitude(parseSignedValue(parser, 0));

@@ -87,7 +87,7 @@ public class TelemaxProtocolDecoder extends BaseProtocolDecoder {
 
             int speed = Integer.parseInt(readValue(sentence, index, 2), 16);
 
-            //position.setValid(BitUtil.check(speed, 7));
+            position.setValido(BitUtil.check(speed, 7));
             position.setVelocidade(BitUtil.to(speed, 7));
 
             position.setLongitude((Integer.parseInt(readValue(sentence, index, 6), 16) - 5400000) / 30000.0);

@@ -21,7 +21,7 @@
     <entry key='mail.debug'>false</entry>
 
     <entry key='database.driver'>com.microsoft.sqlserver.jdbc.SQLServerDriver</entry>
-    <entry key='database.url'>jdbc:sqlserver://192.168.1.10;databaseName=RASTREADOR;trustServerCertificate=true;</entry>
+    <entry key='database.url'>jdbc:sqlserver://192.168.1.10;databaseName=PRAETOR;trustServerCertificate=true;</entry>
     <entry key='database.user'>sa</entry>
     <entry key='database.password'>fdxB2x9a7i2x2</entry>
 

@@ -88,7 +88,7 @@ public class TlvProtocolDecoder extends BaseProtocolDecoder {
             Position position = new Position(getProtocolName());
             position.setRastreador_id(deviceSession.getDeviceId());
 
-            //position.setValid(true);
+            position.setValido(true);
             position.setTime(new Date(Long.parseLong(readArgument(buf)) * 1000));
 
             readArgument(buf); // location identifier

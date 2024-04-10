@@ -157,7 +157,7 @@ public class TytanProtocolDecoder extends BaseProtocolDecoder {
 
             int flags = buf.readUnsignedByte();
             position.set(Position.KEY_SATELLITES, BitUtil.from(flags, 2));
-            //position.setValid(BitUtil.to(flags, 2) > 0);
+            position.setValido(BitUtil.to(flags, 2) > 0);
 
             // Latitude
             double lat = buf.readUnsignedMedium();

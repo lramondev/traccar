@@ -104,7 +104,7 @@ public class M2mProtocolDecoder extends BaseProtocolDecoder {
                 latitude = -latitude;
             }
 
-            //position.setValid(true);
+            position.setValido(true);
             position.setLatitude(latitude);
             position.setLongitude(longitude);
             position.setVelocidade(buf.readUnsignedByte());

@@ -63,7 +63,7 @@ public class GpxExportProvider {
                 writer.print(position.getAltitude());
                 writer.print("</ele>");
                 writer.print("<time>");
-                writer.print(DateUtil.formatDate(position.getDatahora_corrigida()));
+                writer.print(DateUtil.formatDate(position.getDatahora_calculada()));
                 writer.print("</time>");
                 writer.print("</trkpt>");
             });

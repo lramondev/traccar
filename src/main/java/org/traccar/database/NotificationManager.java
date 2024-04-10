@@ -72,7 +72,7 @@ public class NotificationManager {
     }
 
     private void updateEvent(Event event, Position position) {
-        /*try {
+        try {
             event.setId(storage.addObject(event, new Request(new Columns.Exclude("id"))));
         } catch (StorageException error) {
             LOGGER.warn("Event save error", error);
@@ -98,13 +98,13 @@ public class NotificationManager {
                 })
                 .collect(Collectors.toUnmodifiableList());
                 
-        if (!notifications.isEmpty()) {*/
+        if (!notifications.isEmpty()) {
             /*
             if (position != null && position.getAddress() == null && geocodeOnRequest && geocoder != null) {
                 position.setAddress(geocoder.getAddress(position.getLatitude(), position.getLongitude(), null));
             }
             */
-            /*notifications.forEach(notification -> {
+            notifications.forEach(notification -> {
                 cacheManager.getNotificationUsers(notification.getId(), event.getRastreador_id()).forEach(user -> {
                     for (String notificator : notification.getNotificatorsTypes()) {
                         try {
@@ -117,7 +117,7 @@ public class NotificationManager {
             });
         }
 
-        forwardEvent(event, position);*/
+        forwardEvent(event, position);
     }
 
     private void forwardEvent(Event event, Position position) {

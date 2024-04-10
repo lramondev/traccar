@@ -275,7 +275,7 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
         calendar.add(Calendar.SECOND, bits.readUnsigned(25));
         position.setTime(calendar.getTime());
 
-        //position.setValid(bits.readUnsigned(1) == 0);
+        position.setValido(bits.readUnsigned(1) == 0);
         position.setLongitude(360 * bits.readUnsigned(22) / 4194304.0 - 180);
         position.setLatitude(180 * bits.readUnsigned(21) / 2097152.0 - 90);
         if (bits.readUnsigned(1) > 0) {
@@ -331,7 +331,7 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
             while (data.isReadable()) {
                 int tag = data.readUnsignedByte();
                 if (tag == 0x30) {
-                    //position.setValid((data.readUnsignedByte() & 0xf0) == 0x00);
+                    position.setValido((data.readUnsignedByte() & 0xf0) == 0x00);
                     position.setLatitude(data.readIntLE() / 1000000.0);
                     position.setLongitude(data.readIntLE() / 1000000.0);
                 } else {
@@ -359,7 +359,7 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
 
             int tag = buf.readUnsignedByte();
             if (tags.contains(tag)) {
-                if (hasLocation && position.getDatahora_corrigida() != null) {
+                if (hasLocation && position.getDatahora_calculada() != null) {
                     positions.add(position);
                 }
                 tags.clear();
@@ -373,7 +373,7 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
                         channel, remoteAddress, buf.readSlice(15).toString(StandardCharsets.US_ASCII));
             } else if (tag == 0x30) {
                 hasLocation = true;
-                //position.setValid((buf.readUnsignedByte() & 0xf0) == 0x00);
+                position.setValido((buf.readUnsignedByte() & 0xf0) == 0x00);
                 position.setLatitude(buf.readIntLE() / 1000000.0);
                 position.setLongitude(buf.readIntLE() / 1000000.0);
             } else {
@@ -389,7 +389,7 @@ public class GalileoProtocolDecoder extends BaseProtocolDecoder {
             }
         }
 
-        if (hasLocation && position.getDatahora_corrigida() != null) {
+        if (hasLocation && position.getDatahora_calculada() != null) {
             positions.add(position);
         } else if (position.hasAttribute(Position.KEY_RESULT)) {
             position.setRastreador_id(deviceSession.getDeviceId());

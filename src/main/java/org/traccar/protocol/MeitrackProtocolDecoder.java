@@ -167,7 +167,7 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime());
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
         int rssi = parser.nextInt();
@@ -332,7 +332,7 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
 
             position.setTime(new Date((946684800 + buf.readUnsignedIntLE()) * 1000)); // 946684800 = 2000-01-01
 
-            //position.setValid(buf.readUnsignedByte() == 1);
+            position.setValido(buf.readUnsignedByte() == 1);
 
             position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
             int rssi = buf.readUnsignedByte();
@@ -406,7 +406,7 @@ public class MeitrackProtocolDecoder extends BaseProtocolDecoder {
                         position.set(Position.KEY_EVENT, buf.readUnsignedByte());
                         break;
                     case 0x05:
-                        //position.setValid(buf.readUnsignedByte() > 0);
+                        position.setValido(buf.readUnsignedByte() > 0);
                         break;
                     case 0x06:
                         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());

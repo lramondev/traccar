@@ -147,8 +147,8 @@ public abstract class BaseProtocolDecoder extends ExtendedObjectDecoder {
 
             Position last = cacheManager.getPosition(position.getRastreador_id());
             if (last != null) {
-                position.setDatahora_corrigida(last.getDatahora_corrigida());
-                //position.setValid(last.getValid());
+                position.setDatahora_calculada(last.getDatahora_calculada());
+                position.setValido(last.getValido());
                 position.setLatitude(last.getLatitude());
                 position.setLongitude(last.getLongitude());
                 position.setAltitude(last.getAltitude());
@@ -156,7 +156,7 @@ public abstract class BaseProtocolDecoder extends ExtendedObjectDecoder {
                 position.setCurso(last.getCurso());
                 position.setPrecisao(last.getPrecisao());
             } else {
-                position.setDatahora_corrigida(new Date(0));
+                position.setDatahora_calculada(new Date(0));
             }
 
             if (deviceTime != null) {

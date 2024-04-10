@@ -84,7 +84,7 @@ public class AppelloProtocolDecoder extends BaseProtocolDecoder {
 
         position.setAltitude(parser.nextDouble(0));
 
-        //position.setValid(parser.next().equals("F"));
+        position.setValido(parser.next().equals("F"));
 
         return position;
     }

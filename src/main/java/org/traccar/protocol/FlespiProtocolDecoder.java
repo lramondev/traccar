@@ -64,7 +64,7 @@ public class FlespiProtocolDecoder extends BaseHttpProtocolDecoder {
             }
             Position position = new Position(getProtocolName());
             position.setRastreador_id(deviceSession.getDeviceId());
-            //position.setValid(true);
+            position.setValido(true);
             decodePosition(message, position);
             positions.add(position);
         }
@@ -116,7 +116,7 @@ public class FlespiProtocolDecoder extends BaseHttpProtocolDecoder {
                 position.set(Position.KEY_SATELLITES, ((JsonNumber) value).intValue());
                 return true;
             case "position.valid":
-                //position.setValid(value == JsonValue.TRUE);
+                position.setValido(value == JsonValue.TRUE);
                 return true;
             case "position.hdop":
                 position.set(Position.KEY_HDOP, ((JsonNumber) value).doubleValue());

@@ -78,7 +78,7 @@ public class JpKorjarProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_BATTERY, parser.nextDouble(0));
 
-        //position.setValid(parser.nextInt(0) == 1);
+        position.setValido(parser.nextInt(0) == 1);
 
         position.setRede(new Network(CellTower.from(
                 parser.nextInt(0), parser.nextInt(0), parser.nextHexInt(0), parser.nextHexInt(0))));

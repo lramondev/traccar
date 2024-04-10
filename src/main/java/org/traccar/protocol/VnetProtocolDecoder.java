@@ -86,7 +86,7 @@ public class VnetProtocolDecoder extends BaseProtocolDecoder {
             double lon = degrees + value % 10000000 * 0.00001 / 60;
 
             int flags = buf.readUnsignedByte();
-            //position.setValid(BitUtil.check(flags, 0));
+            position.setValido(BitUtil.check(flags, 0));
             position.setLatitude(BitUtil.check(flags, 1) ? lat : -lat);
             position.setLongitude(BitUtil.check(flags, 2) ? lon : -lon);
 

@@ -78,7 +78,7 @@ public class TechtoCruzProtocolDecoder extends BaseProtocolDecoder {
         position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(parser.nextDateTime());
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
 
         position.set("registration", parser.next());
 

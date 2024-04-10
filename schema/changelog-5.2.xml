@@ -9,7 +9,7 @@
   <changeSet author="author" id="changelog-5.2">
 
     <addColumn tableName="geolocal_rastreador">
-      <column name="status" type="CHAR(8)" />
+      <column name="situacao" type="CHAR(8)" />
     </addColumn>
 
     <!--

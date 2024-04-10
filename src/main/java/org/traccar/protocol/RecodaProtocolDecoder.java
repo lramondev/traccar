@@ -86,7 +86,7 @@ public class RecodaProtocolDecoder extends BaseProtocolDecoder {
 
                 int status = buf.readUnsignedByte();
 
-                //position.setValid(BitUtil.check(status, 0));
+                position.setValido(BitUtil.check(status, 0));
                 if (BitUtil.check(status, 1)) {
                     position.setLongitude(-position.getLongitude());
                 }

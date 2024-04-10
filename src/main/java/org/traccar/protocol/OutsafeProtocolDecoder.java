@@ -58,7 +58,7 @@ public class OutsafeProtocolDecoder extends BaseHttpProtocolDecoder {
         position.setRastreador_id(deviceSession.getDeviceId());
 
         position.setTime(new Date());
-        //position.setValid(true);
+        position.setValido(true);
         position.setLatitude(json.getJsonNumber("latitude").doubleValue());
         position.setLongitude(json.getJsonNumber("longitude").doubleValue());
         position.setAltitude(json.getJsonNumber("altitude").doubleValue());

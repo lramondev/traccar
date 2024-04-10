@@ -106,7 +106,7 @@ public class MainEventHandler extends ChannelInboundHandlerAdapter {
             for (String attribute : logAttributes) {
                 switch (attribute) {
                     case "time":
-                        builder.append(", time: ").append(DateUtil.formatDate(position.getDatahora_corrigida(), false));
+                        builder.append(", time: ").append(DateUtil.formatDate(position.getDatahora_calculada(), false));
                         break;
                     case "position":
                         builder.append(", lat: ").append(String.format("%.5f", position.getLatitude()));
@@ -129,12 +129,12 @@ public class MainEventHandler extends ChannelInboundHandlerAdapter {
                         if (position.getOutdated()) {
                             builder.append(", outdated");
                         }
-                        break;
+                        break;*/
                     case "invalid":
-                        if (!position.getValid()) {
+                        if (!position.getValido()) {
                             builder.append(", invalid");
                         }
-                        break;*/
+                        break;
                     default:
                         Object value = position.getAttributes().get(attribute);
                         if (value != null) {

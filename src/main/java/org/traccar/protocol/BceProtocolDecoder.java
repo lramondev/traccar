@@ -51,7 +51,7 @@ public class BceProtocolDecoder extends BaseProtocolDecoder {
     private void decodeMask1(ByteBuf buf, int mask, Position position) {
 
         if (BitUtil.check(mask, 0)) {
-            //position.setValid(true);
+            position.setValido(true);
             position.setLongitude(buf.readFloatLE());
             position.setLatitude(buf.readFloatLE());
             position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));
@@ -318,9 +318,9 @@ public class BceProtocolDecoder extends BaseProtocolDecoder {
 
                 buf.readerIndex(structEnd);
 
-                //if (position.getValid()) {
-                    //positions.add(position);
-                /* } else */if (!position.getAttributes().isEmpty()) {
+                if (position.getValido()) {
+                    positions.add(position);
+                } else if (!position.getAttributes().isEmpty()) {
                     getLastLocation(position, null);
                     positions.add(position);
                 }

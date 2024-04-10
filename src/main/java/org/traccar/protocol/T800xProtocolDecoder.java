@@ -219,10 +219,10 @@ public class T800xProtocolDecoder extends BaseProtocolDecoder {
 
             if (type == MSG_DRIVER_BEHAVIOR_2) {
                 int status = buf.readUnsignedByte();
-                //position.setValid(!BitUtil.check(status, 7));
+                position.setValido(!BitUtil.check(status, 7));
                 buf.skipBytes(5); // acceleration
             } else {
-                //position.setValid(true);
+                position.setValido(true);
             }
 
             position.setAltitude(buf.readFloatLE());
@@ -415,7 +415,7 @@ public class T800xProtocolDecoder extends BaseProtocolDecoder {
 
         if (BitUtil.check(status, 6)) {
 
-            //position.setValid(true);
+            position.setValido(true);
             position.setTime(readDate(buf));
             position.setAltitude(buf.readFloatLE());
             position.setLongitude(buf.readFloatLE());

@@ -191,7 +191,7 @@ public class Tlt2hProtocolDecoder extends BaseProtocolDecoder {
                     DateBuilder dateBuilder = new DateBuilder()
                             .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
-                    //position.setValid(parser.next().equals("A"));
+                    position.setValido(parser.next().equals("A"));
                     position.setLatitude(parser.nextCoordinate());
                     position.setLongitude(parser.nextCoordinate());
                     position.setVelocidade(parser.nextDouble(0));

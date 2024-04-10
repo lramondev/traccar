@@ -76,13 +76,13 @@ public class WliProtocolDecoder extends BaseProtocolDecoder {
                     int endIndex = buf.readUnsignedShort() + buf.readerIndex();
 
                     if (fieldNumber == 52) {
-                        //position.setValid(true);
+                        position.setValido(true);
                         buf.readUnsignedByte(); // reason
                         buf.readUnsignedByte(); // century
                         DateBuilder dateBuilder = new DateBuilder()
                                 .setDate(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
                                 .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte());
-                        position.setDatahora_corrigida(dateBuilder.getDate());
+                        position.setDatahora_calculada(dateBuilder.getDate());
                         position.setLatitude(buf.readInt() / 600000.0);
                         position.setLongitude(buf.readInt() / 600000.0);
                         position.setVelocidade(buf.readUnsignedShort());
@@ -164,9 +164,9 @@ public class WliProtocolDecoder extends BaseProtocolDecoder {
                 position.setRede(new Network(cellTower));
             }
 
-            //if (!position.getValid()) {
-                //getLastLocation(position, position.getDatahora_rastreador());
-            //}
+            if (!position.getValido()) {
+                getLastLocation(position, position.getDatahora_rastreador());
+            }
 
             return position;
 

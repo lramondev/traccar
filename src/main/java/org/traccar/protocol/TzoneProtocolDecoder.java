@@ -98,7 +98,7 @@ public class TzoneProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (hardware == 0x413) {
-            position.setDatahora_corrigida(new DateBuilder()
+            position.setDatahora_calculada(new DateBuilder()
                     .setDate(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
                     .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte()).getDate());
         }
@@ -126,7 +126,7 @@ public class TzoneProtocolDecoder extends BaseProtocolDecoder {
 
         } else {
 
-            position.setDatahora_corrigida(new DateBuilder()
+            position.setDatahora_calculada(new DateBuilder()
                     .setDate(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
                     .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte()).getDate());
 
@@ -144,7 +144,7 @@ public class TzoneProtocolDecoder extends BaseProtocolDecoder {
                 lon = -lon;
             }
             position.setLongitude(lon);
-            //position.setValid(BitUtil.check(flags, 11));
+            position.setValido(BitUtil.check(flags, 11));
 
         }
 

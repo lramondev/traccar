@@ -189,7 +189,7 @@ public class Mta6ProtocolDecoder extends BaseProtocolDecoder {
                     position.set(Position.KEY_RSSI, (buf.getUnsignedByte(buf.readerIndex()) >> 4) & 0x07);
 
                     int satellites = buf.readUnsignedByte() & 0x0f;
-                    //position.setValid(satellites >= 3);
+                    position.setValido(satellites >= 3);
                     position.set(Position.KEY_SATELLITES, satellites);
                 }
                 positions.add(position);
@@ -267,7 +267,7 @@ public class Mta6ProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_RSSI, buf.getUnsignedByte(buf.readerIndex()) >> 5);
 
             int satellites = buf.readUnsignedByte() & 0x1f;
-            //position.setValid(satellites >= 3);
+            position.setValido(satellites >= 3);
             position.set(Position.KEY_SATELLITES, satellites);
         }
 

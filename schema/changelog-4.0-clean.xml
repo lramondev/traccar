@@ -307,14 +307,12 @@
       <column name="datahora_rastreador" type="TIMESTAMP">
         <constraints nullable="false" />
       </column>
-      <column name="datahora_corrigida" type="TIMESTAMP">
+      <column name="datahora_calculada" type="TIMESTAMP">
         <constraints nullable="false" />
       </column>
-      <!--
-      <column name="valid" type="BOOLEAN">
+      <column name="valido" type="BOOLEAN">
         <constraints nullable="false" />
       </column>
-      -->
       <column name="latitude" type="DOUBLE">
         <constraints nullable="false" />
       </column>

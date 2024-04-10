@@ -62,7 +62,7 @@ public class PricolProtocolDecoder extends BaseProtocolDecoder {
                 .setDateReverse(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte())
                 .setTime(buf.readUnsignedByte(), buf.readUnsignedByte(), buf.readUnsignedByte()).getDate());
 
-        //position.setValid(true);
+        position.setValido(true);
 
         double lat = buf.getUnsignedShort(buf.readerIndex()) / 100;
         lat += (buf.readUnsignedShort() % 100 * 10000 + buf.readUnsignedShort()) / 600000.0;

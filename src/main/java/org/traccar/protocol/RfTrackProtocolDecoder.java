@@ -100,12 +100,12 @@ public class RfTrackProtocolDecoder extends BaseHttpProtocolDecoder {
                         break;
                     case "gps":
                         JsonObject location = Json.createReader(new StringReader(value)).readObject();
-                        //position.setValid(true);
+                        position.setValido(true);
                         position.setPrecisao(location.getJsonNumber("a").doubleValue());
                         position.setLongitude(location.getJsonNumber("x").doubleValue());
                         position.setLatitude(location.getJsonNumber("y").doubleValue());
                         position.setAltitude(location.getJsonNumber("z").doubleValue());
-                        position.setDatahora_corrigida(new Date(location.getJsonNumber("t").longValue()));
+                        position.setDatahora_calculada(new Date(location.getJsonNumber("t").longValue()));
                         break;
                     case "gsm":
                         JsonObject cellInfo = Json.createReader(new StringReader(value)).readObject();
@@ -144,7 +144,7 @@ public class RfTrackProtocolDecoder extends BaseHttpProtocolDecoder {
             }
         }
 
-        if (position.getDatahora_corrigida() == null) {
+        if (position.getDatahora_calculada() == null) {
             getLastLocation(position, position.getDatahora_rastreador());
         }
 

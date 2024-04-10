@@ -130,9 +130,9 @@ public class GlobalSatProtocolDecoder extends BaseProtocolDecoder {
                     break;
                 case 'A':
                     if (value.isEmpty()) {
-                        //position.setValid(false);
+                        position.setValido(false);
                     } else {
-                        //position.setValid(Integer.parseInt(value) != 1);
+                        position.setValido(Integer.parseInt(value) != 1);
                     }
                     break;
                 case 'B':
@@ -292,7 +292,7 @@ public class GlobalSatProtocolDecoder extends BaseProtocolDecoder {
         }
         position.setRastreador_id(deviceSession.getDeviceId());
 
-        //position.setValid(!parser.next().equals("1"));
+        position.setValido(!parser.next().equals("1"));
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
         position.setLongitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));
         position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.HEM_DEG_MIN));

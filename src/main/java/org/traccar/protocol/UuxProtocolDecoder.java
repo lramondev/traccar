@@ -98,7 +98,7 @@ public class UuxProtocolDecoder extends BaseProtocolDecoder {
             buf.readUnsignedShort(); // flags
 
             buf.readUnsignedByte(); // position status
-            //position.setValid(true);
+            position.setValido(true);
 
             position.set(Position.KEY_SATELLITES, readInt(buf, 2));
 

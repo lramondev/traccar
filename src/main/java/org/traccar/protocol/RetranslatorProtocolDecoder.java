@@ -72,7 +72,7 @@ public class RetranslatorProtocolDecoder extends BaseProtocolDecoder {
             buf.readByte();
 
             if (name.equals("posinfo")) {
-                //position.setValid(true);
+                position.setValido(true);
                 position.setLongitude(buf.readDoubleLE());
                 position.setLatitude(buf.readDoubleLE());
                 position.setAltitude(buf.readDoubleLE());

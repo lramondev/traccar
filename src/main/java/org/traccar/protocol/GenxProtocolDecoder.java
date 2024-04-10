@@ -53,7 +53,7 @@ public class GenxProtocolDecoder extends BaseProtocolDecoder {
         String[] values = ((String) msg).split(",");
 
         Position position = new Position(getProtocolName());
-        //position.setValid(true);
+        position.setValido(true);
 
         for (int i = 0; i < Math.min(values.length, reportColumns.length); i++) {
             switch (reportColumns[i]) {

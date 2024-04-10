@@ -88,7 +88,7 @@ public class CarcellProtocolDecoder extends BaseProtocolDecoder {
 
         Position position = new Position(getProtocolName());
         position.set(Position.KEY_ARCHIVE, parser.next().equals("%"));
-        //position.setValid(true);
+        position.setValido(true);
 
         DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
         if (deviceSession == null) {

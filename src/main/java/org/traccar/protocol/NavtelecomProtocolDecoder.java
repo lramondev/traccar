@@ -210,11 +210,11 @@ public class NavtelecomProtocolDecoder extends BaseProtocolDecoder {
                                     break;
                                 case 8:
                                     value = buf.readUnsignedByte();
-                                    //position.setValid(BitUtil.check(value, 1));
+                                    position.setValido(BitUtil.check(value, 1));
                                     position.set(Position.KEY_SATELLITES, BitUtil.from(value, 2));
                                     break;
                                 case 9:
-                                    position.setDatahora_corrigida(new Date(buf.readUnsignedIntLE() * 1000));
+                                    position.setDatahora_calculada(new Date(buf.readUnsignedIntLE() * 1000));
                                     break;
                                 case 10:
                                     position.setLatitude(buf.readIntLE() * 0.0001 / 60);
@@ -312,7 +312,7 @@ public class NavtelecomProtocolDecoder extends BaseProtocolDecoder {
                         }
                     }
 
-                    if (position.getDatahora_corrigida() == null) {
+                    if (position.getDatahora_calculada() == null) {
                         getLastLocation(position, position.getDatahora_rastreador());
                     }
 

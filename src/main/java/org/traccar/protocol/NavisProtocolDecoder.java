@@ -207,7 +207,7 @@ public class NavisProtocolDecoder extends BaseProtocolDecoder {
 
         if (isFormat(format, F20, F50, F51, F52, F60)) {
             int navSensorState = buf.readUnsignedByte();
-            //position.setValid(BitUtil.check(navSensorState, 1));
+            position.setValido(BitUtil.check(navSensorState, 1));
             if (isFormat(format, F60)) {
                 position.set(Position.KEY_SATELLITES, BitUtil.from(navSensorState, 2));
             }
@@ -269,7 +269,7 @@ public class NavisProtocolDecoder extends BaseProtocolDecoder {
         response.writeIntLE((int) position.getLong(Position.KEY_INDEX));
         sendNtcbReply(channel, response);
 
-        return position.getDatahora_corrigida() != null ? position : null;
+        return position.getDatahora_calculada() != null ? position : null;
     }
 
     private Object processNtcbArray(DeviceSession deviceSession, Channel channel, ByteBuf buf) {
@@ -278,7 +278,7 @@ public class NavisProtocolDecoder extends BaseProtocolDecoder {
 
         for (int i = 0; i < count; i++) {
             Position position = parseNtcbPosition(deviceSession, buf);
-            if (position.getDatahora_corrigida() != null) {
+            if (position.getDatahora_calculada() != null) {
                 positions.add(position);
             }
         }
@@ -343,7 +343,7 @@ public class NavisProtocolDecoder extends BaseProtocolDecoder {
                     break;
                 case 7:
                     int navSensorState = buf.readUnsignedByte();
-                    //position.setValid(BitUtil.check(navSensorState, 1));
+                    position.setValido(BitUtil.check(navSensorState, 1));
                     position.set(Position.KEY_SATELLITES, BitUtil.from(navSensorState, 2));
                     break;
                 case 8:
@@ -469,7 +469,7 @@ public class NavisProtocolDecoder extends BaseProtocolDecoder {
             buf.readUnsignedInt(); // event time
 
             int navSensorState = buf.readUnsignedByte();
-            //position.setValid(BitUtil.check(navSensorState, 1));
+            position.setValido(BitUtil.check(navSensorState, 1));
             position.set(Position.KEY_SATELLITES, BitUtil.from(navSensorState, 2));
 
             position.setTime(new DateBuilder(new Date(buf.readUnsignedIntLE() * 1000)).getDate());
@@ -504,7 +504,7 @@ public class NavisProtocolDecoder extends BaseProtocolDecoder {
         response.writeIntLE((int) position.getLong(Position.KEY_INDEX));
         sendFlexReply(channel, response);
 
-        return position.getDatahora_corrigida() != null ? position : null;
+        return position.getDatahora_calculada() != null ? position : null;
     }
 
     private Object processFlexArray(
@@ -515,7 +515,7 @@ public class NavisProtocolDecoder extends BaseProtocolDecoder {
 
         for (int i = 0; i < count; i++) {
             Position position = parser.parsePosition(deviceSession, buf);
-            if (position.getDatahora_corrigida() != null) {
+            if (position.getDatahora_calculada() != null) {
                 positions.add(position);
             }
         }

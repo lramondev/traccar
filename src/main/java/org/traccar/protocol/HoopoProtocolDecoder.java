@@ -55,7 +55,7 @@ public class HoopoProtocolDecoder extends BaseProtocolDecoder {
             Date time = new Date(OffsetDateTime.parse(json.getString("eventTime")).toInstant().toEpochMilli());
             position.setTime(time);
 
-            //position.setValid(true);
+            position.setValido(true);
             position.setLatitude(eventData.getJsonNumber("latitude").doubleValue());
             position.setLongitude(eventData.getJsonNumber("longitude").doubleValue());
 

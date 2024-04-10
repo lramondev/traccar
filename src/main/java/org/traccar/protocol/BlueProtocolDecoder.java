@@ -113,7 +113,7 @@ public class BlueProtocolDecoder extends BaseProtocolDecoder {
                 buf.readUnsignedByte(); // reserved
                 int flags = buf.readUnsignedByte();
 
-                //position.setValid(BitUtil.check(flags, 7));
+                position.setValido(BitUtil.check(flags, 7));
                 position.setLatitude(readCoordinate(buf, BitUtil.check(flags, 6)));
                 position.setLongitude(readCoordinate(buf, BitUtil.check(flags, 5)));
                 position.setVelocidade(buf.readUnsignedShort() + buf.readUnsignedShort() * 0.001);
@@ -164,7 +164,7 @@ public class BlueProtocolDecoder extends BaseProtocolDecoder {
             buf.readerIndex(frameEnd);
         }
 
-        return position.getDatahora_corrigida() != null ? position : null;
+        return position.getDatahora_calculada() != null ? position : null;
     }
 
 }

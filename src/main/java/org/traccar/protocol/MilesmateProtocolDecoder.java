@@ -98,7 +98,7 @@ public class MilesmateProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_BLOCKED, flags.charAt(0) == '1');
         position.set(Position.KEY_ALARM, flags.charAt(1) == '1' ? Position.ALARM_TOW : null);
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
 
         position.setCurso(parser.nextDouble());
 

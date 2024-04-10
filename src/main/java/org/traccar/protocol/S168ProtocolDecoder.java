@@ -67,7 +67,7 @@ public class S168ProtocolDecoder extends BaseProtocolDecoder {
 
             switch (type) {
                 case "GDATA":
-                    //position.setValid(values[index++].equals("A"));
+                    position.setValido(values[index++].equals("A"));
                     position.set(Position.KEY_SATELLITES, Integer.parseInt(values[index++]));
                     DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
                     dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));

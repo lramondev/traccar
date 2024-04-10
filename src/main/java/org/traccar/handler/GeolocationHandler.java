@@ -52,7 +52,8 @@ public class GeolocationHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(final ChannelHandlerContext ctx, Object message) {
         if (message instanceof Position) {
             final Position position = (Position) message;
-            if (processInvalidPositions) {
+            if ((processInvalidPositions && !position.getValido())
+                    && position.getRede() != null) {
                 if (reuse) {
                     Position lastPosition = cacheManager.getPosition(position.getRastreador_id());
                     if (lastPosition != null && position.getRede().equals(lastPosition.getRede())) {
@@ -92,8 +93,8 @@ public class GeolocationHandler extends ChannelInboundHandlerAdapter {
 
     private void updatePosition(Position position, double latitude, double longitude, double accuracy) {
         position.set(Position.KEY_APPROXIMATE, true);
-        //position.setValid(true);
-        position.setDatahora_corrigida(position.getDatahora_rastreador());
+        position.setValido(true);
+        position.setDatahora_calculada(position.getDatahora_rastreador());
         position.setLatitude(latitude);
         position.setLongitude(longitude);
         position.setPrecisao(accuracy);

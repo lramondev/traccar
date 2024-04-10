@@ -95,7 +95,7 @@ public class Gt02ProtocolDecoder extends BaseProtocolDecoder {
             buf.skipBytes(3); // reserved
 
             long flags = buf.readUnsignedInt();
-            //position.setValid(BitUtil.check(flags, 0));
+            position.setValido(BitUtil.check(flags, 0));
             if (!BitUtil.check(flags, 1)) {
                 latitude = -latitude;
             }

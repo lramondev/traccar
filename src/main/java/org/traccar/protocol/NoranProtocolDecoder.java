@@ -86,7 +86,7 @@ public class NoranProtocolDecoder extends BaseProtocolDecoder {
                 buf.readUnsignedIntLE(); // GIS port
             }
 
-            //position.setValid(BitUtil.check(buf.readUnsignedByte(), 0));
+            position.setValido(BitUtil.check(buf.readUnsignedByte(), 0));
 
             short alarm = buf.readUnsignedByte();
             switch (alarm) {

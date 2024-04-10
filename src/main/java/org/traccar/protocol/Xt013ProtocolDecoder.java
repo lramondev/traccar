@@ -81,7 +81,7 @@ public class Xt013ProtocolDecoder extends BaseProtocolDecoder {
         position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
         position.setCurso(parser.nextDouble(0));
         position.setAltitude(parser.nextDouble(0));
-        //position.setValid(parser.next().equals("F"));
+        position.setValido(parser.next().equals("F"));
 
         position.set(Position.KEY_SATELLITES, parser.nextInt());
         position.set(Position.KEY_RSSI, parser.nextDouble());

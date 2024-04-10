@@ -139,7 +139,7 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
         double longitude = readCoordinate(buf, true);
 
         int flags = buf.readUnsignedByte() & 0x0f;
-        //position.setValid((flags & 0x02) != 0);
+        position.setValido((flags & 0x02) != 0);
         if ((flags & 0x04) == 0) {
             latitude = -latitude;
         }
@@ -343,11 +343,11 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
         }
 
         if (parser.hasNext()) {
-            //position.setValid(parser.next().equals("A"));
+            position.setValido(parser.next().equals("A"));
         }
         if (parser.hasNext()) {
             parser.nextInt(); // coding scheme
-            //position.setValid(true);
+            position.setValido(true);
         }
 
         if (parser.hasNext(3)) {
@@ -554,7 +554,7 @@ public class H02ProtocolDecoder extends BaseProtocolDecoder {
 
         } else {
 
-            //position.setValid(true);
+            position.setValido(true);
             position.setLatitude(parser.nextCoordinate());
             position.setLongitude(parser.nextCoordinate());
             position.setVelocidade(parser.nextDouble());

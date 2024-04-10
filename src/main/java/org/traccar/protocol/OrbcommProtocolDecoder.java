@@ -107,8 +107,8 @@ public class OrbcommProtocolDecoder extends BaseProtocolDecoder {
                 }
 
                 if (position.getLatitude() != 0 && position.getLongitude() != 0) {
-                    //position.setValid(true);
-                    position.setDatahora_corrigida(position.getDatahora_rastreador());
+                    position.setValido(true);
+                    position.setDatahora_calculada(position.getDatahora_rastreador());
                 } else {
                     getLastLocation(position, position.getDatahora_rastreador());
                 }

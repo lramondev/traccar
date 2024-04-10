@@ -65,7 +65,7 @@ public class MotionEventHandler extends BaseEventHandler {
         }
         boolean processInvalid = AttributeUtil.lookup(
                 cacheManager, Keys.EVENT_MOTION_PROCESS_INVALID_POSITIONS, deviceId);
-        if (!processInvalid) {
+        if (!processInvalid && !position.getValido()) {
             return null;
         }
 

@@ -70,7 +70,7 @@ public class PacificTrackProtocolDecoder extends BaseProtocolDecoder {
                     position.set(Position.KEY_EVENT, readBitExt(buf));
                     break;
                 case 0x10:
-                    //position.setValid(BitUtil.check(buf.readUnsignedByte(), 4));
+                    position.setValido(BitUtil.check(buf.readUnsignedByte(), 4));
                     int date = buf.readUnsignedByte();
                     DateBuilder dateBuilder = new DateBuilder()
                             .setDate(2020 + BitUtil.from(date, 4), BitUtil.to(date, 4), buf.readUnsignedByte())
@@ -211,7 +211,7 @@ public class PacificTrackProtocolDecoder extends BaseProtocolDecoder {
 
         if (deviceSession != null) {
             position.setRastreador_id(deviceSession.getDeviceId());
-            if (position.getDatahora_corrigida() == null) {
+            if (position.getDatahora_calculada() == null) {
                 getLastLocation(position, null);
             }
             return position;

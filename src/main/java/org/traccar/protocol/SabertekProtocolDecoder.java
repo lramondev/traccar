@@ -119,7 +119,7 @@ public class SabertekProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_ALARM, Position.ALARM_CORNERING);
         }
 
-        //position.setValid(parser.nextInt() == 1);
+        position.setValido(parser.nextInt() == 1);
         position.setLatitude(parser.nextDouble());
         position.setLongitude(parser.nextDouble());
         position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt()));

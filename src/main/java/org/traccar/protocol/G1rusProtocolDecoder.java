@@ -70,7 +70,7 @@ public class G1rusProtocolDecoder extends BaseProtocolDecoder {
             if (BitUtil.check(locationMask, 0)) {
                 int validity = buf.readUnsignedByte();
                 position.set(Position.KEY_SATELLITES, BitUtil.to(validity, 5));
-                //position.setValid(BitUtil.between(validity, 5, 7) == 2);
+                position.setValido(BitUtil.between(validity, 5, 7) == 2);
             }
             if (BitUtil.check(locationMask, 1)) {
                 position.setLatitude(buf.readInt() / 1000000.0);

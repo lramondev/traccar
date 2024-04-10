@@ -100,7 +100,7 @@ public class TechTltProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
         position.setRastreador_id(deviceSession.getDeviceId());
 
-        //position.setValid(true);
+        position.setValido(true);
         position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS_DMY));
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());

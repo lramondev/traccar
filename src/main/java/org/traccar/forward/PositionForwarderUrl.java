@@ -94,12 +94,12 @@ public class PositionForwarderUrl implements PositionForwarder {
         String request = url
                 .replace("{name}", URLEncoder.encode(device.getDescricao(), StandardCharsets.UTF_8))
                 .replace("{uniqueId}", device.getImei())
-                .replace("{status}", device.getStatus())
+                .replace("{status}", device.getSituacao())
                 .replace("{deviceId}", String.valueOf(position.getRastreador_id()))
                 .replace("{protocol}", String.valueOf(position.getProtocolo()))
                 .replace("{deviceTime}", String.valueOf(position.getDatahora_rastreador().getTime()))
-                .replace("{fixTime}", String.valueOf(position.getDatahora_corrigida().getTime()))
-                //.replace("{valid}", String.valueOf(position.getValid()))
+                .replace("{fixTime}", String.valueOf(position.getDatahora_calculada().getTime()))
+                .replace("{valid}", String.valueOf(position.getValido()))
                 .replace("{latitude}", String.valueOf(position.getLatitude()))
                 .replace("{longitude}", String.valueOf(position.getLongitude()))
                 .replace("{altitude}", String.valueOf(position.getAltitude()))
@@ -135,7 +135,7 @@ public class PositionForwarderUrl implements PositionForwarder {
         try (Formatter f = new Formatter(s, Locale.ENGLISH)) {
 
             Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"), Locale.ENGLISH);
-            calendar.setTimeInMillis(position.getDatahora_corrigida().getTime());
+            calendar.setTimeInMillis(position.getDatahora_calculada().getTime());
 
             f.format("%1$tH%1$tM%1$tS.%1$tL,A,", calendar);
 

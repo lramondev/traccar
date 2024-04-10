@@ -125,8 +125,8 @@ public class PstProtocolDecoder extends BaseProtocolDecoder {
                         }
                         break;
                     case 0x10:
-                        //position.setValid(true);
-                        position.setDatahora_corrigida(readDate(buf));
+                        position.setValido(true);
+                        position.setDatahora_calculada(readDate(buf));
                         position.setLatitude(readCoordinate(buf));
                         position.setLongitude(readCoordinate(buf));
                         position.setVelocidade(buf.readUnsignedByte());
@@ -140,7 +140,7 @@ public class PstProtocolDecoder extends BaseProtocolDecoder {
                 }
             }
 
-            return position.getDatahora_corrigida() != null ? position : null;
+            return position.getDatahora_calculada() != null ? position : null;
         }
 
         return null;

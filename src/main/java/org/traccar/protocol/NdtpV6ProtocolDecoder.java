@@ -93,7 +93,7 @@ public class NdtpV6ProtocolDecoder extends BaseProtocolDecoder {
             position.setLatitude(buf.readIntLE() / 10000000.0);
 
             short flags = buf.readUnsignedByte();
-            //position.setValid(BitUtil.check(flags, 7));
+            position.setValido(BitUtil.check(flags, 7));
             if (BitUtil.check(flags, 1)) {
                 position.set(Position.KEY_ALARM, Position.ALARM_GENERAL);
             }
@@ -172,7 +172,7 @@ public class NdtpV6ProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_RESULT, String.valueOf(NPH_SGC_RESULT));
             position.setTime(new Date());
             getLastLocation(position, new Date());
-            //position.setValid(false);
+            position.setValido(false);
 
             return position;
 

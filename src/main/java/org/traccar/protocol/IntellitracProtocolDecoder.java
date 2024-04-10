@@ -108,7 +108,7 @@ public class IntellitracProtocolDecoder extends BaseProtocolDecoder {
 
         position.setTime(parser.nextDateTime());
 
-        //position.setValid(true);
+        position.setValido(true);
         position.setLongitude(parser.nextDouble());
         position.setLatitude(parser.nextDouble());
         position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextDouble()));

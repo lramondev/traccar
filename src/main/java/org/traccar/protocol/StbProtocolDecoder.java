@@ -109,7 +109,7 @@ public class StbProtocolDecoder extends BaseProtocolDecoder {
                 }
                 if (locationType > 0) {
                     position.setTime(new Date());
-                    //position.setValid(locationType != 5);
+                    position.setValido(locationType != 5);
                     if (locationType == 2 || locationType == 4) {
                         position.setLongitude(-position.getLongitude());
                     }

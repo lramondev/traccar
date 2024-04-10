@@ -114,7 +114,7 @@ public class WialonProtocolDecoder extends BaseProtocolDecoder {
 
         if (parser.hasNext()) {
             int satellites = parser.nextInt(0);
-            //position.setValid(satellites >= 3);
+            position.setValido(satellites >= 3);
             position.set(Position.KEY_SATELLITES, satellites);
         }
 
@@ -223,7 +223,7 @@ public class WialonProtocolDecoder extends BaseProtocolDecoder {
                     position = new Position(getProtocolName());
                     position.setRastreador_id(deviceSession.getDeviceId());
                     getLastLocation(position, new Date());
-                    //position.setValid(false);
+                    position.setValido(false);
                     position.set(Position.KEY_RESULT, data);
                     sendResponse(channel, remoteAddress, type, 1);
                     return position;

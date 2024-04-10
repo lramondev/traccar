@@ -139,9 +139,9 @@ public class ComputedAttributesHandler extends BaseDataHandler {
                 if (result != null) {
                     try {
                         switch (attribute.getAttribute()) {
-                            /*case "valid":
-                                position.setValid((Boolean) result);
-                                break;*/
+                            case "valid":
+                                position.setValido((Boolean) result);
+                                break;
                             case "latitude":
                                 position.setLatitude(((Number) result).doubleValue());
                                 break;

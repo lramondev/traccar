@@ -139,7 +139,7 @@ public class EasyTrackProtocolDecoder extends BaseProtocolDecoder {
 
         position.set(Position.KEY_COMMAND, parser.next());
 
-        //position.setValid(parser.next().equals("A"));
+        position.setValido(parser.next().equals("A"));
 
         DateBuilder dateBuilder = new DateBuilder()
                 .setDate(parser.nextHexInt(), parser.nextHexInt(), parser.nextHexInt())

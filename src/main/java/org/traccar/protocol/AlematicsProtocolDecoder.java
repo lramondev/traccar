@@ -127,10 +127,10 @@ public class AlematicsProtocolDecoder extends BaseProtocolDecoder {
         }
         position.setRastreador_id(deviceSession.getDeviceId());
 
-        position.setDatahora_corrigida(parser.nextDateTime());
+        position.setDatahora_calculada(parser.nextDateTime());
         position.setDatahora_rastreador(parser.nextDateTime());
 
-        //position.setValid(true);
+        position.setValido(true);
         position.setLatitude(parser.nextDouble(0));
         position.setLongitude(parser.nextDouble(0));
         position.setVelocidade(UnitsConverter.knotsFromKph(parser.nextInt(0)));

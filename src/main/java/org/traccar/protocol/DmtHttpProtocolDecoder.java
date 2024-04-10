@@ -98,14 +98,14 @@ public class DmtHttpProtocolDecoder extends BaseHttpProtocolDecoder {
                 JsonObject field = fields.getJsonObject(j);
                 switch (field.getInt("FType")) {
                     case 0:
-                        position.setDatahora_corrigida(dateFormat.parse(field.getString("GpsUTC")));
+                        position.setDatahora_calculada(dateFormat.parse(field.getString("GpsUTC")));
                         position.setLatitude(field.getJsonNumber("Lat").doubleValue());
                         position.setLongitude(field.getJsonNumber("Long").doubleValue());
                         position.setAltitude(field.getInt("Alt"));
                         position.setVelocidade(UnitsConverter.knotsFromCps(field.getInt("Spd")));
                         position.setCurso(field.getInt("Head"));
                         position.setPrecisao(field.getInt("PosAcc"));
-                        //position.setValid(field.getInt("GpsStat") > 0);
+                        position.setValido(field.getInt("GpsStat") > 0);
                         break;
                     case 2:
                         int input = field.getInt("DIn");
@@ -162,7 +162,7 @@ public class DmtHttpProtocolDecoder extends BaseHttpProtocolDecoder {
         Date time = new Date(OffsetDateTime.parse(root.getString("date")).toInstant().toEpochMilli());
 
         if (root.containsKey("lat") && root.containsKey("lng")) {
-            //position.setValid(true);
+            position.setValido(true);
             position.setTime(time);
             position.setLatitude(root.getJsonNumber("lat").doubleValue());
             position.setLongitude(root.getJsonNumber("lng").doubleValue());

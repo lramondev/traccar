@@ -93,7 +93,7 @@ public class ArnaviTextProtocolDecoder extends BaseProtocolDecoder {
         DateBuilder dateBuilder = new DateBuilder()
                 .setTime(parser.nextInt(), parser.nextInt(), parser.nextInt());
 
-        //position.setValid(true);
+        position.setValido(true);
         position.setLatitude(parser.nextCoordinate());
         position.setLongitude(parser.nextCoordinate());
         position.setVelocidade(parser.nextDouble());

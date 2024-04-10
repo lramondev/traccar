@@ -109,7 +109,7 @@ public class MxtProtocolDecoder extends BaseProtocolDecoder {
 
             position.setTime(dateBuilder.getDate());
 
-            //position.setValid(true);
+            position.setValido(true);
             position.setLatitude(buf.readIntLE() / 1000000.0);
             position.setLongitude(buf.readIntLE() / 1000000.0);
 
@@ -121,7 +121,7 @@ public class MxtProtocolDecoder extends BaseProtocolDecoder {
             position.set(Position.KEY_INPUT, BitUtil.between(flags, 2, 7));
             position.set(Position.KEY_OUTPUT, BitUtil.between(flags, 7, 10));
             position.setCurso(BitUtil.between(flags, 10, 13) * 45);
-            // //position.setValid(BitUtil.check(flags, 15));
+            // position.setValido(BitUtil.check(flags, 15));
             position.set(Position.KEY_CHARGE, BitUtil.check(flags, 20));
 
             position.setVelocidade(UnitsConverter.knotsFromKph(buf.readUnsignedByte()));

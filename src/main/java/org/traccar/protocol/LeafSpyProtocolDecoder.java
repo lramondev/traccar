@@ -50,7 +50,7 @@ public class LeafSpyProtocolDecoder extends BaseHttpProtocolDecoder {
         }
 
         Position position = new Position(getProtocolName());
-        //position.setValid(true);
+        position.setValido(true);
 
         for (Map.Entry<String, List<String>> entry : params.entrySet()) {
             for (String value : entry.getValue()) {
@@ -109,7 +109,7 @@ public class LeafSpyProtocolDecoder extends BaseHttpProtocolDecoder {
             }
         }
 
-        if (position.getDatahora_corrigida() == null) {
+        if (position.getDatahora_calculada() == null) {
             position.setTime(new Date());
         }
 

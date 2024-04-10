@@ -62,9 +62,9 @@ public class TimeHandler extends ChannelInboundHandlerAdapter {
             Position position = (Position) msg;
             if (useServerTime) {
                 position.setDatahora_rastreador(position.getDatahora_servidor());
-                position.setDatahora_corrigida(position.getDatahora_servidor());
+                position.setDatahora_calculada(position.getDatahora_servidor());
             } else {
-                position.setDatahora_corrigida(position.getDatahora_rastreador());
+                position.setDatahora_calculada(position.getDatahora_rastreador());
             }
 
         }

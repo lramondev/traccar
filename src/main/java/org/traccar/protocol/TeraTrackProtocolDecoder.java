@@ -57,7 +57,7 @@ public class TeraTrackProtocolDecoder extends BaseProtocolDecoder {
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         position.setTime(dateFormat.parse(json.getString("DateTime")));
 
-        //position.setValid(true);
+        position.setValido(true);
         position.setLatitude(Double.parseDouble(json.getString("Latitude")));
         position.setLongitude(Double.parseDouble(json.getString("Longitude")));
         position.setVelocidade(UnitsConverter.knotsFromKph(Integer.parseInt(json.getString("Speed"))));

@@ -403,7 +403,7 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
         position.set(Position.KEY_BLOCKED, BitUtil.check(status, 10));
         position.set(Position.KEY_CHARGE, BitUtil.check(status, 26));
 
-        //position.setValid(BitUtil.check(status, 1));
+        position.setValido(BitUtil.check(status, 1));
 
         double lat = buf.readUnsignedInt() * 0.000001;
         double lon = buf.readUnsignedInt() * 0.000001;
@@ -747,7 +747,7 @@ public class HuabaoProtocolDecoder extends BaseProtocolDecoder {
         position.setRastreador_id(deviceSession.getDeviceId());
 
         Jt600ProtocolDecoder.decodeBinaryLocation(buf, position);
-        //position.setValid(type != MSG_LOCATION_REPORT_BLIND);
+        position.setValido(type != MSG_LOCATION_REPORT_BLIND);
 
         position.set(Position.KEY_RSSI, buf.readUnsignedByte());
         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());

@@ -80,7 +80,7 @@ public class MiniFinderProtocolDecoder extends BaseProtocolDecoder {
 
     private void decodeFlags(Position position, int flags) {
 
-        //position.setValid(BitUtil.to(flags, 2) > 0);
+        position.setValido(BitUtil.to(flags, 2) > 0);
         if (BitUtil.check(flags, 1)) {
             position.set(Position.KEY_APPROXIMATE, true);
         }

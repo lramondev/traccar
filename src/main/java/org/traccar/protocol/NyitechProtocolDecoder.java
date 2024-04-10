@@ -49,7 +49,7 @@ public class NyitechProtocolDecoder extends BaseProtocolDecoder {
         position.setTime(dateBuilder.getDate());
 
         int flags = buf.readUnsignedByte();
-        //position.setValid(BitUtil.to(flags, 2) > 0);
+        position.setValido(BitUtil.to(flags, 2) > 0);
 
         double lat = buf.readUnsignedIntLE() / 3600000.0;
         double lon = buf.readUnsignedIntLE() / 3600000.0;

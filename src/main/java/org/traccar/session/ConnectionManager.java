@@ -226,8 +226,8 @@ public class ConnectionManager implements BroadcastInterface {
             }
         }
 
-        String oldStatus = device.getStatus();
-        device.setStatus(status);
+        String oldStatus = device.getSituacao();
+        device.setSituacao(status);
 
         if (!status.equals(oldStatus)) {
             String eventType;
@@ -247,9 +247,11 @@ public class ConnectionManager implements BroadcastInterface {
             notificationManager.updateEvents(events);
         }
 
+        /* 
         if (time != null) {
-            //device.setLastUpdate(time);
+           device.setLastUpdate(time);
         }
+        */
 
         Timeout timeout = timeouts.remove(deviceId);
         if (timeout != null) {
@@ -266,7 +268,7 @@ public class ConnectionManager implements BroadcastInterface {
 
         try {
             storage.updateObject(device, new Request(
-                    new Columns.Include("status"),
+                    new Columns.Include("situacao"),
                     new Condition.Equals("id", deviceId)));
         } catch (StorageException e) {
             LOGGER.warn("Update device status error", e);
@@ -287,7 +289,7 @@ public class ConnectionManager implements BroadcastInterface {
     public synchronized void updateDevice(boolean local, Device device) {
         if (local) {
             broadcastService.updateDevice(true, device);
-        } else if (Device.STATUS_ONLINE.equals(device.getStatus())) {
+        } else if (Device.STATUS_ONLINE.equals(device.getSituacao())) {
             timeouts.remove(device.getId());
             removeDeviceSession(device.getId());
         }

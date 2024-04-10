@@ -74,7 +74,7 @@ public class MaestroProtocolDecoder extends BaseProtocolDecoder {
         Position position = new Position(getProtocolName());
         position.setRastreador_id(deviceSession.getDeviceId());
 
-        //position.setValid(parser.nextInt(0) == 1);
+        position.setValido(parser.nextInt(0) == 1);
 
         position.set(Position.KEY_BATTERY, parser.nextDouble(0));
         position.set(Position.KEY_RSSI, parser.nextInt(0));

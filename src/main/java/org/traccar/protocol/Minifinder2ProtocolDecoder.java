@@ -201,7 +201,7 @@ public class Minifinder2ProtocolDecoder extends BaseProtocolDecoder {
                         position.setCurso(buf.readUnsignedShortLE());
                         position.setAltitude(buf.readShortLE());
                         int hdop = buf.readUnsignedShortLE();
-                        ////position.setValid(hdop > 0);
+                        //position.setValido(hdop > 0);
                         position.set(Position.KEY_HDOP, hdop * 0.1);
                         position.set(Position.KEY_ODOMETER, buf.readUnsignedIntLE());
                         position.set(Position.KEY_SATELLITES, buf.readUnsignedByte());
@@ -233,7 +233,7 @@ public class Minifinder2ProtocolDecoder extends BaseProtocolDecoder {
                         position.set("tagId", readTagId(buf));
                         position.setLatitude(buf.readIntLE() * 0.0000001);
                         position.setLongitude(buf.readIntLE() * 0.0000001);
-                        //position.setValid(true);
+                        position.setValido(true);
                         hasLocation = true;
                         break;
                     case 0x24:
@@ -258,7 +258,7 @@ public class Minifinder2ProtocolDecoder extends BaseProtocolDecoder {
                         if (BitUtil.check(beaconFlags, 7)) {
                             position.setLatitude(buf.readIntLE() * 0.0000001);
                             position.setLongitude(buf.readIntLE() * 0.0000001);
-                            //position.setValid(true);
+                            position.setValido(true);
                             hasLocation = true;
                         }
                         if (BitUtil.check(beaconFlags, 6)) {
@@ -272,7 +272,7 @@ public class Minifinder2ProtocolDecoder extends BaseProtocolDecoder {
                         buf.readUnsignedByte(); // rssi
                         position.setLatitude(buf.readIntLE() * 0.0000001);
                         position.setLongitude(buf.readIntLE() * 0.0000001);
-                        //position.setValid(true);
+                        position.setValido(true);
                         hasLocation = true;
                         break;
                     case 0x30:
